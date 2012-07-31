@@ -22,6 +22,12 @@
  */
 App::uses('AppModel', 'Model');
 /**
+ * Setup the email class
+ *
+ * @author Johnathan Pulos
+ */
+App::uses('CakeEmail', 'Network/Email');
+/**
  * User Model
  *
  */
@@ -126,6 +132,17 @@ class User extends AppModel {
 			}
 		} 
 		return TRUE;
+	}
+	
+	/**
+	 * Creates an activation hash for the current user.
+	 *
+	 * @param date $created_on User.created_on 
+	 * @return string
+	 * @author Technoguru Aka. Johnathan Pulos
+	 */
+	function getActivationHash() {  
+		return substr(Security::hash(uniqid(date('YmdGis'))), 0, 25);
 	}
 	
 	/**

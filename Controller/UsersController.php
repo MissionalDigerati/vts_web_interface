@@ -91,11 +91,14 @@ class UsersController extends AppController {
 			$this->User->create();
 			if ($this->User->save($this->request->data, true, $this->User->attrAccessible)) {
 				$this->User->set('role', 'USER');
+				$this->User->set('activation_hash', $this->User->getActivationHash());
 				$this->User->save();
 				$this->Session->setFlash(__('Your account has been added.  Please check the email that you provided to verify your account.'));
 				$this->redirect('/');
 			} else {
 				$this->Session->setFlash(__('Unable to create your account. Please, try again.'));
+				$this->request->data['User']['password'] = '';
+				$this->request->data['User']['confirm_password'] = '';
 			}
 		}
 	}
