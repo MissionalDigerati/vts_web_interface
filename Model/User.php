@@ -164,5 +164,19 @@ class User extends AppModel {
 		}
     return true;
   }
+
+
+	public function afterSave($created = FALSE) {
+		if($created === TRUE) {
+			$email = $this->data[$this->name];
+			exit;
+			/**
+			 * Send the user an email for validation
+			 *
+			 * @author Johnathan Pulos
+			 */
+		}
+		return true;
+	}
 	
 }
