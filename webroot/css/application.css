@@ -1,0 +1,22 @@
+body {
+	padding-top: 45px;
+}
+.hidden {
+	display: none;
+}
+.btn.edit-clip {
+	margin-top: 3px;
+}
+table {
+	width: 100%;
+}
+div#list-translations table {
+	width: 50%;
+}
+
+div#list-translations table tr td.title{
+	padding-top: 8px;
+}
+div#list-translations table tr td.actions{
+	text-align: center;
+}
