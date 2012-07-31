@@ -1,4 +1,4 @@
-<?php
+<?php 
 /**
  * This file is part of Video Translator Service Website Example.
  * 
@@ -29,9 +29,8 @@ class WebsiteWithPluginSchema extends CakeSchema {
 
 	public function after($event = array()) {
 		if(array_key_exists('create', $event) && $event['create'] == 'users') {
-			$admin = array('User' => array( 'password' 								=> 	'password', 
-																			'password_original' 			=> 	'password', 
-																			'password_confirmation' 	=> 	'password', 
+			$admin = array('User' => array( 'password' 								=> 	'password21', 
+																			'confirm_password'			 	=> 	'password21', 
 																			'name' 										=> 	'Johnathan Pulos', 
 																			'email' 									=> 	'johnathan@missionaldigerati.org',
 																			'active'									=>	1,
@@ -40,7 +39,7 @@ class WebsiteWithPluginSchema extends CakeSchema {
 										);
 			$Auth = new AuthComponent(new ComponentCollection());
 			$admin['User']['password'] = $Auth->password($admin['User']['password']);
-			ClassRegistry::init('User')->save($admin);
+			ClassRegistry::init('User')->save($admin, false);
 		}
 	}
 
@@ -58,7 +57,7 @@ class WebsiteWithPluginSchema extends CakeSchema {
 		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
 		'title' => array('type' => 'string', 'null' => true, 'default' => NULL, 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
 		'language' => array('type' => 'text', 'null' => true, 'default' => NULL, 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
-		'token' => array('type' => 'string', 'null' => true, 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
+		'token' => array('type' => 'string', 'null' => true, 'default' => NULL, 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
 		'expires_at' => array('type' => 'datetime', 'null' => false, 'default' => NULL),
 		'master_recording_file' => array('type' => 'string', 'null' => true, 'default' => NULL, 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
 		'vts_master_recording_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
@@ -70,8 +69,8 @@ class WebsiteWithPluginSchema extends CakeSchema {
 	public $users = array(
 		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
 		'name' => array('type' => 'string', 'null' => true, 'default' => NULL, 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
-		'email' => array('type' => 'string', 'null' => false, 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
-		'password' => array('type' => 'string', 'null' => false, 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
+		'email' => array('type' => 'string', 'null' => false, 'default' => NULL, 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
+		'password' => array('type' => 'string', 'null' => false, 'default' => NULL, 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
 		'role' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 20, 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
 		'activation_hash' => array('type' => 'string', 'null' => true, 'default' => NULL, 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
 		'active' => array('type' => 'boolean', 'null' => false, 'default' => '0'),
