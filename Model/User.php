@@ -46,8 +46,14 @@ class User extends AppModel {
 	 * @var array
 	 */
 	public $validate = array(	'email'	=>							array(
-																														'rule'	=>	'email', 
-																														'message'	=> 'Must be a valid email address.'
+																														'email'	=>	array(
+																																								'rule'	=>	'email', 
+																																								'message'	=> 'Must be a valid email address.'
+																																							),
+																														'mustBeUniqueEmail'	=>	array(
+																																												'rule'	=>	'mustBeUniqueEmail', 
+																																												'message'	=> 'Sorry,  that email address already has an account.'
+																																											)
 																													),
 														'name'	=>							array(
 																														'rule'	=>	'notEmpty',	
@@ -91,6 +97,32 @@ class User extends AppModel {
 		foreach($field as $key => $value) {
 			if($value != $this->data[$this->name]["confirm_" . $key]) { 
 				return FALSE; 
+			}
+		} 
+		return TRUE;
+	}
+	
+	/**
+	 * Email must be unique, since it is the username
+	 *
+	 * @param array $field the field to check
+	 * @return boolean
+	 * @access public
+	 * @author Johnathan Pulos
+	 */
+	public function mustBeUniqueEmail($field = array()) {
+		foreach($field as $key => $value) {
+			$user = $this->find('first', array('conditions'	=>	array('email'	=>	$value)));
+			if(!empty($user)) {
+				if($user['User']['email'] == $value) {
+					if(isset($this->data[$this->name]['id'])) {
+						if ($this->data[$this->name]['id'] != $user['User']['id']) {
+							return FALSE;
+						}
+					} else{
+						return FALSE;
+					}
+				}
 			}
 		} 
 		return TRUE;
