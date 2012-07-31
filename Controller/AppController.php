@@ -37,7 +37,16 @@ class AppController extends Controller {
 	 *
 	 * @var array
 	 */
-	public $components = array('DebugKit.Toolbar', 'Session');
+	public $components = array(	'DebugKit.Toolbar', 
+															'Session',
+															'Auth' => array(
+																				        'authenticate' => array(
+																															            'Form' => array('fields' => array('username' => 'email'),
+																																														'scope'	=>	array('User.active'	=>	1)
+																																													)
+																				        )
+															    )
+														);
 	/**
 	 * Define helpers you will be using
 	 *

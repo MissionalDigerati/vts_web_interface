@@ -25,7 +25,13 @@
               <li><a href="/"><?php echo __('Home'); ?></a></li>
 							<li>
 								<div>
-									<?php echo $this->Html->link(__('Add a Translation'), array('controller' => 'translations', 'action' => 'add'), array('class' => 'btn btn-primary')); ?>
+									<?php 
+										if($this->Session->read('Auth.User.id')):
+											echo $this->Html->link(__('Add a Translation'), array('controller' => 'translations', 'action' => 'add'), array('class' => 'btn btn-primary'));
+										else:
+											echo $this->Html->link(__('Join'), '/join', array('class' => 'btn btn-primary'));
+										endif;
+									?>
 								</div>
 							</li>
             </ul>

@@ -33,4 +33,87 @@ class User extends AppModel {
  */
 	public $displayField = 'name';
 	
+	/**
+	 * An array of fields that can be modified by a form
+	 *
+	 * @var array
+	 */
+	public $attrAccessible = array('name', 'email', 'password');
+	
+	/**
+	 * Define validations for model
+	 *
+	 * @var array
+	 */
+	public $validate = array(	'email'	=>							array(
+																														'rule'	=>	'email', 
+																														'message'	=> 'Must be a valid email address.'
+																													),
+														'name'	=>							array(
+																														'rule'	=>	'notEmpty',	
+																														'message'	=>	'This field cannot be left blank.'
+																													),
+														'password'	=>					array(
+																														'notEmpty'	=>	array(
+																																										'rule'	=>	'notEmpty',	
+																																										'message'	=>	'This field cannot be left blank.'
+																																									), 
+																														'minLength'	=>	array(	
+																																										'rule'	=>	array('minLength', '8'),	
+																																										'message' => 'Minimum 8 characters long.'
+																																									), 
+																														'mustMatchConfirm'	=>	array(	
+																																										'rule'	=>	'mustMatchConfirm',	
+																																										'message' => 'Your password confirmation must match.'
+																																									)
+																												),
+														'confirm_password'	=>	array(	'notEmpty'	=>	array(
+																																										'rule'	=>	'notEmpty',	
+																																										'message'	=>	'This field cannot be left blank.'
+																																									), 
+																														'minLength'	=>	array(	
+																																										'rule'	=>	array('minLength', '8'),	
+																																										'message' => 'Minimum 8 characters long.'
+																																									)
+																													)
+													);
+
+	
+	/**
+	 * Compares a field with its confirm_field, and returns tru if they match
+	 *
+	 * @param string $field array of the field and its value
+	 * @return boolean
+	 * @access public
+	 * @author Johnathan Pulos
+	 */
+	public function mustMatchConfirm($field = array()) {
+		foreach($field as $key => $value) {
+			if($value != $this->data[$this->name]["confirm_" . $key]) { 
+				return FALSE; 
+			}
+		} 
+		return TRUE;
+	}
+	
+	/**
+	 * Call CakePHP's callback beforeSave
+	 *
+	 * @param array $options array of options
+	 * @return boolean
+	 * @access public
+	 * @author Johnathan Pulos
+	 */
+	public function beforeSave($options = array()) {
+		if((isset($this->data[$this->name]['password'])) && (!empty($this->data[$this->name]['password']))) {
+			/**
+			 * Hash the password
+			 *
+			 * @author Johnathan Pulos
+			 */
+			$this->data[$this->name]['password'] = AuthComponent::password($this->data[$this->name]['password']);
+		}
+    return true;
+  }
+	
 }

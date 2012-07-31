@@ -20,34 +20,20 @@
  * @copyright Copyright 2012 Missional Digerati
  * 
  */
-App::uses('AppHelper', 'View/Helper');
-
-class TwitterBootstrapHelper extends AppHelper {
-  /**
-   * Setup which helpers you need for this helper
-   *
-   * @var string
-   */  
-	public $helpers = array();
-
-	/**
-	 * Sends back an array of input defaults to match Twitter Bootstrap styling
-	 * @link http://stackoverflow.com/questions/9129214/cakephp-2-0-with-twitter-bootstrap
-	 *
-	 * @return array
-	 * @access public
-	 * @author Johnathan Pulos
-	 */
-	public function inputDefaults() {
-		return array(
-							    'div' => 'control-group',
-							    'label' => array('class' => 'control-label'),
-							    'between' => '<div class="controls">',
-							    'after' => '</div>',
-							    'class' => 'span3',
-							    'error' => array('attributes' => array('wrap' => 'span', 'class' => 'help-inline')),
-									'format' => array('before', 'label', 'between', 'input', 'error', 'after')
-								);
-	}
-
-}
+?>
+<div class="users join form">
+<?php echo $this->Form->create('User', array('inputDefaults' => $this->TwitterBootstrap->inputDefaults(), 'class' => 'form-horizontal'));?>
+	<fieldset>
+		<legend><?php echo __('Join'); ?></legend>
+	<?php
+		echo $this->Form->input('name');
+		echo $this->Form->input('email');
+		echo $this->Form->input('password');
+		echo $this->Form->input('confirm_password', array('type'=>	'password'));
+	?>
+	</fieldset>
+	<div class="form-actions">
+		<button type="submit" class="btn btn-primary"><?php echo __('Join'); ?></button>
+	</div>
+<?php echo $this->Form->end(); ?>
+</div>

@@ -24,6 +24,8 @@ Router::connect('/translations/:translation_id/clips', array('controller' => 'tr
 Router::connect('/translations/:translation_id/clips/add', array('controller' => 'translation_clips', 'action' => 'add'), array('pass' => array('translation_id'), 'id' => '[0-9]+'));
 Router::connect('/translations/:translation_id/clips/edit', array('controller' => 'translation_clips', 'action' => 'edit'), array('pass' => array('translation_id'), 'id' => '[0-9]+'));
 Router::mapResources('translations');
+Router::connect('/join', array('controller' => 'users', 'action' => 'add'));
+Router::mapResources('users');
 /**
  * Here, we are connecting '/' (base path) to controller called 'Pages',
  * its action called 'display', and we pass a param to select the view file
