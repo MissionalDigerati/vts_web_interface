@@ -1,0 +1,3 @@
+[submodule "Plugin/VideoTranslatorService"]
+	path = Plugin/VideoTranslatorService
+	url = git@github.com:MissionalDigerati/video_translator_service_cakephp_plugin.git
