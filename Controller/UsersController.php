@@ -52,6 +52,34 @@ class UsersController extends AppController {
 		}
 		$this->set('user', $this->User->read(null, $id));
 	}
+	
+	/**
+	 * Login to the website
+	 *
+	 * @return void
+	 * @access public
+	 * @author Johnathan Pulos
+	 */
+	public function login() {
+		if ($this->request->is('post')) {
+			if ($this->Auth->login()) {
+			    $this->redirect($this->Auth->redirect());
+			} else {
+			    $this->Session->setFlash(__('Invalid username or password, or your account has not been activated yet. Please try again.'));
+			}
+    }
+	}
+	
+	/**
+	 * Log out of the website
+	 *
+	 * @return void
+	 * @access public
+	 * @author Johnathan Pulos
+	 */
+	public function logout() {
+		$this->redirect($this->Auth->logout());
+	}
 
 /**
  * add method Join

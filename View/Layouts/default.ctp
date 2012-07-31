@@ -23,6 +23,14 @@
           <div class="nav-collapse">
             <ul class="nav pull-right">
               <li><a href="/"><?php echo __('Home'); ?></a></li>
+							<?php 
+								if($this->Session->read('Auth.User.id')):
+									echo '<li>' . $this->Html->link(__('Welcome ,'), '/my-account', array('title'	=>	'View My Account')) . '</li>';
+									echo '<li>' . $this->Html->link(__('Logout'), array('controller' => 'users', 'action' => 'logout')) . '</li>';
+								else:
+									echo '<li>' . $this->Html->link(__('Login'), array('controller' => 'users', 'action' => 'login')) . '</li>';
+								endif;
+							?>
 							<li>
 								<div>
 									<?php 
