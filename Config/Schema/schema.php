@@ -1,4 +1,26 @@
-<?php 
+<?php
+/**
+ * This file is part of Video Translator Service Website Example.
+ * 
+ * Video Translator Service Website Example is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * Video Translator Service Website Example is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see 
+ * <http://www.gnu.org/licenses/>.
+ *
+ * @author Johnathan Pulos <johnathan@missionaldigerati.org>
+ * @copyright Copyright 2012 Missional Digerati
+ * 
+ */
+App::uses('AuthComponent', 'Controller/Component');
 class WebsiteWithPluginSchema extends CakeSchema {
 
 	public function before($event = array()) {
@@ -6,6 +28,20 @@ class WebsiteWithPluginSchema extends CakeSchema {
 	}
 
 	public function after($event = array()) {
+		if(array_key_exists('create', $event) && $event['create'] == 'users') {
+			$admin = array('User' => array( 'password' 								=> 	'password', 
+																			'password_original' 			=> 	'password', 
+																			'password_confirmation' 	=> 	'password', 
+																			'name' 										=> 	'Johnathan Pulos', 
+																			'email' 									=> 	'johnathan@missionaldigerati.org',
+																			'active'									=>	1,
+																			'role'										=>	'ADMIN'
+																		)
+										);
+			$Auth = new AuthComponent(new ComponentCollection());
+			$admin['User']['password'] = $Auth->password($admin['User']['password']);
+			ClassRegistry::init('User')->save($admin);
+		}
 	}
 
 	public $translation_clips = array(
@@ -28,6 +64,20 @@ class WebsiteWithPluginSchema extends CakeSchema {
 		'vts_master_recording_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
 		'created' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
 		'modifiied' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
+		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1)),
+		'tableParameters' => array('charset' => 'latin1', 'collate' => 'latin1_swedish_ci', 'engine' => 'MyISAM')
+	);
+	public $users = array(
+		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
+		'name' => array('type' => 'string', 'null' => true, 'default' => NULL, 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
+		'email' => array('type' => 'string', 'null' => false, 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
+		'password' => array('type' => 'string', 'null' => false, 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
+		'role' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 20, 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
+		'activation_hash' => array('type' => 'string', 'null' => true, 'default' => NULL, 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
+		'active' => array('type' => 'boolean', 'null' => false, 'default' => '0'),
+		'created' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
+		'modified' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
+		'activated' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
 		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1)),
 		'tableParameters' => array('charset' => 'latin1', 'collate' => 'latin1_swedish_ci', 'engine' => 'MyISAM')
 	);
