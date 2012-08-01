@@ -166,6 +166,13 @@ class UsersController extends AppController {
 		$this->request->data['User']['confirm_password'] = "";
 	}
 	
+	/**
+	 * Resend the activation code
+	 *
+	 * @return void
+	 * @access public
+	 * @author Johnathan Pulos
+	 */
 	public function resend_activation() {
 		if ($this->request->is('post')) {
 			$user = $this->User->findByEmail($this->request->data['User']['email']);
