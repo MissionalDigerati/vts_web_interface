@@ -30,6 +30,7 @@ Router::mapResources('translations');
  * @author Johnathan Pulos
  */
 Router::connect('/activate/:activation', array('controller' => 'users', 'action' => 'activate'), array('pass' => array('activation'), 'activation' => '[a-zA-Z0-9]+'));
+Router::connect('/change_password/:activation', array('controller' => 'users', 'action' => 'change_password'), array('pass' => array('activation'), 'activation' => '[a-zA-Z0-9]+'));
 Router::connect('/join', array('controller' => 'users', 'action' => 'join'));
 Router::connect('/my-account', array('controller' => 'users', 'action' => 'my_account'));
 Router::connect('/edit-account', array('controller' => 'users', 'action' => 'edit_account'));

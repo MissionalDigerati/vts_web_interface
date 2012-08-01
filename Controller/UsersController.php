@@ -44,7 +44,7 @@ class UsersController extends AppController {
 	 */
 	public function beforeFilter() {
 		parent::beforeFilter();
-		$this->Auth->allow('join', 'login', 'activate', 'resend_activation');
+		$this->Auth->allow('join', 'login', 'activate', 'resend_activation', 'request_password_change', 'change_password');
 	}
 	
 	/**
@@ -194,6 +194,67 @@ class UsersController extends AppController {
 			}
 			$this->redirect(array('controller'	=>	'users', 'action'		=>	'login'));
 		}
+	}
+	
+	/**
+	 * Request to change your password
+	 *
+	 * @return void
+	 * @access public
+	 * @author Johnathan Pulos
+	 */
+	public function request_password_change() {
+		if($this->request->is('post')) {
+			$user = $this->User->findByEmail($this->request->data['User']['email']);
+			if($user) {
+				$this->User->id = $user['User']['id'];
+				$activationHash = $this->User->getActivationHash();
+				if($this->User->saveField('activation_hash', $activationHash)) {
+					$this->User->sendChangePassword($user['User']['name'],  $activationHash, $user['User']['email']);
+					$this->Session->setFlash(__('Instructions have been sent to your email.'));
+				}else{
+					$this->Session->setFlash(__('Unable to complete the request.'));
+				}
+			}else {
+				$this->Session->setFlash(__('Unable to locate your account.'));
+			}
+			$this->redirect(array('controller'	=>	'users', 'action'		=>	'login'));
+		}
+	}
+	
+	/**
+	 * Change Password
+	 *
+	 * @param string $activation the User.activation_hash
+	 * @return void
+	 * @access public
+	 * @author Johnathan Pulos
+	 */
+	public function change_password($activation = null) {
+		if(!$activation) {
+			$this->Session->setFlash(__('Your access code does not exist.'));
+			$this->redirect("/");
+		}
+		$user = $this->User->findByActivationHash($activation);
+		if($this->request->is('post')) {
+			/**
+			 * We are only validating the password
+			 *
+			 * @author Johnathan Pulos
+			 */
+			$this->User->unbindValidation('keep', array('password', 'confirm_password'));
+			$this->request->data['User']['id'] = $user['User']['id'];
+			$this->request->data['User']['activation_hash'] = '';
+			if ($this->User->save($this->request->data, true, array('password', 'activation_hash'))) {
+				$this->Auth->login($user['User']);
+				$this->Session->setFlash(__('Your account has been updated, and you have been logged in.'));
+				$this->redirect('/');
+			} else {
+				$this->Session->setFlash(__('Unable to update your account. Please, try again.'));
+			}
+		}
+		$this->request->data['User']['password'] = "";
+		$this->request->data['User']['confirm_password'] = "";
 	}
 
 

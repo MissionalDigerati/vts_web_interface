@@ -21,19 +21,17 @@
  * 
  */
 ?>
-<div class="users login form">
+<div class="users request_password_change form">
 <?php echo $this->Form->create('User', array('inputDefaults' => $this->TwitterBootstrap->inputDefaults(), 'class' => 'form-horizontal'));?>
 	<fieldset>
-		<legend><?php echo __('Login'); ?></legend>
+		<legend><?php echo __('Request to Change Password'); ?></legend>
 	<?php
 		echo $this->Form->input('email');
-		echo $this->Form->input('password');
 	?>
 	</fieldset>
 	<div class="form-actions">
-		<button type="submit" class="btn btn-primary"><?php echo __('Login'); ?></button>
-		<?php echo $this->Html->link(__('Resend Activation Email'), '/resend-activation', array('class'=> 'btn btn-mini')); ?>
-		<?php echo $this->Html->link(__('Forgot Password?'), '/request-password-change', array('class'=> 'btn btn-mini')); ?></button>
+		<button type="submit" class="btn btn-primary"><?php echo __('Send'); ?></button>
+		<?php echo $this->Html->link(__('Cancel'), array('controller'	=>	'users',	'action'	=>	'login'), array('class'=> 'btn btn-mini')); ?></button>
 	</div>
 <?php echo $this->Form->end(); ?>
 </div>

@@ -105,7 +105,7 @@ class User extends AppModel {
 	 */
 	public function mustMatchConfirmPassword($field = array()) {
 		foreach($field as $key => $value) {
-			if($value != $this->data[$this->name]["confirm_password"]) { 
+			if($value != $this->data[$this->name]["confirm_password"]) {
 				return FALSE; 
 			}
 		} 
@@ -205,7 +205,8 @@ class User extends AppModel {
 	 */
 	public function sendWelcome($name,  $activationHash, $email) {
 		$cakeEmail = new CakeEmail();
-		$viewVars = array('name'	=>	$name, 'activationHash'	=>	$activationHash);
+		$domain = Configure::read('Domain.name');
+		$viewVars = array('name'	=>	$name, 'activationHash'	=>	$activationHash,	'domain'	=>	$domain);
 		try {
 		    $cakeEmail->template('welcome', 'default')->
 								emailFormat('both')->
@@ -222,6 +223,34 @@ class User extends AppModel {
 			 * @author Johnathan Pulos
 			 */
 		  $this->log("[UNABLE TO EMAIL NEW USER] -> " . $email . " (" . $name . ")");
+			return false;
+		}
+	}
+	
+	/**
+	 * Send a welcome message
+	 *
+	 * @param string $name The User.name
+	 * @param string $activationHash The User.activation_hash
+	 * @param string $email The User.email
+	 * @return boolean
+	 * @access public
+	 * @author Johnathan Pulos
+	 */
+	public function sendChangePassword($name,  $activationHash, $email) {
+		$cakeEmail = new CakeEmail();
+		$domain = Configure::read('Domain.name');
+		$viewVars = array('name'	=>	$name, 'activationHash'	=>	$activationHash,	'domain'	=>	$domain);
+		try {
+		    $cakeEmail->template('change_password', 'default')->
+								emailFormat('both')->
+								to($email)->
+								from('info@openbiblestories.com')->
+								subject('Request to Change Password')->
+								viewVars($viewVars)->
+								send();
+				return true;
+		} catch (Exception $e) {
 			return false;
 		}
 	}
