@@ -165,6 +165,12 @@ class UsersController extends AppController {
 		$this->request->data['User']['password'] = "";
 		$this->request->data['User']['confirm_password'] = "";
 	}
+	
+	public function resend_activation() {
+		if ($this->request->is('post')) {
+			
+		}
+	}
 
 
 	/**

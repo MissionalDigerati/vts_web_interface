@@ -188,31 +188,42 @@ class User extends AppModel {
 			 */
 			$this->saveField('role', 'USER');
 			$this->saveField('activation_hash', $activationHash);
+			$this->sendWelcome($user['User']['name'],  $activationHash, $user['User']['email']);
+		}
+		return true;
+	}
+	
+	/**
+	 * Send a welcome message
+	 *
+	 * @param string $name The User.name
+	 * @param string $activationHash The User.activation_hash
+	 * @param string $email The User.email
+	 * @return boolean
+	 * @access public
+	 * @author Johnathan Pulos
+	 */
+	public function sendWelcome($name,  $activationHash, $email) {
+		$cakeEmail = new CakeEmail();
+		$viewVars = array('name'	=>	$name, 'activationHash'	=>	$activationHash);
+		try {
+		    $cakeEmail->template('welcome', 'default')->
+								emailFormat('both')->
+								to($email)->
+								from('info@openbiblestories.com')->
+								subject('Welcome to Open Bible Stories')->
+								viewVars($viewVars)->
+								send();
+				return true;
+		} catch (Exception $e) {
 			/**
-			 * Send the user an email for validation
+			 * Email failed log it, and move on
 			 *
 			 * @author Johnathan Pulos
 			 */
-			$email = new CakeEmail();
-			$viewVars = array('name'	=>	$user[$this->name]['name'], 'activationHash'	=>	$activationHash);
-			try {
-			    $email->template('welcome', 'default')->
-									emailFormat('both')->
-									to($user[$this->name]['email'])->
-									from('info@openbiblestories.com')->
-									subject('Welcome to Open Bible Stories')->
-									viewVars($viewVars)->
-									send();
-			} catch (Exception $e) {
-				/**
-				 * Email failed log it, and move on
-				 *
-				 * @author Johnathan Pulos
-				 */
-			  $this->log("[UNABLE TO EMAIL NEW USER] -> " . $this->id . " (" . $user[$this->name]['name'] . ")");
-			}
+		  $this->log("[UNABLE TO EMAIL NEW USER] -> " . $email . " (" . $name . ")");
+			return false;
 		}
-		return true;
 	}
 	
 }
