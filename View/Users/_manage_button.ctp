@@ -37,7 +37,7 @@
 		</li>
 		<li>
 				<?php 
-					echo $this->Html->link('<i class="icon-trash"></i> ' . __('Delete'), array('controller'	=>	'users', 'action'	=>	'delete',	'admin'	=>	true, $user['User']['id']), array('escape'	=>	false), sprintf(__('Are you sure you want to delete the account for %s?'), $user['User']['name'])); 
+					echo $this->Form->postLink('<i class="icon-trash"></i> ' . __('Delete'), array('controller'	=>	'users', 'action'	=>	'delete',	'admin'	=>	true, $user['User']['id']), array('escape'	=>	false), sprintf(__('Are you sure you want to delete the account for %s?'), $user['User']['name'])); 
 				?>
 		</li>
 		
