@@ -131,26 +131,39 @@ class UsersController extends AppController {
 	}
 
 	/**
-	 * edit method
+	 * edit method /edit-account
 	 *
-	 * @param string $id
 	 * @return void
 	 */
-	public function edit($id = null) {
+	public function edit() {
+		$id = $this->Auth->user('id');
 		$this->User->id = $id;
 		if (!$this->User->exists()) {
 			throw new NotFoundException(__('Invalid user'));
 		}
 		if ($this->request->is('post') || $this->request->is('put')) {
-			if ($this->User->save($this->request->data)) {
-				$this->Session->setFlash(__('The user has been saved'));
-				$this->redirect(array('action' => 'index'));
+			if(!isset($this->request->data['User']['change_password'])) {
+				/**
+				 * They do not want to change their password, so unset fields and remove validation
+				 *
+				 * @author Johnathan Pulos
+				 */
+				$this->User->unbindValidation('remove', array('password', 'confirm_password'));
+				unset($this->request->data['User']['password']);
+				unset($this->request->data['User']['confirm_password']);
+			}
+			$this->request->data['User']['id'] = $id;
+			if ($this->User->save($this->request->data, true, $this->User->attrAccessible)) {
+				$this->Session->setFlash(__('Your account has been updated.'));
+				$this->redirect('/my-account');
 			} else {
-				$this->Session->setFlash(__('The user could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('Unable to update your account. Please, try again.'));
 			}
 		} else {
 			$this->request->data = $this->User->read(null, $id);
 		}
+		$this->request->data['User']['password'] = "";
+		$this->request->data['User']['confirm_password'] = "";
 	}
 
 

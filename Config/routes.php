@@ -24,10 +24,17 @@ Router::connect('/translations/:translation_id/clips', array('controller' => 'tr
 Router::connect('/translations/:translation_id/clips/add', array('controller' => 'translation_clips', 'action' => 'add'), array('pass' => array('translation_id'), 'id' => '[0-9]+'));
 Router::connect('/translations/:translation_id/clips/edit', array('controller' => 'translation_clips', 'action' => 'edit'), array('pass' => array('translation_id'), 'id' => '[0-9]+'));
 Router::mapResources('translations');
+/**
+ * User Routes
+ *
+ * @author Johnathan Pulos
+ */
 Router::connect('/user/activate/:activation', array('controller' => 'users', 'action' => 'activate'), array('pass' => array('activation'), 'activation' => '[a-zA-Z0-9]+'));
 Router::connect('/join', array('controller' => 'users', 'action' => 'add'));
 Router::connect('/my-account', array('controller' => 'users', 'action' => 'view'));
-Router::mapResources('users');
+Router::connect('/edit-account', array('controller' => 'users', 'action' => 'edit'));
+Router::connect('/users/login', array('controller' => 'users', 'action' => 'login'));
+Router::connect('/users/logout', array('controller' => 'users', 'action' => 'logout'));
 /**
  * Here, we are connecting '/' (base path) to controller called 'Pages',
  * its action called 'display', and we pass a param to select the view file
