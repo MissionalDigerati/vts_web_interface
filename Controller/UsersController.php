@@ -44,21 +44,26 @@ class UsersController extends AppController {
 	 */
 	public function beforeFilter() {
 		parent::beforeFilter();
-		$this->Auth->allow('add', 'login', 'activate');
+		$this->Auth->allow('join', 'login', 'activate');
 	}
 	
 	/**
-	 * view method My Account /my-account
+	 * add method Join
 	 *
 	 * @return void
 	 */
-	public function view() {
-		$id = $this->Auth->user('id');
-		$this->User->id = $id;
-		if (!$this->User->exists()) {
-			throw new NotFoundException(__('Invalid user'));
+	public function join() {
+		if ($this->request->is('post')) {
+			$this->User->create();
+			if ($this->User->save($this->request->data, true, $this->User->attrAccessible)) {
+				$this->Session->setFlash(__('Your account has been added.  Please check the email that you provided to verify your account.'));
+				$this->redirect('/');
+			} else {
+				$this->Session->setFlash(__('Unable to create your account. Please, try again.'));
+				$this->request->data['User']['password'] = '';
+				$this->request->data['User']['confirm_password'] = '';
+			}
 		}
-		$this->set('user', $this->User->read(null, $id));
 	}
 	
 	/**
@@ -110,24 +115,19 @@ class UsersController extends AppController {
 	public function logout() {
 		$this->redirect($this->Auth->logout());
 	}
-
+	
 	/**
-	 * add method Join
+	 * view method My Account /my-account
 	 *
 	 * @return void
 	 */
-	public function add() {
-		if ($this->request->is('post')) {
-			$this->User->create();
-			if ($this->User->save($this->request->data, true, $this->User->attrAccessible)) {
-				$this->Session->setFlash(__('Your account has been added.  Please check the email that you provided to verify your account.'));
-				$this->redirect('/');
-			} else {
-				$this->Session->setFlash(__('Unable to create your account. Please, try again.'));
-				$this->request->data['User']['password'] = '';
-				$this->request->data['User']['confirm_password'] = '';
-			}
+	public function my_account() {
+		$id = $this->Auth->user('id');
+		$this->User->id = $id;
+		if (!$this->User->exists()) {
+			throw new NotFoundException(__('Invalid user'));
 		}
+		$this->set('user', $this->User->read(null, $id));
 	}
 
 	/**
@@ -135,7 +135,7 @@ class UsersController extends AppController {
 	 *
 	 * @return void
 	 */
-	public function edit() {
+	public function edit_account() {
 		$id = $this->Auth->user('id');
 		$this->User->id = $id;
 		if (!$this->User->exists()) {
