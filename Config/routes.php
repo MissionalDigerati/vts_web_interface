@@ -29,11 +29,12 @@ Router::mapResources('translations');
  *
  * @author Johnathan Pulos
  */
-Router::connect('/user/activate/:activation', array('controller' => 'users', 'action' => 'activate'), array('pass' => array('activation'), 'activation' => '[a-zA-Z0-9]+'));
+Router::connect('/activate/:activation', array('controller' => 'users', 'action' => 'activate'), array('pass' => array('activation'), 'activation' => '[a-zA-Z0-9]+'));
 Router::connect('/join', array('controller' => 'users', 'action' => 'join'));
 Router::connect('/my-account', array('controller' => 'users', 'action' => 'my_account'));
 Router::connect('/edit-account', array('controller' => 'users', 'action' => 'edit_account'));
 Router::connect('/resend-activation', array('controller' => 'users', 'action' => 'resend_activation'));
+Router::connect('/request-password-change', array('controller' => 'users', 'action' => 'request_password_change'));
 Router::connect('/users/login', array('controller' => 'users', 'action' => 'login'));
 Router::connect('/users/logout', array('controller' => 'users', 'action' => 'logout'));
 /**
