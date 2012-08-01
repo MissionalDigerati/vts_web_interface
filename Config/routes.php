@@ -33,6 +33,7 @@ Router::connect('/user/activate/:activation', array('controller' => 'users', 'ac
 Router::connect('/join', array('controller' => 'users', 'action' => 'join'));
 Router::connect('/my-account', array('controller' => 'users', 'action' => 'my_account'));
 Router::connect('/edit-account', array('controller' => 'users', 'action' => 'edit_account'));
+Router::connect('/resend-activation', array('controller' => 'users', 'action' => 'resend_activation'));
 Router::connect('/users/login', array('controller' => 'users', 'action' => 'login'));
 Router::connect('/users/logout', array('controller' => 'users', 'action' => 'logout'));
 /**

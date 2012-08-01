@@ -44,7 +44,7 @@ class UsersController extends AppController {
 	 */
 	public function beforeFilter() {
 		parent::beforeFilter();
-		$this->Auth->allow('join', 'login', 'activate');
+		$this->Auth->allow('join', 'login', 'activate', 'resend_activation');
 	}
 	
 	/**
@@ -168,7 +168,24 @@ class UsersController extends AppController {
 	
 	public function resend_activation() {
 		if ($this->request->is('post')) {
-			
+			$user = $this->User->findByEmail($this->request->data['User']['email']);
+			if($user) {
+				if($user['User']['active'] != 1) {
+					$this->User->id = $user['User']['id'];
+					$activationHash = $this->User->getActivationHash();
+					if($this->User->saveField('activation_hash', $activationHash)) {
+						$this->User->sendWelcome($user['User']['name'],  $activationHash, $user['User']['email']);
+						$this->Session->setFlash(__('A new activation email has been sent.'));
+					}else{
+						$this->Session->setFlash(__('Unable to send you the activation email.'));
+					}
+				} else{
+					$this->Session->setFlash(__('Your account has already been activated.'));
+				}
+			}else {
+				$this->Session->setFlash(__('Unable to locate your account.'));
+			}
+			$this->redirect(array('controller'	=>	'users', 'action'		=>	'login'));
 		}
 	}
 

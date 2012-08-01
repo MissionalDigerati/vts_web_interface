@@ -21,18 +21,16 @@
  * 
  */
 ?>
-<div class="users login form">
+<div class="users resend_activation form">
 <?php echo $this->Form->create('User', array('inputDefaults' => $this->TwitterBootstrap->inputDefaults(), 'class' => 'form-horizontal'));?>
 	<fieldset>
-		<legend><?php echo __('Login'); ?></legend>
+		<legend><?php echo __('Resend Activation'); ?></legend>
 	<?php
 		echo $this->Form->input('email');
-		echo $this->Form->input('password');
 	?>
 	</fieldset>
 	<div class="form-actions">
-		<button type="submit" class="btn btn-primary"><?php echo __('Login'); ?></button>
-		<?php echo $this->Html->link(__('Resend Activation Email'), '/resend-activation', array('class'=> 'btn btn-mini')); ?></button>
+		<button type="submit" class="btn btn-primary"><?php echo __('Send'); ?></button>
 	</div>
 <?php echo $this->Form->end(); ?>
 </div>
