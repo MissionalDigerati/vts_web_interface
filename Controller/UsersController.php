@@ -46,11 +46,12 @@ class UsersController extends AppController {
 		parent::beforeFilter();
 		$this->Auth->allow('add', 'login', 'activate');
 	}
-/**
- * view method My Account
- *
- * @return void
- */
+	
+	/**
+	 * view method My Account /my-account
+	 *
+	 * @return void
+	 */
 	public function view() {
 		$id = $this->Auth->user('id');
 		$this->User->id = $id;
@@ -110,11 +111,11 @@ class UsersController extends AppController {
 		$this->redirect($this->Auth->logout());
 	}
 
-/**
- * add method Join
- *
- * @return void
- */
+	/**
+	 * add method Join
+	 *
+	 * @return void
+	 */
 	public function add() {
 		if ($this->request->is('post')) {
 			$this->User->create();
@@ -129,12 +130,12 @@ class UsersController extends AppController {
 		}
 	}
 
-/**
- * edit method
- *
- * @param string $id
- * @return void
- */
+	/**
+	 * edit method
+	 *
+	 * @param string $id
+	 * @return void
+	 */
 	public function edit($id = null) {
 		$this->User->id = $id;
 		if (!$this->User->exists()) {
@@ -153,22 +154,22 @@ class UsersController extends AppController {
 	}
 
 
-/**
- * admin_index method
- *
- * @return void
- */
+	/**
+	 * admin_index method
+	 *
+	 * @return void
+	 */
 	public function admin_index() {
 		$this->User->recursive = 0;
 		$this->set('users', $this->paginate());
 	}
 
-/**
- * admin_view method
- *
- * @param string $id
- * @return void
- */
+	/**
+	 * admin_view method
+	 *
+	 * @param string $id
+	 * @return void
+	 */
 	public function admin_view($id = null) {
 		$this->User->id = $id;
 		if (!$this->User->exists()) {
@@ -177,11 +178,11 @@ class UsersController extends AppController {
 		$this->set('user', $this->User->read(null, $id));
 	}
 
-/**
- * admin_add method
- *
- * @return void
- */
+	/**
+	 * admin_add method
+	 *
+	 * @return void
+	 */
 	public function admin_add() {
 		if ($this->request->is('post')) {
 			$this->User->create();
@@ -194,12 +195,12 @@ class UsersController extends AppController {
 		}
 	}
 
-/**
- * admin_edit method
- *
- * @param string $id
- * @return void
- */
+	/**
+	 * admin_edit method
+	 *
+	 * @param string $id
+	 * @return void
+	 */
 	public function admin_edit($id = null) {
 		$this->User->id = $id;
 		if (!$this->User->exists()) {
@@ -217,12 +218,12 @@ class UsersController extends AppController {
 		}
 	}
 
-/**
- * admin_delete method
- *
- * @param string $id
- * @return void
- */
+	/**
+	 * admin_delete method
+	 *
+	 * @param string $id
+	 * @return void
+	 */
 	public function admin_delete($id = null) {
 		if (!$this->request->is('post')) {
 			throw new MethodNotAllowedException();
