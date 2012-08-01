@@ -24,3 +24,63 @@ div#list-translations table tr td.actions{
 	display: block;
 	clear: both;
 }
+/*Pagination Styles*/
+.paging div{ 
+ border:0; 
+ padding:0; 
+ margin:0;
+}
+ 
+.paging {
+}
+ 
+.paging div, .paging a{
+ border:0; 
+ margin:0; 
+ padding:0;
+ font-size:11px;
+ list-style:none;
+}
+ 
+.paging a{
+ border:solid 1px #DDD;
+ margin-right:2px;
+}
+ 
+.paging span.disabled {
+ border:solid 1px #DDD;
+ color:#333;
+ display:block;
+ float:left;
+ padding:3px 4px;
+ margin-right:2px;
+}
+ 
+.paging .current{
+ border:solid 1px #DDD;
+ background:#08C;
+ color:#F9F9F9;
+ font-weight:bold;
+ display:block;
+ float:left;
+ padding:3px 4px;
+ margin-right:2px;
+}
+ 
+.paging a:link,
+.paging a:visited {
+ color:#08C;
+ background:#F9F9F9;
+ display:block;
+ float:left;
+ padding:3px 4px;
+ text-decoration:none;
+}
+ 
+.paging a:hover{
+ border:solid 1px #DDD;
+ background:#08C;
+ color:#F9F9F9;
+  
+  
+}

@@ -36,6 +36,13 @@ class UsersController extends AppController {
 	public $helpers = array('Time');
 	
 	/**
+	 * Define pagination settings
+	 *
+	 * @var array
+	 */
+	public $paginate = array('limit' => 25);
+	
+	/**
 	 * Declare CakePHP's callback
 	 *
 	 * @return void
@@ -257,6 +264,11 @@ class UsersController extends AppController {
 		$this->request->data['User']['confirm_password'] = "";
 	}
 
+/**
+ * ADMINISTRATION FUNCTIONS
+ *
+ * @author Johnathan Pulos
+ */
 
 	/**
 	 * admin_index method
