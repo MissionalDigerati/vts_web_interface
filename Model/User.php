@@ -168,13 +168,38 @@ class User extends AppModel {
 
 	public function afterSave($created = FALSE) {
 		if($created === TRUE) {
-			$email = $this->data[$this->name];
-			exit;
+			$activationHash = $this->getActivationHash();
+			$user = $this->read(null, $this->id);
+			/**
+			 * Setup the new user by setting their role and activation_hash
+			 *
+			 * @author Johnathan Pulos
+			 */
+			$this->saveField('role', 'USER');
+			$this->saveField('activation_hash', $activationHash);
 			/**
 			 * Send the user an email for validation
 			 *
 			 * @author Johnathan Pulos
 			 */
+			$email = new CakeEmail();
+			$viewVars = array('name'	=>	$user[$this->name]['name'], 'activationHash'	=>	$activationHash);
+			try {
+			    $email->template('welcome', 'default')->
+									emailFormat('both')->
+									to($user[$this->name]['email'])->
+									from('info@openbiblestories.com')->
+									subject('Welcome to Open Bible Stories')->
+									viewVars($viewVars)->
+									send();
+			} catch (Exception $e) {
+				/**
+				 * Email failed log it, and move on
+				 *
+				 * @author Johnathan Pulos
+				 */
+			  $this->log("[UNABLE TO EMAIL NEW USER] -> " . $this->id . " (" . $user[$this->name]['name'] . ")");
+			}
 		}
 		return true;
 	}
