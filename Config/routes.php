@@ -24,6 +24,7 @@ Router::connect('/translations/:translation_id/clips', array('controller' => 'tr
 Router::connect('/translations/:translation_id/clips/add', array('controller' => 'translation_clips', 'action' => 'add'), array('pass' => array('translation_id'), 'id' => '[0-9]+'));
 Router::connect('/translations/:translation_id/clips/edit', array('controller' => 'translation_clips', 'action' => 'edit'), array('pass' => array('translation_id'), 'id' => '[0-9]+'));
 Router::mapResources('translations');
+Router::connect('/user/activate/:activation', array('controller' => 'users', 'action' => 'activate'), array('pass' => array('activation'), 'activation' => '[a-zA-Z0-9]+'));
 Router::connect('/join', array('controller' => 'users', 'action' => 'add'));
 Router::mapResources('users');
 /**

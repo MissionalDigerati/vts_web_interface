@@ -37,7 +37,7 @@ class UsersController extends AppController {
 	 */
 	public function beforeFilter() {
 		parent::beforeFilter();
-		$this->Auth->allow('add', 'login');
+		$this->Auth->allow('add', 'login', 'activate');
 	}
 /**
  * view method My Account
@@ -68,6 +68,28 @@ class UsersController extends AppController {
 			    $this->Session->setFlash(__('Invalid username or password, or your account has not been activated yet. Please try again.'));
 			}
     }
+	}
+	
+	/**
+	 * Activate a new user
+	 *
+	 * @param string $activation the activation code
+	 * @return void
+	 * @access public
+	 * @author Johnathan Pulos
+	 */
+	public function activate($activation = null) {
+		if(!$activation) {
+			$this->Session->setFlash(__('Please provide an activation code.'));
+			$this->redirect("/");
+		}
+		$user = $this->User->findByActivationHash($activation);
+		$this->User->id = $user['User']['id'];
+		$this->User->saveField('active', 1);
+		$this->User->saveField('activation_hash', '');
+		$this->Auth->login($user['User']);
+		$this->Session->setFlash(__('Thank you.  Your account has been activated, and you have been logged in.'));
+		$this->redirect('/');
 	}
 	
 	/**
