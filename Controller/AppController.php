@@ -53,4 +53,28 @@ class AppController extends Controller {
 	 * @var array
 	 */
 	public $helpers = array('TwitterBootstrap', 'Form', 'Html', 'Session');
+	
+	/**
+	 * Define a CakePHP callback beforeFilter
+	 *
+	 * @return void
+	 * @access public
+	 * @author Johnathan Pulos
+	 */
+	public function beforeFilter() {
+		/**
+		 * Capture and redirect non-admins
+		 *
+		 * @author Johnathan Pulos
+		 */
+		if($this->request->prefix == 'admin') {
+			if(!$this->Auth->user('id')) {
+				$this->Session->setFlash(__('You do not have access to this area.'));
+				$this->redirect('/');
+			}else if ($this->Auth->user('role') != 'ADMIN') {
+				$this->Session->setFlash(__('You do not have access to this area.'));
+				$this->redirect('/');
+			}
+		}
+	}
 }
