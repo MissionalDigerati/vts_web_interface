@@ -26,6 +26,7 @@ Router::connect('/translations/:translation_id/clips/edit', array('controller' =
 Router::mapResources('translations');
 Router::connect('/user/activate/:activation', array('controller' => 'users', 'action' => 'activate'), array('pass' => array('activation'), 'activation' => '[a-zA-Z0-9]+'));
 Router::connect('/join', array('controller' => 'users', 'action' => 'add'));
+Router::connect('/my-account', array('controller' => 'users', 'action' => 'view'));
 Router::mapResources('users');
 /**
  * Here, we are connecting '/' (base path) to controller called 'Pages',

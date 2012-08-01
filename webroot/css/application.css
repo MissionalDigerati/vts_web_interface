@@ -20,3 +20,7 @@ div#list-translations table tr td.title{
 div#list-translations table tr td.actions{
 	text-align: center;
 }
+.clear {
+	display: block;
+	clear: both;
+}

@@ -27,7 +27,14 @@ App::uses('AppController', 'Controller');
  * @property User $User
  */
 class UsersController extends AppController {
-
+	/**
+	 * Define needed CakePHP Helpers
+	 *
+	 * @author Johnathan Pulos
+	 * @access public
+	 */
+	public $helpers = array('Time');
+	
 	/**
 	 * Declare CakePHP's callback
 	 *
@@ -42,10 +49,10 @@ class UsersController extends AppController {
 /**
  * view method My Account
  *
- * @param string $id
  * @return void
  */
-	public function view($id = null) {
+	public function view() {
+		$id = $this->Auth->user('id');
 		$this->User->id = $id;
 		if (!$this->User->exists()) {
 			throw new NotFoundException(__('Invalid user'));
