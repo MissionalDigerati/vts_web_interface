@@ -25,17 +25,7 @@
 <?php echo $this->Form->create('User', array('inputDefaults' => $this->TwitterBootstrap->inputDefaults(), 'class' => 'form-horizontal'));?>
 	<fieldset>
 		<legend><?php echo __('Add User'); ?></legend>
-		<?php echo $this->element('../Users/_admin_form'); ?>
-		<div class="control-group">
-			<div class="controls">
-				<label class="checkbox">
-				<input type="checkbox" name="data[User][active]" value="1">
-					Activate User
-				</label>
-				<p class="help-block">If you do not check "Activate User",  the user will be emailed to activate their account.</p>
-			</div>
-		</div>
-	</fieldset>
+		<?php echo $this->element('../Users/_admin_form', array('method'	=>	'ADD')); ?>
 	<div class="form-actions">
 		<button type="submit" class="btn btn-primary"><?php echo __('Add User'); ?></button>
 	</div>

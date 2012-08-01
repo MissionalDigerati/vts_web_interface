@@ -25,4 +25,18 @@
 	echo $this->Form->input('email');
 	echo $this->Form->input('password');
 	echo $this->Form->input('confirm_password', array('type'=>	'password'));
+	if($method == 'ADD'):
+		?>
+		<div class="control-group">
+			<div class="controls">
+				<label class="checkbox">
+				<input type="checkbox" name="data[User][active]" value="1">
+					Activate User
+				</label>
+				<p class="help-block">If you do not check "Activate User",  the user will be emailed to activate their account.</p>
+			</div>
+		</div>
+	</fieldset>
+		<?php
+	endif;
 ?>
