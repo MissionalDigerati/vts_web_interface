@@ -31,6 +31,7 @@
 	</fieldset>
 	<div class="form-actions">
 		<button type="submit" class="btn btn-primary"><?php echo __('Send'); ?></button>
+		<?php echo $this->Html->link(__('Cancel'), array('controller'	=>	'users',	'action'	=>	'login'), array('class'=> 'btn btn-mini')); ?></button>
 	</div>
 <?php echo $this->Form->end(); ?>
 </div>
