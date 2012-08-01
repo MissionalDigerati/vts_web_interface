@@ -26,6 +26,17 @@
 							<?php 
 								if($this->Session->read('Auth.User.id')):
 									echo '<li>' . $this->Html->link(__('Welcome ') . $this->Session->read('Auth.User.name'), '/my-account', array('title'	=>	'View My Account')) . '</li>';
+									if($this->Session->read('Auth.User.role') == 'ADMIN'):
+										?>
+										<li class="dropdown" id="#manage" class="active">
+											<a href="#manage" class="dropdown-toggle" data-toggle="dropdown">Manage<b class="caret"></b></a>
+											<ul class="dropdown-menu">
+												<li><?php echo $this->Html->link('Users', array('controller' => 'users', 'action' => 'index', 'admin'=> true)); ?></li>
+												<li><?php echo $this->Html->link('Translations', array('controller' => 'translations', 'action' => 'index', 'admin'=> true)); ?></li>
+											</ul>
+										</li>
+										<?php
+									endif;
 									echo '<li>' . $this->Html->link(__('Logout'), array('controller' => 'users', 'action' => 'logout')) . '</li>';
 								else:
 									echo '<li>' . $this->Html->link(__('Login'), array('controller' => 'users', 'action' => 'login')) . '</li>';
