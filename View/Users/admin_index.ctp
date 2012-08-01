@@ -49,7 +49,13 @@
 					?></td>
 					<td><?php echo $this->Time->nice($user['User']['created']); ?></td>
 			    <td class="actions">
-			    	
+			    	<?php
+			 			if($this->Session->read('Auth.User.id') == $user['User']['id']):
+							echo $this->Html->link(__('My Account'), '/my-account', array('class' => 'btn'));
+						else:
+							echo $this->element('../Users/_manage_button', array('user'	=>	$user));
+						endif; 
+					?>
 			    </td>
 			  </tr>
 			<?php endforeach; ?>
