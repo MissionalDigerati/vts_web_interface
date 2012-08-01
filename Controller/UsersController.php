@@ -302,11 +302,35 @@ class UsersController extends AppController {
 	public function admin_add() {
 		if ($this->request->is('post')) {
 			$this->User->create();
-			if ($this->User->save($this->request->data)) {
-				$this->Session->setFlash(__('The user has been saved'));
-				$this->redirect(array('action' => 'index'));
+			/**
+			 * Tell the model that an admin is add the user
+			 *
+			 * @author Johnathan Pulos
+			 */
+			$this->User->requestedByAdmin = true;
+			/**
+			 * Only email if the user does not activate the account
+			 *
+			 * @author Johnathan Pulos
+			 */
+			$this->User->bypassWelcomeEmail = (isset($this->request->data['User']['active'])) ? true : false;
+			/**
+			 * Add additional attributes to the accessible list
+			 *
+			 * @author Johnathan Pulos
+			 */
+			$attrAccessible = array_merge($this->User->attrAccessible, array('role','active'));
+			if ($this->User->save($this->request->data, true, $attrAccessible)) {
+				if(!isset($this->request->data['User']['active'])) {
+					$this->Session->setFlash(__('The user has been added, and an email was sent to them.'));
+				}else {
+					$this->Session->setFlash(__('The user has been added.'));
+				}
+				$this->redirect(array('controller'	=>	'users', 'action'	=>	'index', 'admin'	=>	true));
 			} else {
-				$this->Session->setFlash(__('The user could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('Unable to create the account. Please, try again.'));
+				$this->request->data['User']['password'] = '';
+				$this->request->data['User']['confirm_password'] = '';
 			}
 		}
 	}

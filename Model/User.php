@@ -40,6 +40,20 @@ class User extends AppModel {
 	public $displayField = 'name';
 	
 	/**
+	 * Tells the model if the Admin is requesting the process
+	 *
+	 * @var boolean
+	 */
+	public $requestedByAdmin = false;
+	
+	/**
+	 * Tells the model if the Admin wants to bypass the welcome email
+	 *
+	 * @var boolean
+	 */
+	public $bypassWelcomeEmail = false;
+	
+	/**
 	 * An array of fields that can be modified by a form
 	 *
 	 * @var array
@@ -179,16 +193,20 @@ class User extends AppModel {
 	 */
 	public function afterSave($created = FALSE) {
 		if($created === TRUE) {
-			$activationHash = $this->getActivationHash();
 			$user = $this->read(null, $this->id);
-			/**
-			 * Setup the new user by setting their role and activation_hash
-			 *
-			 * @author Johnathan Pulos
-			 */
-			$this->saveField('role', 'USER');
-			$this->saveField('activation_hash', $activationHash);
-			$this->sendWelcome($user['User']['name'],  $activationHash, $user['User']['email']);
+			if($this->requestedByAdmin === false) {
+				/**
+				 * Setup the new user by setting their role and activation_hash
+				 *
+				 * @author Johnathan Pulos
+				 */
+				$this->saveField('role', 'USER');
+			}
+			if($this->bypassWelcomeEmail === false) {
+				$activationHash = $this->getActivationHash();
+				$this->saveField('activation_hash', $activationHash);
+				$this->sendWelcome($user['User']['name'],  $activationHash, $user['User']['email']);
+			}
 		}
 		return true;
 	}
