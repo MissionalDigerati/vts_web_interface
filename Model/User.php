@@ -54,7 +54,8 @@ class User extends AppModel {
 	public $validate = array(	'email'	=>							array(
 																														'email'	=>	array(
 																																								'rule'	=>	'email', 
-																																								'message'	=> 'Must be a valid email address.'
+																																								'message'	=> 'Must be a valid email address.',
+																																								'required'	=>	true
 																																							),
 																														'mustBeUniqueEmail'	=>	array(
 																																												'rule'	=>	'mustBeUniqueEmail', 
@@ -63,25 +64,28 @@ class User extends AppModel {
 																													),
 														'name'	=>							array(
 																														'rule'	=>	'notEmpty',	
-																														'message'	=>	'This field cannot be left blank.'
+																														'message'	=>	'This field cannot be left blank.',
+																														'required'	=>	true
 																													),
 														'password'	=>					array(
 																														'notEmpty'	=>	array(
 																																										'rule'	=>	'notEmpty',	
-																																										'message'	=>	'This field cannot be left blank.'
+																																										'message'	=>	'This field cannot be left blank.',
+																																										'required'	=>	true
 																																									), 
 																														'minLength'	=>	array(	
 																																										'rule'	=>	array('minLength', '8'),	
 																																										'message' => 'Minimum 8 characters long.'
 																																									), 
-																														'mustMatchConfirm'	=>	array(	
-																																										'rule'	=>	'mustMatchConfirm',	
+																														'mustMatchConfirmPassword'	=>	array(	
+																																										'rule'	=>	'mustMatchConfirmPassword',	
 																																										'message' => 'Your password confirmation must match.'
 																																									)
 																												),
 														'confirm_password'	=>	array(	'notEmpty'	=>	array(
 																																										'rule'	=>	'notEmpty',	
-																																										'message'	=>	'This field cannot be left blank.'
+																																										'message'	=>	'This field cannot be left blank.',
+																																										'required'	=>	true
 																																									), 
 																														'minLength'	=>	array(	
 																																										'rule'	=>	array('minLength', '8'),	
@@ -92,16 +96,16 @@ class User extends AppModel {
 
 	
 	/**
-	 * Compares a field with its confirm_field, and returns tru if they match
+	 * Compares a field with its confirm_field, and returns true if they match
 	 *
 	 * @param string $field array of the field and its value
 	 * @return boolean
 	 * @access public
 	 * @author Johnathan Pulos
 	 */
-	public function mustMatchConfirm($field = array()) {
+	public function mustMatchConfirmPassword($field = array()) {
 		foreach($field as $key => $value) {
-			if($value != $this->data[$this->name]["confirm_" . $key]) { 
+			if($value != $this->data[$this->name]["confirm_password"]) { 
 				return FALSE; 
 			}
 		} 
