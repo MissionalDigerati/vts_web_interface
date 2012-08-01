@@ -165,7 +165,14 @@ class User extends AppModel {
     return true;
   }
 
-
+	/**
+	 * Call CakePHP's callback method afterSave
+	 *
+	 * @param boolean $created wheater they are creating or updating
+	 * @return boolean
+	 * @access public
+	 * @author Johnathan Pulos
+	 */
 	public function afterSave($created = FALSE) {
 		if($created === TRUE) {
 			$activationHash = $this->getActivationHash();
