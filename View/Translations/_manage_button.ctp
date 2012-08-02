@@ -28,7 +28,7 @@ $isAdmin = (isset($isAdmin)) ? $isAdmin : false;
   <ul class="dropdown-menu">
     <li>
 				<?php 
-					echo $this->Html->link('<i class="icon-zoom-in"></i> ' . __('View'), "/translations/" . $translation['Translation']['id'] . "/clips", array('escape'	=>	false)); 
+					echo $this->Html->link('<i class="icon-zoom-in"></i> ' . __('View & Add Clips'), "/translations/" . $translation['Translation']['id'] . "/clips", array('escape'	=>	false)); 
 				?>
 		</li>
 		<li>

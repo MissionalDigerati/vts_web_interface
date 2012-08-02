@@ -34,6 +34,13 @@ class Translation extends AppModel {
 	public $displayField = 'title';
 	
 	/**
+	 * The accessible attributes for mass assignment
+	 *
+	 * @var array
+	 */
+	public $attrAccessible	=	array('title', 'language', 'user_id');
+	
+	/**
 	 * hasMany associations
 	 *
 	 * @var array

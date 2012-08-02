@@ -21,6 +21,15 @@
  * 
  */
 ?>
-<div class="translations form">
-	<?php echo $this->element('../Translations/_form', array('method'	=>	'CREATE')); ?>
-</div>
+<?php echo $this->Form->create('Translation', array('inputDefaults' => $this->TwitterBootstrap->inputDefaults(), 'class' => 'form-horizontal'));?>
+	<fieldset>
+		<legend><?php echo ($method == 'EDIT') ? __('Edit Translation') : __('Add Translation'); ?></legend>
+	<?php
+		echo $this->Form->input('title');
+		echo $this->Form->input('language', array('type' => 'string'));
+	?>
+	</fieldset>
+	<div class="form-actions">
+		<button type="submit" class="btn btn-primary"><?php echo ($method == 'EDIT') ? __('Update Translation') : __('Create Translation'); ?></button>
+	</div>
+<?php echo $this->Form->end(); ?>

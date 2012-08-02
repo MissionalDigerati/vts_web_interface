@@ -22,5 +22,5 @@
  */
 ?>
 <div class="translations form">
-	<?php echo $this->element('../Translations/_form', array('method'	=>	'CREATE')); ?>
+	<?php echo $this->element('../Translations/_form', array('method'	=>	'EDIT')); ?>
 </div>

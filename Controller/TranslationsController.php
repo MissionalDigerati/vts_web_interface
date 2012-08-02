@@ -72,9 +72,9 @@ class TranslationsController extends AppController {
 				$this->request->data['Translation']['user_id'] = $this->Auth->user('id');
 				if ($this->TranslationRequest->save(array(), false)) {
 					$translationRequest = $this->TranslationRequest->read(null, $this->TranslationRequest->id);
-					$this->request->data['Translation']['token'] = $translationRequest['TranslationRequest']['token'];
-					$this->request->data['Translation']['expires_at'] = $translationRequest['TranslationRequest']['expires_at'];
-					if ($this->Translation->save($this->request->data, true)) {
+					if ($this->Translation->save($this->request->data, true, $this->Translation->attrAccessible)) {
+						$this->Translation->saveField('token', $translationRequest['TranslationRequest']['token']);
+						$this->Translation->saveField('expires_at', $translationRequest['TranslationRequest']['expires_at']);
 						$this->Session->setFlash(__('The translation has been created.  Now upload your audio files for each clip.'));
 						$this->redirect("/translations/" . $this->Translation->id . "/clips");
 					} else{
@@ -83,6 +83,31 @@ class TranslationsController extends AppController {
 				}else {
 					throw new CakeException(__('Unable to create the translation request.'));
 				}
+			}
+		}
+		
+		/**
+		 * Edit a translation
+		 *
+		 * @param integer $id Translation.id
+		 * @return void
+		 * @access public
+		 * @author Johnathan Pulos
+		 */
+		public function edit($id = null) {
+			$this->Translation->id = $id;
+			if (!$this->Translation->exists()) {
+				throw new NotFoundException(__('Invalid translation'));
+			}
+			if ($this->request->is('post') || $this->request->is('put')) {
+				if ($this->Translation->save($this->request->data, true, $this->Translation->attrAccessible)) {
+					$this->Session->setFlash(__('The translation has been updated.'));
+					$this->redirect(array('action'	=>	'index'));
+				} else{
+					$this->Session->setFlash(__('Unable to update the translation.'));
+				}
+			}else {
+				$this->request->data = $this->Translation->read(null, $id);
 			}
 		}
 		
