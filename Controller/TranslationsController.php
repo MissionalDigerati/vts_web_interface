@@ -55,7 +55,8 @@ class TranslationsController extends AppController {
 	 * @return void
 	 */
 		public function index() {
-			$this->set('translations', $this->Translation->find('all'));
+			$id = $this->Auth->user('id');
+			$this->set('translations', $this->Translation->find('all', array('conditions'=> array('Translation.user_id'	=>	$id))));
 		}
 		
 		/**
@@ -68,6 +69,7 @@ class TranslationsController extends AppController {
 		public function add() {
 			$this->TranslationRequest->create();
 			if(!empty($this->request->data)) {
+				$this->request->data['Translation']['user_id'] = $this->Auth->user('id');
 				if ($this->TranslationRequest->save(array(), false)) {
 					$translationRequest = $this->TranslationRequest->read(null, $this->TranslationRequest->id);
 					$this->request->data['Translation']['token'] = $translationRequest['TranslationRequest']['token'];

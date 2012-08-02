@@ -26,6 +26,7 @@
 							<?php 
 								if($this->Session->read('Auth.User.id')):
 									echo '<li>' . $this->Html->link(__('Welcome ') . $this->Session->read('Auth.User.name'), '/my-account', array('title'	=>	'View My Account')) . '</li>';
+									echo '<li>' . $this->Html->link(__('My Translations'), array('controller'	=>	'translations', 'action'	=>	'index',	'admin'	=>	false)) . '</li>';
 									if($this->Session->read('Auth.User.role') == 'ADMIN'):
 										?>
 										<li class="dropdown" id="#manage" class="active">
@@ -37,16 +38,16 @@
 										</li>
 										<?php
 									endif;
-									echo '<li>' . $this->Html->link(__('Logout'), array('controller' => 'users', 'action' => 'logout')) . '</li>';
+									echo '<li>' . $this->Html->link(__('Logout'), array('controller' => 'users', 'action' => 'logout', 'admin'	=>	false)) . '</li>';
 								else:
-									echo '<li>' . $this->Html->link(__('Login'), array('controller' => 'users', 'action' => 'login')) . '</li>';
+									echo '<li>' . $this->Html->link(__('Login'), array('controller' => 'users', 'action' => 'login', 'admin'	=>	false)) . '</li>';
 								endif;
 							?>
 							<li>
 								<div>
 									<?php 
 										if($this->Session->read('Auth.User.id')):
-											echo $this->Html->link(__('Add a Translation'), array('controller' => 'translations', 'action' => 'add'), array('class' => 'btn btn-primary'));
+											echo $this->Html->link(__('Add a Translation'), array('controller' => 'translations', 'action' => 'add', 'admin'	=>	false), array('class' => 'btn btn-primary'));
 										else:
 											echo $this->Html->link(__('Join'), '/join', array('class' => 'btn btn-primary'));
 										endif;

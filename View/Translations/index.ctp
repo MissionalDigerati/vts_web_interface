@@ -21,9 +21,17 @@
  * 
  */
 ?>
-<h1>Current Translations</h1>
-<div id="list-translations">
+<h1>My Translations</h1>
+<?php echo $this->Html->link(__('Add a Translation'), array('controller'	=>	'translations',	'action'	=>	'add',	'admin'	=>	false), array('class' => 'btn pull-right')); ?>
+<div id="my-translations list-translations">
+	<div class="clear"></div><br>
 	<table class="table table-striped table-bordered table-condensed">
+		<thead>
+			<tr>
+				<th>Title (Language)</th>
+				<th></th>
+			</tr>
+		</thead>
 	  <tbody>
 	    <?php foreach($translations as $translation): ?>
 				<tr>
@@ -31,6 +39,11 @@
 			    <td class="actions"><?php echo $this->Html->link(__('View'), "/translations/" . $translation['Translation']['id'] . "/clips", array('class' => 'btn'));?></td>
 			  </tr>
 			<?php endforeach; ?>
+			<?php if(empty($translations)): ?>
+				<tr>
+					<td colspan="2">No Translations</td>
+				</tr>
+			<?php endif; ?>
 	  </tbody>
 	</table>
 </div>
