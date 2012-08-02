@@ -283,7 +283,7 @@ class UsersController extends AppController {
 	/**
 	 * admin_view method
 	 *
-	 * @param string $id
+	 * @param integer $id User.id
 	 * @return void
 	 */
 	public function admin_view($id = null) {

@@ -29,7 +29,7 @@ $viewLink	=	($isAdmin === true) ? array('controller'	=>	'translations',	'action'
   <ul class="dropdown-menu">
     <li>
 				<?php 
-					echo $this->Html->link('<i class="icon-zoom-in"></i> ' . __('View & Add Clips'), $viewLink, array('escape'	=>	false)); 
+					echo $this->Html->link('<i class="icon-zoom-in"></i> ' . __('View'), $viewLink, array('escape'	=>	false)); 
 				?>
 		</li>
 		<li>

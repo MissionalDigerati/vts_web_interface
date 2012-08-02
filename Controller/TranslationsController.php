@@ -41,6 +41,21 @@ class TranslationsController extends AppController {
 	 * @access public
 	 */
 		public $name = 'Translations';
+		
+		/**
+		 * Define needed CakePHP Helpers
+		 *
+		 * @author Johnathan Pulos
+		 * @access public
+		 */
+		public $helpers = array('Time');
+
+		/**
+		 * Define pagination settings
+		 *
+		 * @var array
+		 */
+		public $paginate = array('limit' => 25);
 
 	/**
 	 * This controller uses the plugins models
@@ -216,6 +231,23 @@ class TranslationsController extends AppController {
 		public function admin_index() {
 			$this->Translation->recursive = 0;
 			$this->set('translations', $this->paginate());
+		}
+		
+		/**
+		 * admin_view method
+		 *
+		 * @param integer $id Translation.id
+		 * @return void
+		 */
+		public function admin_view($id = null) {
+			$this->Translation->id = $id;
+			if (!$this->Translation->exists()) {
+				throw new NotFoundException(__('Invalid translation'));
+			}
+			$translation = $this->Translation->read(null, $id);
+			$this->set('translation', $translation);
+			$this->set('uploadedClips', $this->Translation->getUploadedClipsArray($translation['TranslationClip']));
+			$this->set('maxClips', count($this->Translation->TranslationClip->videoClipsNeeded['compassionateFather']));
 		}
 
 }
