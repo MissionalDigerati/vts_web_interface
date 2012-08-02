@@ -22,11 +22,11 @@
  */
 ?>
 <h1>Manage Users</h1>
-<?php echo $this->Html->link(__('Add User'), array('controller'	=>	'users',	'action'	=>	'add',	'admin'	=>	true), array('class' => 'btn pull-right')); ?>
+<?php echo $this->Html->link(__('Add a User'), array('controller'	=>	'users',	'action'	=>	'add',	'admin'	=>	true), array('class' => 'btn pull-right')); ?>
 <div id="list-users manage">
 	<div class="clear"></div><br>
 	<table class="table table-striped table-bordered table-condensed">
-	  <tbody>
+		<thead>
 			<tr>
 				<th><?php echo $this->Paginator->sort('name', 'Name'); ?></th>
 				<th><?php echo $this->Paginator->sort('email', 'Email'); ?></th>
@@ -35,6 +35,8 @@
 				<th><?php echo $this->Paginator->sort('created', 'Joined On'); ?></th>
 				<th></th>
 			</tr>
+		</thead>
+		<tbody>
 	    <?php foreach($users as $user): ?>
 				<tr>
 			    <td><?php echo $user['User']['name']; ?></td>
