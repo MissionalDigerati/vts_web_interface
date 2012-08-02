@@ -36,7 +36,7 @@
 	    <?php foreach($translations as $translation): ?>
 				<tr>
 			    <td class="title"><?php echo $translation['Translation']['title']; ?> (<?php echo $translation['Translation']['language']; ?>)</td>
-			    <td class="actions"><?php echo $this->Html->link(__('View'), "/translations/" . $translation['Translation']['id'] . "/clips", array('class' => 'btn'));?></td>
+			    <td class="actions"><?php echo $this->element('../Translations/_manage_button', array('translation'	=>	$translation)); ?></td>
 			  </tr>
 			<?php endforeach; ?>
 			<?php if(empty($translations)): ?>
