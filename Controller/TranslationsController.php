@@ -172,6 +172,14 @@ class TranslationsController extends AppController {
 			}
 		}
 		
+		/**
+		 * Remove the video, so they can re edit the clips
+		 *
+		 * @param integer $id Translation.id
+		 * @return void
+		 * @access public
+		 * @author Johnathan Pulos
+		 */
 		public function remove_video($id = null) {
 			$this->Translation->id = $id;
 			if (!$this->Translation->exists()) {
