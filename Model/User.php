@@ -61,6 +61,16 @@ class User extends AppModel {
 	public $attrAccessible = array('name', 'email', 'password');
 	
 	/**
+	 * hasMany associations
+	 *
+	 * @var array
+	 */
+	public $hasMany = array(	'Translation' => array(	'className' => 'Translation',
+																										'dependent'    => true
+																									)
+													);
+	
+	/**
 	 * Define validations for model
 	 *
 	 * @var array

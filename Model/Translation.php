@@ -42,6 +42,15 @@ class Translation extends AppModel {
 																													'dependent' => true
 																											)
 															);
+	/**
+	 * belongsTo associations
+	 *
+	 * @var array
+	 */
+	public $belongsTo = array(	'User' => array(	'className' => 'User',
+																								'foreignKey' => 'user_id'
+																							)
+														);
 		
 		/**
 		 * Checks if the translation is ready for rendering.  It checks the returned ready_for_processing var from the VTS clips index, and
