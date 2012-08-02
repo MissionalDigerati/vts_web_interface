@@ -200,4 +200,22 @@ class TranslationsController extends AppController {
 			}
 		}
 
+/**
+ * ADMINISTRATION FUNCTIONS
+ *
+ * @author Johnathan Pulos
+ */
+				
+		/**
+		 * The admin index action
+		 *
+		 * @return void
+		 * @access public
+		 * @author Johnathan Pulos
+		 */
+		public function admin_index() {
+			$this->Translation->recursive = 0;
+			$this->set('translations', $this->paginate());
+		}
+
 }

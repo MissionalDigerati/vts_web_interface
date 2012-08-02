@@ -21,6 +21,7 @@
  * 
  */
 $isAdmin = (isset($isAdmin)) ? $isAdmin : false;
+$viewLink	=	($isAdmin === true) ? array('controller'	=>	'translations',	'action'	=>	'view', 'admin'	=>	true, $translation['Translation']['id']): "/translations/" . $translation['Translation']['id'] . "/clips";
 ?>
 <div class="btn-group<?php if((isset($pull_right)) && ($pull_right === true)) { echo ' pull-right';} ?>">
   <a class="btn" href="#"><i class="icon-facetime-video"></i> Manage</a>
@@ -28,7 +29,7 @@ $isAdmin = (isset($isAdmin)) ? $isAdmin : false;
   <ul class="dropdown-menu">
     <li>
 				<?php 
-					echo $this->Html->link('<i class="icon-zoom-in"></i> ' . __('View & Add Clips'), "/translations/" . $translation['Translation']['id'] . "/clips", array('escape'	=>	false)); 
+					echo $this->Html->link('<i class="icon-zoom-in"></i> ' . __('View & Add Clips'), $viewLink, array('escape'	=>	false)); 
 				?>
 		</li>
 		<li>
