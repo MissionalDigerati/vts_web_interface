@@ -62,6 +62,7 @@ class WebsiteWithPluginSchema extends CakeSchema {
 		'expires_at' => array('type' => 'datetime', 'null' => false, 'default' => NULL),
 		'master_recording_file' => array('type' => 'string', 'null' => true, 'default' => NULL, 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
 		'vts_master_recording_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
+		'vts_translation_request_id' => array('type' => 'integer', 'null' => false, 'default' => NULL),
 		'created' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
 		'modifiied' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
 		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1)),

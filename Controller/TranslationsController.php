@@ -73,6 +73,7 @@ class TranslationsController extends AppController {
 				if ($this->TranslationRequest->save(array(), false)) {
 					$translationRequest = $this->TranslationRequest->read(null, $this->TranslationRequest->id);
 					if ($this->Translation->save($this->request->data, true, $this->Translation->attrAccessible)) {
+						$this->Translation->saveField('vts_translation_request_id', $translationRequest['TranslationRequest']['id']);
 						$this->Translation->saveField('token', $translationRequest['TranslationRequest']['token']);
 						$this->Translation->saveField('expires_at', $translationRequest['TranslationRequest']['expires_at']);
 						$this->Session->setFlash(__('The translation has been created.  Now upload your audio files for each clip.'));
@@ -81,7 +82,7 @@ class TranslationsController extends AppController {
 						$this->Session->setFlash(__('Unable to save the translation.'));
 					}
 				}else {
-					throw new CakeException(__('Unable to create the translation request.'));
+					$this->Session->setFlash(__('Unable to save the translation.'));
 				}
 			}
 		}
@@ -109,6 +110,34 @@ class TranslationsController extends AppController {
 			}else {
 				$this->request->data = $this->Translation->read(null, $id);
 			}
+		}
+		
+		/**
+		 * Delete a translation
+		 *
+		 * @param integer $id	Translation.id 
+		 * @return void
+		 * @access public
+		 * @author Johnathan Pulos
+		 */
+		public function delete($id = null) {
+			if (!$this->request->is('post')) {
+				throw new MethodNotAllowedException();
+			}
+			$this->Translation->id = $id;
+			if (!$this->Translation->exists()) {
+				throw new NotFoundException(__('Invalid translation'));
+			}
+			$translation = $this->Translation->read('vts_translation_request_id', $id);
+			$this->TranslationRequest->id = $translation['Translation']['vts_translation_request_id'];
+			if ($this->TranslationRequest->delete()) {
+				if ($this->Translation->delete()) {
+					$this->Session->setFlash(__('The translation has been deleted.'));
+					$this->redirect(array('action' => 'index'));
+				}
+			}
+			$this->Session->setFlash(__('Unable to delete the translation.'));
+			$this->redirect(array('action' => 'index'));
 		}
 		
 		/**
