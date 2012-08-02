@@ -347,15 +347,38 @@ class UsersController extends AppController {
 			throw new NotFoundException(__('Invalid user'));
 		}
 		if ($this->request->is('post') || $this->request->is('put')) {
+			if(!isset($this->request->data['User']['change_password'])) {
+				/**
+				 * They do not want to change their password, so unset fields and remove validation
+				 *
+				 * @author Johnathan Pulos
+				 */
+				$this->User->unbindValidation('remove', array('password', 'confirm_password'));
+				unset($this->request->data['User']['password']);
+				unset($this->request->data['User']['confirm_password']);
+			}
+			if(!isset($this->request->data['User']['active'])) {
+				/**
+				 * Checkbox hides active if set to zero, so let's set it
+				 *
+				 * @author Johnathan Pulos
+				 */
+				$this->request->data['User']['active'] = 0;
+			}
+			$this->request->data['User']['id'] = $id;
 			if ($this->User->save($this->request->data)) {
-				$this->Session->setFlash(__('The user has been saved'));
+				$this->Session->setFlash(__('The user has been updated.'));
 				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The user could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('The user could not be updated. Please, try again.'));
 			}
 		} else {
 			$this->request->data = $this->User->read(null, $id);
 		}
+		$this->request->data['User']['password'] = '';
+		$this->request->data['User']['confirm_password'] = '';
+		$isActive = ((isset($this->request->data['User']['active'])) && ($this->request->data['User']['active'] == 1)) ? true : false;
+		$this->set('isActive', $isActive);
 	}
 
 	/**

@@ -20,6 +20,9 @@
  * @copyright Copyright 2012 Missional Digerati
  * 
  */
+	if(!isset($isActive)) {
+		$isActive = false;
+	}
 	echo $this->Form->input('name');
 	echo $this->Form->input('role', array('type'	=>	'select', 'options'	=>	array('USER'	=>	'User', 'ADMIN'	=>	'Administrator')));
 	echo $this->Form->input('email');
@@ -34,6 +37,26 @@
 					Activate User
 				</label>
 				<p class="help-block">If you do not check "Activate User",  the user will be emailed to activate their account.</p>
+			</div>
+		</div>
+	</fieldset>
+		<?php
+	elseif($method == 'EDIT'):
+		?>
+		<div class="control-group">
+			<div class="controls">
+				<label class="checkbox">
+				<input type="checkbox" name="data[User][change_password]" value="1">
+					Change Password!
+				</label>
+			</div>
+		</div>
+		<div class="control-group">
+			<div class="controls">
+				<label class="checkbox">
+				<input type="checkbox" name="data[User][active]" value="1"<?php if($isActive === true){ echo ' checked'; }?>>
+					Active User
+				</label>
 			</div>
 		</div>
 	</fieldset>
