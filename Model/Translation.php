@@ -58,27 +58,27 @@ class Translation extends AppModel {
 																								'foreignKey' => 'user_id'
 																							)
 														);
-		
-		/**
-		 * Checks if the translation is ready for rendering.  It checks the returned ready_for_processing var from the VTS clips index, and
-		 * the total number of clips uploaded.
-		 *
-		 * @param string $vtsReadyForProcessing the VTS response ready_for_processing from ClipsController Index
-		 * @param string $video the key for the film from TranslationClip->videoClipsNeeded variable
-		 * @return boolean
-		 * @access public
-		 * @author Johnathan Pulos
-		 */													
-		public function isReadyForRender($vtsReadyForProcessing, $video) {
-			$totalClipsNeeded = count($this->TranslationClip->videoClipsNeeded[$video]);
-			if(strtoupper($vtsReadyForProcessing) != 'YES') {
-				return false;
-			}
-			$totalClipsResult = $this->TranslationClip->find('count', array('conditions' => array('translation_id' => $this->id)));
-			if($totalClipsResult == $totalClipsNeeded) {
-				return true;
-			}else {
-				return false;
-			}
+	
+	/**
+	 * Checks if the translation is ready for rendering.  It checks the returned ready_for_processing var from the VTS clips index, and
+	 * the total number of clips uploaded.
+	 *
+	 * @param string $vtsReadyForProcessing the VTS response ready_for_processing from ClipsController Index
+	 * @param string $video the key for the film from TranslationClip->videoClipsNeeded variable
+	 * @return boolean
+	 * @access public
+	 * @author Johnathan Pulos
+	 */													
+	public function isReadyForRender($vtsReadyForProcessing, $video) {
+		$totalClipsNeeded = count($this->TranslationClip->videoClipsNeeded[$video]);
+		if(strtoupper($vtsReadyForProcessing) != 'YES') {
+			return false;
 		}
+		$totalClipsResult = $this->TranslationClip->find('count', array('conditions' => array('translation_id' => $this->id)));
+		if($totalClipsResult == $totalClipsNeeded) {
+			return true;
+		}else {
+			return false;
+		}
+	}
 }
