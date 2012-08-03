@@ -253,7 +253,7 @@ class TranslationsController extends AppController {
 		/**
 		 * admin_delete method
 		 *
-		 * @param string $id
+		 * @param integer $id Translation.id
 		 * @return void
 		 */
 		public function admin_delete($id = null) {

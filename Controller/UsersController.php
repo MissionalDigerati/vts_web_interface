@@ -384,7 +384,7 @@ class UsersController extends AppController {
 	/**
 	 * admin_delete method
 	 *
-	 * @param string $id
+	 * @param integer $id User.id
 	 * @return void
 	 */
 	public function admin_delete($id = null) {
