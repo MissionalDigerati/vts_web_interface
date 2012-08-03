@@ -249,5 +249,31 @@ class TranslationsController extends AppController {
 			$this->set('uploadedClips', $this->Translation->getUploadedClipsArray($translation['TranslationClip']));
 			$this->set('maxClips', count($this->Translation->TranslationClip->videoClipsNeeded['compassionateFather']));
 		}
+		
+		/**
+		 * admin_delete method
+		 *
+		 * @param string $id
+		 * @return void
+		 */
+		public function admin_delete($id = null) {
+			if (!$this->request->is('post')) {
+				throw new MethodNotAllowedException();
+			}
+			$this->Translation->id = $id;
+			if (!$this->Translation->exists()) {
+				throw new NotFoundException(__('Invalid translation'));
+			}
+			$translation = $this->Translation->read('vts_translation_request_id', $id);
+			$this->TranslationRequest->id = $translation['Translation']['vts_translation_request_id'];
+			if ($this->TranslationRequest->delete()) {
+				if ($this->Translation->delete()) {
+					$this->Session->setFlash(__('The translation has been deleted.'));
+					$this->redirect(array('action' => 'index'));
+				}
+			}
+			$this->Session->setFlash(__('Unable to delete the translation.'));
+			$this->redirect(array('action' => 'index'));
+		}
 
 }
