@@ -61,6 +61,11 @@
 			    </td>
 			  </tr>
 			<?php endforeach; ?>
+			<?php if(empty($users)): ?>
+				<tr>
+					<td colspan="6">No Users</td>
+				</tr>
+			<?php endif; ?>
 	  </tbody>
 	</table>
 	<?php echo $this->element('_pagination_links'); ?>

@@ -55,7 +55,7 @@
 			<?php endforeach; ?>
 			<?php if(empty($translations)): ?>
 				<tr>
-					<td colspan="2">No Translations</td>
+					<td colspan="3">No Translations</td>
 				</tr>
 			<?php endif; ?>
 	  </tbody>
