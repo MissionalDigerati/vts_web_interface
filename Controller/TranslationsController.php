@@ -73,7 +73,7 @@ class TranslationsController extends AppController {
 		 */
 		public function beforeFilter() {
 			parent::beforeFilter();
-			$this->Auth->allow('view');
+			$this->Auth->allow('view', 'download');
 		}
 		
 	/**
@@ -102,6 +102,16 @@ class TranslationsController extends AppController {
 			$translation = $this->Translation->read(null, $id);
 			$this->set('translation', $translation);
 			$this->set('videoUrl', $translation['Translation']['master_recording_file']);
+		}
+		
+		public function download($id = null) {
+			$this->Translation->id = $id;
+			if (!$this->Translation->exists()) {
+				throw new NotFoundException(__('Invalid translation'));
+			}
+			$translation = $this->Translation->read(null, $id);
+			$this->set('videoUrl', $translation['Translation']['master_recording_file']);
+			$this->layout = false;
 		}
 		
 		/**

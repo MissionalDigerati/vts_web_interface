@@ -20,6 +20,7 @@
  * @since         CakePHP(tm) v 0.2.9
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
+Router::connect('/translations/download/:id', array('controller' => 'translations', 'action' => 'download'), array('pass' => array('id'), 'id' => '[a-zA-Z0-9]+'));
 Router::connect('/translations/:translation_id/clips', array('controller' => 'translation_clips', 'action' => 'index'), array('pass' => array('translation_id'), 'id' => '[0-9]+'));
 Router::connect('/translations/:translation_id/clips/add', array('controller' => 'translation_clips', 'action' => 'add'), array('pass' => array('translation_id'), 'id' => '[0-9]+'));
 Router::connect('/translations/:translation_id/clips/edit', array('controller' => 'translation_clips', 'action' => 'edit'), array('pass' => array('translation_id'), 'id' => '[0-9]+'));

@@ -20,19 +20,8 @@
  * @copyright Copyright 2012 Missional Digerati
  * 
  */
+header('Content-Disposition: attachment; filename="' .VTS_URL. $videoUrl . '"');
+$fp=fopen(VTS_URL. $videoUrl,'r');
+fpassthru($fp);
+fclose($fp);
 ?>
-<div class="translation view">
-	<?php 
-		if($videoUrl):
-			echo $this->element('_quicktime_embed', array('videoLocation' => VTS_URL.$videoUrl));
-		endif; 
-	?>
-	<div class="well">
-		<?php echo $this->Html->link('<i class="icon-download-alt icon-white"></i> Download', array('controller'	=>	'translations', 'action'	=>	'download', $translation['Translation']['id']), array('target'	=> '_blank', 'class' =>	'pull-right btn btn-large btn-primary', 'escape'=> false)); ?>
-		<p><strong>Title:</strong> <?php echo $translation['Translation']['title']; ?></p>
-		<p><strong>Language:</strong> <?php echo $translation['Translation']['language']; ?></p>
-		<p><strong>Created On:</strong> <?php echo $this->Time->nice($translation['Translation']['created']); ?></p>
-		<p><strong>Uploaded By:</strong> <?php echo $translation['User']['name']; ?></p>
-		<div class="clear"></div>
-	</div>
-</div>
