@@ -64,6 +64,18 @@ class TranslationsController extends AppController {
 	 */
 		public $uses = array('Translation', 'VideoTranslatorService.TranslationRequest', 'VideoTranslatorService.MasterRecording');
 		
+		/**
+		 * Declare CakePHP's callback
+		 *
+		 * @return void
+		 * @access public
+		 * @author Johnathan Pulos
+		 */
+		public function beforeFilter() {
+			parent::beforeFilter();
+			$this->Auth->allow('view');
+		}
+		
 	/**
 	 * index method
 	 *
@@ -72,6 +84,23 @@ class TranslationsController extends AppController {
 		public function index() {
 			$id = $this->Auth->user('id');
 			$this->set('translations', $this->Translation->find('all', array('conditions'=> array('Translation.user_id'	=>	$id))));
+		}
+		
+		/**
+		 * View the Translation
+		 *
+		 * @param integer $id Translation.id
+		 * @return void
+		 * @access public
+		 * @author Johnathan Pulos
+		 */
+		public function view($id = null) {
+			$this->Translation->id = $id;
+			if (!$this->Translation->exists()) {
+				throw new NotFoundException(__('Invalid translation'));
+			}
+			$translation = $this->Translation->read(null, $id);
+			$this->set('translation', $translation);
 		}
 		
 		/**

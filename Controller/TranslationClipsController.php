@@ -84,6 +84,14 @@ class TranslationClipsController extends AppController {
 					throw new NotFoundException(__('Invalid Translation'));
 				}
 				$translation = $this->TranslationClip->Translation->read(null, $translationId);
+				if($translation['Translation']['user_id'] != $this->Auth->user('id')) {
+					/**
+					 * They do no own the translation so redirect them to the view page
+					 *
+					 * @author Johnathan Pulos
+					 */
+					$this->redirect(array('controller'	=>	'translations', 'action'	=>	'view', $translation['Translation']['id']));
+				}
 				$this->set('translation', $translation);
 				$this->set('currentClipOrderNumberAndIds', $this->TranslationClip->findClipsOrderNumberAndId($translationId));
 				$show = (isset($this->request->query['show'])) ? explode(',', $this->request->query['show']) : array();
