@@ -33,8 +33,10 @@ $viewLink	=	($isAdmin === true) ? array('controller'	=>	'translations',	'action'
 				?>
 		</li>
 		<li>
-				<?php 
-					echo $this->Html->link('<i class="icon-pencil"></i> ' . __('Edit'), array('controller'	=>	'translations', 'action'	=>	'edit',	'admin'	=>	$isAdmin, $translation['Translation']['id']), array('escape'	=>	false)); 
+				<?php
+					if($isAdmin === false):
+						echo $this->Html->link('<i class="icon-pencil"></i> ' . __('Edit'), array('controller'	=>	'translations', 'action'	=>	'edit',	'admin'	=>	$isAdmin, $translation['Translation']['id']), array('escape'	=>	false)); 
+					endif;
 				?>
 		</li>
 		<li>
