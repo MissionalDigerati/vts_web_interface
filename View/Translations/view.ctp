@@ -22,6 +22,14 @@
  */
 ?>
 <div class="translation view">
+	<?php if($videoUrl): ?>
+			<object classid="clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B" codebase="http://www.apple.com/qtactivex/qtplugin.cab" height="360" width="640" scale="tofit"> 
+				<param name="src" value="<?php echo VTS_URL . $videoUrl; ?>">
+				<param name="autoplay" value="false">
+				<param name="type" value="video/quicktime" height="360" width="640">
+				<embed src="<?php echo VTS_URL . $videoUrl; ?>" height="360" width="640" autoplay="false" scale="tofit" type="video/quicktime" pluginspage="http://www.apple.com/quicktime/download/"></embed>
+		</object>
+	<?php endif; ?>
 	<div class="well">
 		<p><strong>Title:</strong> <?php echo $translation['Translation']['title']; ?></p>
 		<p><strong>Language:</strong> <?php echo $translation['Translation']['language']; ?></p>

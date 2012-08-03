@@ -101,6 +101,7 @@ class TranslationsController extends AppController {
 			}
 			$translation = $this->Translation->read(null, $id);
 			$this->set('translation', $translation);
+			$this->set('videoUrl', $translation['Translation']['master_recording_file']);
 		}
 		
 		/**
