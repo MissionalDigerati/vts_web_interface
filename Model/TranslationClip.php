@@ -73,9 +73,8 @@ class TranslationClip extends AppModel {
 			$finfo = new finfo;
 			$fileInfo = $finfo->file($file, FILEINFO_MIME);
 			return ((preg_match("/audio/", $fileInfo)) && (preg_match("/mpeg/", $fileInfo))) ? true : false;
-		} else{
-			$info = pathinfo($file);
-			return ($info['extension'] == 'mp3') ? true : false;
+		}else {
+			return true;
 		}
 	}
 	
