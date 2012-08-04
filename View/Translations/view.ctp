@@ -24,7 +24,7 @@
 <div class="translation view">
 	<?php 
 		if($videoUrl):
-			echo $this->element('_quicktime_embed', array('videoLocation' => VTS_URL.$videoUrl));
+			echo $this->element('_quicktime_embed', array('videoLocation' => $videoUrl));
 		endif; 
 	?>
 	<div class="well">
