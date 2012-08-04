@@ -104,6 +104,14 @@ class TranslationsController extends AppController {
 			$this->set('videoUrl', $translation['Translation']['master_recording_file']);
 		}
 		
+		/**
+		 * Download the remote file
+		 *
+		 * @param integer $id Translation.id
+		 * @return void
+		 * @access public
+		 * @author Johnathan Pulos
+		 */
 		public function download($id = null) {
 			$this->Translation->id = $id;
 			if (!$this->Translation->exists()) {
@@ -288,6 +296,7 @@ class TranslationsController extends AppController {
 			$this->set('translation', $translation);
 			$this->set('uploadedClips', $this->Translation->getUploadedClipsArray($translation['TranslationClip']));
 			$this->set('maxClips', count($this->Translation->TranslationClip->videoClipsNeeded['compassionateFather']));
+			$this->set('videoUrl', $translation['Translation']['master_recording_file']);
 		}
 		
 		/**

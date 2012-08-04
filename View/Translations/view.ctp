@@ -28,7 +28,11 @@
 		endif; 
 	?>
 	<div class="well">
-		<?php echo $this->Html->link('<i class="icon-download-alt icon-white"></i> Download', array('controller'	=>	'translations', 'action'	=>	'download', $translation['Translation']['id']), array('target'	=> '_blank', 'class' =>	'pull-right btn btn-large btn-primary', 'escape'=> false)); ?>
+		<?php
+			if($videoUrl):
+				echo $this->Html->link('<i class="icon-download-alt icon-white"></i> Download', array('controller'	=>	'translations', 'action'	=>	'download', $translation['Translation']['id']), array('target'	=> '_blank', 'class' =>	'pull-right btn btn-large btn-primary', 'escape'=> false)); 
+			endif;
+		?>
 		<p><strong>Title:</strong> <?php echo $translation['Translation']['title']; ?></p>
 		<p><strong>Language:</strong> <?php echo $translation['Translation']['language']; ?></p>
 		<p><strong>Created On:</strong> <?php echo $this->Time->nice($translation['Translation']['created']); ?></p>

@@ -22,9 +22,19 @@
  */
 ?>
 <div class="translation view">
+	<?php 
+		if($videoUrl):
+			echo $this->element('_quicktime_embed', array('videoLocation' => VTS_URL.$videoUrl));
+		endif; 
+	?>
 	<?php echo $this->element('../Translations/_manage_button', array('translation'	=>	$translation, 'pull_right'	=>	true, 'isAdmin'	=> true)); ?>
 	<div class="clear"></div><br>
 	<div class="well">
+		<?php 
+			if($videoUrl):
+				echo $this->Html->link('<i class="icon-download-alt icon-white"></i> Download', array('controller'	=>	'translations', 'action'	=>	'download', 'admin'	=>	false, $translation['Translation']['id']), array('target'	=> '_blank', 'class' =>	'pull-right btn btn-large btn-primary', 'escape'=> false)); 
+			endif;
+		?>
 		<p><strong>Title:</strong> <?php echo $translation['Translation']['title']; ?></p>
 		<p><strong>Language:</strong> <?php echo $translation['Translation']['language']; ?></p>
 		<p><strong>Status:</strong> <?php 

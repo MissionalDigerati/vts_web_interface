@@ -20,7 +20,7 @@
  * @copyright Copyright 2012 Missional Digerati
  * 
  */
-header('Content-Disposition: attachment; filename="' .VTS_URL. $videoUrl . '"');
+header('Content-Disposition: attachment; filename="obs_video.mp4"');
 $fp=fopen(VTS_URL. $videoUrl,'r');
 fpassthru($fp);
 fclose($fp);
