@@ -60,7 +60,7 @@ class TranslationClip extends AppModel {
 
 	/**
 	 * Checks the mime-type of the file & verifies it is a mp3 audio file
-	 * This is very rudimentary, but works for a sample app.
+	 * It will degrade to checking the extension.
 	 *
 	 * @param string $file the location of the file to check
 	 * @return boolean
@@ -69,9 +69,14 @@ class TranslationClip extends AppModel {
 	 */
 	public function isMp3($file) {
 		$mimeTypes = array('audio/mpeg3', 'audio/x-mpeg-3');
-		$finfo = new finfo;
-		$fileInfo = $finfo->file($file, FILEINFO_MIME);
-		return ((preg_match("/audio/", $fileInfo)) && (preg_match("/mpeg/", $fileInfo))) ? true : false;
+		if(class_exists('finfo')) {
+			$finfo = new finfo;
+			$fileInfo = $finfo->file($file, FILEINFO_MIME);
+			return ((preg_match("/audio/", $fileInfo)) && (preg_match("/mpeg/", $fileInfo))) ? true : false;
+		} else{
+			$info = pathinfo($file);
+			return ($info['extension'] == 'mp3') ? true : false;
+		}
 	}
 	
 	/**
