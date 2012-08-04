@@ -38,13 +38,43 @@ class PagesController extends AppController {
  * @var string
  */
 	public $name = 'Pages';
+	
+	/**
+	 * Define pagination settings
+	 *
+	 * @var array
+	 */
+	public $paginate = array('limit' => 25, 'order' => array('Translation.modified' => 'desc', 'Translation.created' => 'desc'));
 
 /**
  * This controller does not use a model
  *
  * @var array
  */
-	public $uses = array();
+	public $uses = array('Translation');
+	
+	/* Declare CakePHP's callback
+	 *
+	 * @return void
+	 * @access public
+	 * @author Johnathan Pulos
+	 */
+	public function beforeFilter() {
+		parent::beforeFilter();
+		$this->Auth->allow('*');
+	}
+	
+	/**
+	 * The home page for the site
+	 *
+	 * @return void
+	 * @access public
+	 * @author Johnathan Pulos
+	 */
+	public function home() {
+		$this->Translation->recursive = 0;
+		$this->set('translations', $this->paginate());
+	}
 
 /**
  * Displays a view

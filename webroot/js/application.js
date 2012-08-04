@@ -42,7 +42,7 @@ $(document).ready(function() {
  * @return void
  */
 function resizeVideos() {
-	var objectWidth = $('div.translation.view').width();
+	var objectWidth = $('div.view').width();
     $('object').css({'height':(objectWidth * 0.5625)+'px', 'width': '100%'});
     $('video').css({'height':(objectWidth * 0.5625)+'px', 'width': '100%'});
     $('embed').css({'height':(objectWidth * 0.5625)+'px', 'width': '100%'});

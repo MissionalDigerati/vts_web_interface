@@ -71,6 +71,7 @@ table {
  border:solid 1px #DDD;
  background:#08C;
  color:#F9F9F9;
-  
-  
+}
+.center {
+	text-align: center !important;
 }

@@ -36,7 +36,7 @@
 		<p><strong>Title:</strong> <?php echo $translation['Translation']['title']; ?></p>
 		<p><strong>Language:</strong> <?php echo $translation['Translation']['language']; ?></p>
 		<p><strong>Created On:</strong> <?php echo $this->Time->nice($translation['Translation']['created']); ?></p>
-		<p><strong>Uploaded By:</strong> <?php echo $translation['User']['name']; ?></p>
+		<p><strong>Translated By:</strong> <?php echo $translation['User']['name']; ?></p>
 		<div class="clear"></div>
 	</div>
 </div>
