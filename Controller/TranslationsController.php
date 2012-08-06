@@ -139,13 +139,13 @@ class TranslationsController extends AppController {
 						$this->Translation->saveField('vts_translation_request_id', $translationRequest['TranslationRequest']['id']);
 						$this->Translation->saveField('token', $translationRequest['TranslationRequest']['token']);
 						$this->Translation->saveField('expires_at', $translationRequest['TranslationRequest']['expires_at']);
-						$this->Session->setFlash(__('The translation has been created.  Now upload your audio files for each clip.'));
+						$this->Session->setFlash(__('The translation has been created.  Now upload your audio files for each clip.'), '_flash_msg', array('msgType' => 'info'));
 						$this->redirect("/translations/" . $this->Translation->id . "/clips");
 					} else{
-						$this->Session->setFlash(__('Unable to save the translation.'));
+						$this->Session->setFlash(__('Unable to save the translation.'), '_flash_msg', array('msgType' => 'error'));
 					}
 				}else {
-					$this->Session->setFlash(__('Unable to save the translation.'));
+					$this->Session->setFlash(__('Unable to save the translation.'), '_flash_msg', array('msgType' => 'error'));
 				}
 			}
 		}
@@ -165,10 +165,10 @@ class TranslationsController extends AppController {
 			}
 			if ($this->request->is('post') || $this->request->is('put')) {
 				if ($this->Translation->save($this->request->data, true, $this->Translation->attrAccessible)) {
-					$this->Session->setFlash(__('The translation has been updated.'));
+					$this->Session->setFlash(__('The translation has been updated.'), '_flash_msg', array('msgType' => 'info'));
 					$this->redirect(array('action'	=>	'index'));
 				} else{
-					$this->Session->setFlash(__('Unable to update the translation.'));
+					$this->Session->setFlash(__('Unable to update the translation.'), '_flash_msg', array('msgType' => 'error'));
 				}
 			}else {
 				$this->request->data = $this->Translation->read(null, $id);
@@ -195,11 +195,11 @@ class TranslationsController extends AppController {
 			$this->TranslationRequest->id = $translation['Translation']['vts_translation_request_id'];
 			if ($this->TranslationRequest->delete()) {
 				if ($this->Translation->delete()) {
-					$this->Session->setFlash(__('The translation has been deleted.'));
+					$this->Session->setFlash(__('The translation has been deleted.'), '_flash_msg', array('msgType' => 'info'));
 					$this->redirect(array('action' => 'index'));
 				}
 			}
-			$this->Session->setFlash(__('Unable to delete the translation.'));
+			$this->Session->setFlash(__('Unable to delete the translation.'), '_flash_msg', array('msgType' => 'error'));
 			$this->redirect(array('action' => 'index'));
 		}
 		
@@ -227,10 +227,10 @@ class TranslationsController extends AppController {
 				$this->Translation->set('vts_master_recording_id', $this->MasterRecording->id);
 				$this->Translation->set('master_recording_file', VTS_URL . 'files/master_recordings/' . $finalFilename . "/" . $finalFilename . ".mp4");
 				$this->Translation->save();
-				$this->Session->setFlash(__('The translation is being rendered.  This may take a few minutes.'));
+				$this->Session->setFlash(__('The translation is being rendered.  This may take a few minutes.'), '_flash_msg', array('msgType' => 'info'));
 				$this->redirect("/translations/" . $this->Translation->id . "/clips");
 			}else {
-				$this->Session->setFlash(__('Unable to render the translation.'));
+				$this->Session->setFlash(__('Unable to render the translation.'), '_flash_msg', array('msgType' => 'error'));
 				$this->redirect("/translations/" . $this->Translation->id . "/clips");
 			}
 		}
@@ -255,10 +255,10 @@ class TranslationsController extends AppController {
 				$this->Translation->set('vts_master_recording_id', '');
 				$this->Translation->set('master_recording_file', '');
 				$this->Translation->save();
-				$this->Session->setFlash(__('The translation video has been removed.  You may now edit your clips.'));
+				$this->Session->setFlash(__('The translation video has been removed.  You may now edit your clips.'), '_flash_msg', array('msgType' => 'info'));
 				$this->redirect("/translations/" . $this->Translation->id . "/clips");
 			}else {
-				$this->Session->setFlash(__('Unable to remove the translation video. Please try again later.'));
+				$this->Session->setFlash(__('Unable to remove the translation video. Please try again later.'), '_flash_msg', array('msgType' => 'error'));
 				$this->redirect("/translations/" . $this->Translation->id . "/clips");
 			}
 		}
@@ -317,11 +317,11 @@ class TranslationsController extends AppController {
 			$this->TranslationRequest->id = $translation['Translation']['vts_translation_request_id'];
 			if ($this->TranslationRequest->delete()) {
 				if ($this->Translation->delete()) {
-					$this->Session->setFlash(__('The translation has been deleted.'));
+					$this->Session->setFlash(__('The translation has been deleted.'), '_flash_msg', array('msgType' => 'info'));
 					$this->redirect(array('action' => 'index'));
 				}
 			}
-			$this->Session->setFlash(__('Unable to delete the translation.'));
+			$this->Session->setFlash(__('Unable to delete the translation.'), '_flash_msg', array('msgType' => 'error'));
 			$this->redirect(array('action' => 'index'));
 		}
 

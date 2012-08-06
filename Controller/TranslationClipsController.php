@@ -147,7 +147,7 @@ class TranslationClipsController extends AppController {
 																																'translation_id'	=> $translationId));
 									if($this->TranslationClip->save($clipData, false)) {
 										$message = __('Clip # %s has been uploaded.');
-										$this->Session->setFlash(sprintf($message, $this->request->data['TranslationClip']['clip_order']));
+										$this->Session->setFlash(sprintf($message, $this->request->data['TranslationClip']['clip_order']), '_flash_msg', array('msgType' => 'info'));
 										$this->redirect("/translations/" . $this->TranslationClip->Translation->id . "/clips");
 									}else {
 										throw new CakeException(__('Unable to upload the clip.'));
@@ -157,11 +157,11 @@ class TranslationClipsController extends AppController {
 								}
 							}
 						}else {
-							$this->Session->setFlash(__('Only mp3 files are accepted.'));
+							$this->Session->setFlash(__('Only mp3 files are accepted.'), '_flash_msg', array('msgType' => 'error'));
 							$this->redirect("/translations/" . $translationId . "/clips");
 						}
 					} else{
-						$this->Session->setFlash(__('You must supply a valid mp3.'));
+						$this->Session->setFlash(__('You must supply a valid mp3.'), '_flash_msg', array('msgType' => 'error'));
 						$this->redirect("/translations/" . $translationId . "/clips");
 					}
 				}
@@ -201,7 +201,7 @@ class TranslationClipsController extends AppController {
 																															'translation_id'	=> $translationId));
 								if($this->TranslationClip->save($clipData, false)) {
 									$message = __('Clip # %s has been updated.');
-									$this->Session->setFlash(sprintf($message, $this->request->data['TranslationClip']['clip_order']));
+									$this->Session->setFlash(sprintf($message, $this->request->data['TranslationClip']['clip_order']), '_flash_msg', array('msgType' => 'info'));
 									$this->redirect("/translations/" . $this->TranslationClip->Translation->id . "/clips");
 								}else {
 									throw new CakeException(__('Unable to update the clip.'));
@@ -211,7 +211,7 @@ class TranslationClipsController extends AppController {
 							}
 						}
 					}else {
-						$this->Session->setFlash(__('Only mp3 files are accepted.'));
+						$this->Session->setFlash(__('Only mp3 files are accepted.'), '_flash_msg', array('msgType' => 'error'));
 						$this->redirect("/translations/" . $this->Translation->id . "/clips");
 					}
 				}

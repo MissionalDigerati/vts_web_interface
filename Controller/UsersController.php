@@ -63,10 +63,10 @@ class UsersController extends AppController {
 		if ($this->request->is('post')) {
 			$this->User->create();
 			if ($this->User->save($this->request->data, true, $this->User->attrAccessible)) {
-				$this->Session->setFlash(__('Your account has been added.  Please check the email that you provided to verify your account.'));
+				$this->Session->setFlash(__('Your account has been added.  Please check the email that you provided to verify your account.'), '_flash_msg', array('msgType' => 'info'));
 				$this->redirect('/');
 			} else {
-				$this->Session->setFlash(__('Unable to create your account. Please, try again.'));
+				$this->Session->setFlash(__('Unable to create your account. Please, try again.'), '_flash_msg', array('msgType' => 'error'));
 				$this->request->data['User']['password'] = '';
 				$this->request->data['User']['confirm_password'] = '';
 			}
@@ -85,7 +85,7 @@ class UsersController extends AppController {
 			if ($this->Auth->login()) {
 			    $this->redirect($this->Auth->redirect());
 			} else {
-			  $this->Session->setFlash(__('Invalid username or password, or your account has not been activated yet. Please try again.'));
+			  $this->Session->setFlash(__('Invalid username or password, or your account has not been activated yet. Please try again.'), '_flash_msg', array('msgType' => 'error'));
 				$this->request->data['User']['password'] = "";
 			}
     }
@@ -101,7 +101,7 @@ class UsersController extends AppController {
 	 */
 	public function activate($activation = null) {
 		if(!$activation) {
-			$this->Session->setFlash(__('Please provide an activation code.'));
+			$this->Session->setFlash(__('Please provide an activation code.'), '_flash_msg', array('msgType' => 'error'));
 			$this->redirect("/");
 		}
 		$user = $this->User->findByActivationHash($activation);
@@ -109,7 +109,7 @@ class UsersController extends AppController {
 		$this->User->saveField('active', 1);
 		$this->User->saveField('activation_hash', '');
 		$this->Auth->login($user['User']);
-		$this->Session->setFlash(__('Thank you.  Your account has been activated, and you have been logged in.'));
+		$this->Session->setFlash(__('Thank you.  Your account has been activated, and you have been logged in.'), '_flash_msg', array('msgType' => 'info'));
 		$this->redirect('/');
 	}
 	
@@ -162,10 +162,10 @@ class UsersController extends AppController {
 			}
 			$this->request->data['User']['id'] = $id;
 			if ($this->User->save($this->request->data, true, $this->User->attrAccessible)) {
-				$this->Session->setFlash(__('Your account has been updated.'));
+				$this->Session->setFlash(__('Your account has been updated.'), '_flash_msg', array('msgType' => 'info'));
 				$this->redirect('/my-account');
 			} else {
-				$this->Session->setFlash(__('Unable to update your account. Please, try again.'));
+				$this->Session->setFlash(__('Unable to update your account. Please, try again.'), '_flash_msg', array('msgType' => 'error'));
 			}
 		} else {
 			$this->request->data = $this->User->read(null, $id);
@@ -190,15 +190,15 @@ class UsersController extends AppController {
 					$activationHash = $this->User->getActivationHash();
 					if($this->User->saveField('activation_hash', $activationHash)) {
 						$this->User->sendWelcome($user['User']['name'],  $activationHash, $user['User']['email']);
-						$this->Session->setFlash(__('A new activation email has been sent.'));
+						$this->Session->setFlash(__('A new activation email has been sent.'), '_flash_msg', array('msgType' => 'info'));
 					}else{
-						$this->Session->setFlash(__('Unable to send you the activation email.'));
+						$this->Session->setFlash(__('Unable to send you the activation email.'), '_flash_msg', array('msgType' => 'error'));
 					}
 				} else{
-					$this->Session->setFlash(__('Your account has already been activated.'));
+					$this->Session->setFlash(__('Your account has already been activated.'), '_flash_msg', array('msgType' => 'error'));
 				}
 			}else {
-				$this->Session->setFlash(__('Unable to locate your account.'));
+				$this->Session->setFlash(__('Unable to locate your account.'), '_flash_msg', array('msgType' => 'error'));
 			}
 			$this->redirect(array('controller'	=>	'users', 'action'		=>	'login'));
 		}
@@ -219,12 +219,12 @@ class UsersController extends AppController {
 				$activationHash = $this->User->getActivationHash();
 				if($this->User->saveField('activation_hash', $activationHash)) {
 					$this->User->sendChangePassword($user['User']['name'],  $activationHash, $user['User']['email']);
-					$this->Session->setFlash(__('Instructions have been sent to your email.'));
+					$this->Session->setFlash(__('Instructions have been sent to your email.'), '_flash_msg', array('msgType' => 'info'));
 				}else{
-					$this->Session->setFlash(__('Unable to complete the request.'));
+					$this->Session->setFlash(__('Unable to complete the request.'), '_flash_msg', array('msgType' => 'error'));
 				}
 			}else {
-				$this->Session->setFlash(__('Unable to locate your account.'));
+				$this->Session->setFlash(__('Unable to locate your account.'), '_flash_msg', array('msgType' => 'error'));
 			}
 			$this->redirect(array('controller'	=>	'users', 'action'		=>	'login'));
 		}
@@ -240,7 +240,7 @@ class UsersController extends AppController {
 	 */
 	public function change_password($activation = null) {
 		if(!$activation) {
-			$this->Session->setFlash(__('Your access code does not exist.'));
+			$this->Session->setFlash(__('Your access code does not exist.'), '_flash_msg', array('msgType' => 'error'));
 			$this->redirect("/");
 		}
 		$user = $this->User->findByActivationHash($activation);
@@ -255,10 +255,10 @@ class UsersController extends AppController {
 			$this->request->data['User']['activation_hash'] = '';
 			if ($this->User->save($this->request->data, true, array('password', 'activation_hash'))) {
 				$this->Auth->login($user['User']);
-				$this->Session->setFlash(__('Your account has been updated, and you have been logged in.'));
+				$this->Session->setFlash(__('Your account has been updated, and you have been logged in.'), '_flash_msg', array('msgType' => 'info'));
 				$this->redirect('/');
 			} else {
-				$this->Session->setFlash(__('Unable to update your account. Please, try again.'));
+				$this->Session->setFlash(__('Unable to update your account. Please, try again.'), '_flash_msg', array('msgType' => 'error'));
 			}
 		}
 		$this->request->data['User']['password'] = "";
@@ -323,13 +323,13 @@ class UsersController extends AppController {
 			$attrAccessible = array_merge($this->User->attrAccessible, array('role','active'));
 			if ($this->User->save($this->request->data, true, $attrAccessible)) {
 				if(!isset($this->request->data['User']['active'])) {
-					$this->Session->setFlash(__('The user has been added, and an email was sent to them.'));
+					$this->Session->setFlash(__('The user has been added, and an email was sent to them.'), '_flash_msg', array('msgType' => 'info'));
 				}else {
 					$this->Session->setFlash(__('The user has been added.'));
 				}
 				$this->redirect(array('controller'	=>	'users', 'action'	=>	'index', 'admin'	=>	true));
 			} else {
-				$this->Session->setFlash(__('Unable to create the account. Please, try again.'));
+				$this->Session->setFlash(__('Unable to create the account. Please, try again.'), '_flash_msg', array('msgType' => 'error'));
 				$this->request->data['User']['password'] = '';
 				$this->request->data['User']['confirm_password'] = '';
 			}
@@ -368,10 +368,10 @@ class UsersController extends AppController {
 			}
 			$this->request->data['User']['id'] = $id;
 			if ($this->User->save($this->request->data)) {
-				$this->Session->setFlash(__('The user has been updated.'));
+				$this->Session->setFlash(__('The user has been updated.'), '_flash_msg', array('msgType' => 'info'));
 				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The user could not be updated. Please, try again.'));
+				$this->Session->setFlash(__('The user could not be updated. Please, try again.'), '_flash_msg', array('msgType' => 'error'));
 			}
 		} else {
 			$this->request->data = $this->User->read(null, $id);
@@ -397,10 +397,10 @@ class UsersController extends AppController {
 			throw new NotFoundException(__('Invalid user'));
 		}
 		if ($this->User->delete()) {
-			$this->Session->setFlash(__('The user account has been deleted.'));
+			$this->Session->setFlash(__('The user account has been deleted.'), '_flash_msg', array('msgType' => 'info'));
 			$this->redirect(array('action' => 'index'));
 		}
-		$this->Session->setFlash(__('Unable to delete the user account.'));
+		$this->Session->setFlash(__('Unable to delete the user account.'), '_flash_msg', array('msgType' => 'error'));
 		$this->redirect(array('action' => 'index'));
 	}
 }

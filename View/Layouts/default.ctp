@@ -83,15 +83,6 @@
       </div>
     </div>
     <div class="container">
-			<?php
-			$message = $this->Session->flash(); 
-			if($message): 
-			?>
-				<div class="alert alert-info">
-				  <button class="close" data-dismiss="alert">×</button>
-				  <?php echo $message; ?>
-				</div>
-			<?php endif; ?>
 			<?php echo $this->Session->flash(); ?>
 			<?php echo $this->fetch('content'); ?>
     </div> <!-- /container -->
