@@ -44,7 +44,7 @@ class PagesController extends AppController {
 	 *
 	 * @var array
 	 */
-	public $paginate = array('limit' => 25, 'order' => array('Translation.modified' => 'desc', 'Translation.created' => 'desc'));
+	public $paginate = array('limit' => 25, 'order' => array('Translation.modified' => 'desc', 'Translation.created' => 'desc'), 'conditions' => array('Translation.master_recording_file IS NOT NULL', 'Translation.master_recording_file != ""'));
 
 /**
  * This controller does not use a model
