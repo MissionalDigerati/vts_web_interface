@@ -31,7 +31,7 @@ $count = 1;
 			elseif($renderState == 'PROCESSING'):
 				echo $this->Html->link(__('Processing'), '', array('class' => 'btn pull-right btn-large btn-inverse disabled', 'title' => 'Please wait.  It is rendering.'));
 			elseif($renderState == 'COMPLETE'):
-				echo $this->Html->link(__('View Video'), $translation['Translation']['master_recording_file'], array('class' => 'btn pull-right btn-large btn-inverse', 'target' => "_blank")); 
+				echo $this->Html->link(__('View Video'), array('controller'=>	'translations', 'action'	=>	'view', $translation['Translation']['id']), array('class' => 'btn pull-right btn-large btn-inverse', 'target' => "_blank")); 
 			else:
 				echo $this->Html->link(__('Render'), '', array('class' => 'btn pull-right btn-large btn-inverse disabled', 'title' => 'Please upload all clips before rendering.')); 
 			endif;
