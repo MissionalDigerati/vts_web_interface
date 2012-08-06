@@ -293,6 +293,7 @@ class UsersController extends AppController {
 			throw new NotFoundException(__('Invalid user'));
 		}
 		$this->set('user', $this->User->read(null, $id));
+		$this->set('translations', $this->User->Translation->find('all', array('conditions'	=>	array('Translation.user_id'	=>	$id), 'order'	=>	array('Translation.modified' => 'desc', 'Translation.created' => 'desc'))));
 	}
 
 	/**

@@ -24,6 +24,7 @@
 <div class="user view account">
 	<?php echo $this->element('../Users/_manage_button', array('user'	=>	$user, 'pull_right'	=>	true)); ?>
 	<div class="clear"></div><br>
+	<h2>User Information</h2>
 	<div class="well">
 		<p><strong>Name:</strong> <?php echo $user['User']['name']; ?></p>
 		<p><strong>Email:</strong> <?php echo $user['User']['email']; ?></p>
@@ -38,4 +39,29 @@
 		<p><strong>Joined On:</strong> <?php echo $this->Time->nice($user['User']['created']); ?></p>
 		<div class="clear"></div>
 	</div>
+	
+	<h2>User Translations</h2>
+	<table class="table table-striped table-bordered table-condensed">
+		<thead>
+			<tr>
+				<th>Title</th>
+				<th>Language</th>
+				<th></th>
+			</tr>
+		</thead>
+	  <tbody>
+	    <?php foreach($translations as $translation): ?>
+				<tr>
+			    <td class="title"><?php echo $translation['Translation']['title']; ?></td>
+					<td><?php echo $translation['Translation']['language']; ?></td>
+			    <td class="actions"><?php echo $this->element('../Translations/_manage_button', array('translation'	=>	$translation, 'isAdmin'	=>	true)); ?></td>
+			  </tr>
+			<?php endforeach; ?>
+			<?php if(empty($translations)): ?>
+				<tr>
+					<td colspan="3">No Translations</td>
+				</tr>
+			<?php endif; ?>
+	  </tbody>
+	</table>
 </div>
