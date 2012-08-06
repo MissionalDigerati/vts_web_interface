@@ -26,7 +26,7 @@
 	<table class="table table-striped table-bordered table-condensed">
 		<thead>
 			<tr>
-				<th class="center">Current Translations</th>
+				<th class="center">Available Translations</th>
 			</tr>
 		</thead>
 	  <tbody>
