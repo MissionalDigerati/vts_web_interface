@@ -163,6 +163,10 @@ class TranslationsController extends AppController {
 			if (!$this->Translation->exists()) {
 				throw new NotFoundException(__('Invalid translation'));
 			}
+			$translation = $this->Translation->read(null, $id);
+			if($translation['Translation']['user_id'] != $this->Auth->user('id')) {
+				throw new NotFoundException(__('You do not have permission.'));
+			}
 			if ($this->request->is('post') || $this->request->is('put')) {
 				if ($this->Translation->save($this->request->data, true, $this->Translation->attrAccessible)) {
 					$this->Session->setFlash(__('The translation has been updated.'), '_flash_msg', array('msgType' => 'info'));
@@ -171,7 +175,7 @@ class TranslationsController extends AppController {
 					$this->Session->setFlash(__('Unable to update the translation.'), '_flash_msg', array('msgType' => 'error'));
 				}
 			}else {
-				$this->request->data = $this->Translation->read(null, $id);
+				$this->request->data = $translation;
 			}
 		}
 		
@@ -191,7 +195,10 @@ class TranslationsController extends AppController {
 			if (!$this->Translation->exists()) {
 				throw new NotFoundException(__('Invalid translation'));
 			}
-			$translation = $this->Translation->read('vts_translation_request_id', $id);
+			$translation = $this->Translation->read(null, $id);
+			if($translation['Translation']['user_id'] != $this->Auth->user('id')) {
+				throw new NotFoundException(__('You do not have permission.'));
+			}
 			$this->TranslationRequest->id = $translation['Translation']['vts_translation_request_id'];
 			if ($this->TranslationRequest->delete()) {
 				if ($this->Translation->delete()) {
@@ -217,6 +224,9 @@ class TranslationsController extends AppController {
 				throw new NotFoundException(__('Invalid Translation'));
 			}
 			$translation = $this->Translation->read(null, $this->Translation->id);
+			if($translation['Translation']['user_id'] != $this->Auth->user('id')) {
+				throw new NotFoundException(__('You do not have permission.'));
+			}
 			$finalFilename = $this->Translation->id . "_translated_video";
 			$data = array(	'translation_request_token' => $translation['Translation']['token'],
 											'title' 										=> $translation['Translation']['title'],
@@ -249,6 +259,9 @@ class TranslationsController extends AppController {
 				throw new NotFoundException(__('Invalid Translation'));
 			}
 			$translation = $this->Translation->read(null, $this->Translation->id);
+			if($translation['Translation']['user_id'] != $this->Auth->user('id')) {
+				throw new NotFoundException(__('You do not have permission.'));
+			}
 			$this->MasterRecording->id = $translation['Translation']['vts_master_recording_id'];
 		 	$this->MasterRecording->translation_request_token = $translation['Translation']['token'];
 		 	if($this->MasterRecording->delete()) {
