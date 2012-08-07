@@ -75,3 +75,6 @@ table {
 .center {
 	text-align: center !important;
 }
+.text-to-translate {
+	margin-top: 10px;
+}

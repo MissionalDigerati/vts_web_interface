@@ -39,6 +39,12 @@ Router::connect('/resend-activation', array('controller' => 'users', 'action' =>
 Router::connect('/request-password-change', array('controller' => 'users', 'action' => 'request_password_change'));
 Router::connect('/users/login', array('controller' => 'users', 'action' => 'login'));
 Router::connect('/users/logout', array('controller' => 'users', 'action' => 'logout'));
+/**
+ * Recorder Routes
+ *
+ * @author Johnathan Pulos
+ */
+Router::connect('/recorder/clip/:number', array('controller' => 'recorder', 'action' => 'clip'), array('pass' => array('number'), 'number' => '[0-9]+'));
 //Router::connect('/admin/users/delete/:id', array('controller' => 'users', 'action' => 'delete', 'admin'	=>	true), array('pass' => array('id'), 'id' => '[0-9]+'));
 /**
  * Here, we are connecting '/' (base path) to controller called 'Pages',
