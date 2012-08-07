@@ -34,7 +34,7 @@
 		<span id="stop-recording-button-wrapper" class="hidden">
 			<a href="" class="stop-recording-button btn btn-primary"><i class="icon-stop icon-white"></i> <?php echo __('Stop'); ?></a> 
 		</span>
-		<a href="" class="next-clip-button btn"><?php echo __('Next'); ?> <i class="icon-chevron-right"></i></a>
+		<?php echo $this->element('../Recorder/_save_clip_form', array('clipNumber'	=>	$clipCount['current'], 'translationId'	=>	$translation['Translation']['id'], 'videoFileUrl'	=>	$currentClip['vts_video_file'], 'translationToken'	=>	$translation['Translation']['token'])); ?>
 	</div>
 	<div id="recorder-wrapper"></div>
 </div>

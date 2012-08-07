@@ -52,7 +52,7 @@ class RecorderController extends AppController {
 	 *
 	 * @var array
 	 */
-		public $uses = array('VideoTranslatorService.Clip', 'VideoTranslatorService.MasterRecording');
+		public $uses = array('Translation', 'VideoTranslatorService.Clip', 'VideoTranslatorService.MasterRecording');
 		
 		/**
 		 * Call any necessary Components
@@ -75,18 +75,42 @@ class RecorderController extends AppController {
 		/**
 		 * Display the recorder for this clip
 		 *
+		 * @param integer $translationId the translation id to work with
 		 * @param integer $number the clip number to work with
 		 * @return void
 		 * @access public
 		 * @author Johnathan Pulos
 		 */
-		public function clip($number = null) {
+		public function clip($translationId = null, $number = null) {
+			$this->Translation->id = $translationId;
+			if (!$this->Translation->exists()) {
+				throw new NotFoundException(__('Invalid Translation'));
+			}
+			$translation = $this->Translation->read(null, $translationId);
 			if (!$number) {
 				throw new NotFoundException(__('Invalid Clip Number'));
 			}
 			$videoClips = $this->SpycYAML->toArray(ROOT . DS . APP_DIR . DS . 'Config' . DS . 'clip_settings.yml');
+			$this->set('translation', $translation);
 			$this->set('currentClip', $videoClips['clip_' . $number]);
 			$this->set('clipCount', array('current'	=>	$number, 'total'	=>	count($videoClips)));
+		}
+		
+		/**
+		 * Upload the recording
+		 *
+		 * @return void
+		 * @access public
+		 * @author Johnathan Pulos
+		 */
+		public function upload() {
+			$fileName = $this->request->query['file_name'];
+			if(!$fileName) {
+				throw new NotFoundException(__('Invalid File Name'));
+			}
+			$fp = fopen(WWW_ROOT . $fileName, "wb");
+			fwrite($fp, file_get_contents('php://input'));
+			fclose($fp);
 		}
 
 }

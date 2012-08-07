@@ -19,6 +19,11 @@
  * @copyright Copyright 2012 Missional Digerati
  * 
  */
+/**
+ * The recording form to be submitted after processing the clip
+ * @param string 
+ */
+var recordingForm = '';
 $(document).ready(function() {
 	/**
 	 * Resize the videos anytime they resize the page 
@@ -62,16 +67,20 @@ function resizeVideos() {
 function setupRecorder() {
 	var recorderWidth = $('div.recorder').width();
 	var flashLeftPosition = (recorderWidth-300)/2;
-	$('.next-clip-button').addClass('disabled');
+	var fileName = $('#TranslationClipAudioFilePath').val();
+	$('.save-button').addClass('disabled');
 	var settings = {
 		 'rec_width': '300',
 		 'rec_height': '200',
+			'rec_top': '50%',
+			'rec_left': flashLeftPosition+'px',
 	   'swf_path': '/swf/jRecorder.swf',
-	   'host': 'acceptfile.php?filename=hello.wav',
+	   'host': '/recorder/upload?file_name='+fileName,
 	   'callback_started_recording' : function(){},
 	   'callback_finished_recording' : function(){},
 	   'callback_stopped_recording': function(){},
-	   'callback_error_recording' : 'callbackJRecorderError',
+	   'callback_error_recording' : function(code){callbackJRecorderError(code);},
+	   'callback_finished_sending' : function(){callbackJRecorderFinishedSending();},
 	   'callback_activityTime': function(time){},
 	   'callback_activityLevel' : function(level){}
 	};
@@ -80,18 +89,37 @@ function setupRecorder() {
 	    $.jRecorder.record(300);
 			$('span#record-button-wrapper').addClass('hidden');
 			$('span#stop-recording-button-wrapper').removeClass('hidden');
-			$('.next-clip-button').addClass('disabled');
+			$('.save-button').addClass('disabled');
 			return false;
 	 });
 	$('.stop-recording-button').click(function(){
-			console.log('stop');
 	    $.jRecorder.stop();
 			$('span#record-button-wrapper').removeClass('hidden');
 			$('span#stop-recording-button-wrapper').addClass('hidden');
-			$('.next-clip-button').removeClass('disabled');
+			$('.save-button').removeClass('disabled');
+			return false;
+	 });
+	$('.save-button').click(function(){
+			$('.record-button').addClass('disabled');
+			var rel = $(this).attr('rel');
+			recordingForm = '#'+rel;
+	    $.jRecorder.sendData();
 			return false;
 	 });
 };
+/**
+ * JRecorder is done sending the file to the server.  Callback for JRecorder
+ * @return void
+ *  
+ */
+function callbackJRecorderFinishedSending() {
+	
+};
+/**
+ * There was an error with the recording. Callback for JRecorder
+ * @param string $code the error code
+ * @return void 
+ */
 function callbackJRecorderError(code) {
     console.log('Error, code:' + code);
 };

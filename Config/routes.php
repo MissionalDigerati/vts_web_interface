@@ -44,7 +44,8 @@ Router::connect('/users/logout', array('controller' => 'users', 'action' => 'log
  *
  * @author Johnathan Pulos
  */
-Router::connect('/recorder/clip/:number', array('controller' => 'recorder', 'action' => 'clip'), array('pass' => array('number'), 'number' => '[0-9]+'));
+Router::connect('/recorder/:translation_id/clip/:number', array('controller' => 'recorder', 'action' => 'clip'), array('pass' => array('translation_id', 'number'), 'translation_id' => '[0-9]+', 'number' => '[0-9]+'));
+Router::connect('/recorder/upload', array('controller' => 'recorder', 'action' => 'upload'), array());
 //Router::connect('/admin/users/delete/:id', array('controller' => 'users', 'action' => 'delete', 'admin'	=>	true), array('pass' => array('id'), 'id' => '[0-9]+'));
 /**
  * Here, we are connecting '/' (base path) to controller called 'Pages',
@@ -56,6 +57,7 @@ Router::connect('/recorder/clip/:number', array('controller' => 'recorder', 'act
  * ...and connect the rest of 'Pages' controller's urls.
  */
 	Router::connect('/pages/*', array('controller' => 'pages', 'action' => 'display'));
+	Router::parseExtensions('json');
 
 /**
  * Load all plugin routes.  See the CakePlugin documentation on 
