@@ -28,8 +28,13 @@
 		<?php echo $currentClip['text']; ?>
 	</div>
 	<div class="translate-controls">
-		<a href="" class="play-button btn"><i class="icon-play"></i> <?php echo __('Play'); ?></a> 
-		<a href="" class="record-button btn btn-primary"><i class="icon-bullhorn icon-white"></i> <?php echo __('Record'); ?></a> 
+		<span id="record-button-wrapper">
+			<a href="" class="record-button btn btn-primary"><i class="icon-bullhorn icon-white"></i> <?php echo __('Record'); ?></a> 
+		</span>
+		<span id="stop-recording-button-wrapper" class="hidden">
+			<a href="" class="stop-recording-button btn btn-primary"><i class="icon-stop icon-white"></i> <?php echo __('Stop'); ?></a> 
+		</span>
 		<a href="" class="next-clip-button btn"><?php echo __('Next'); ?> <i class="icon-chevron-right"></i></a>
 	</div>
+	<div id="recorder-wrapper"></div>
 </div>

@@ -78,3 +78,6 @@ table {
 .text-to-translate {
 	margin-top: 10px;
 }
+.recorder {
+	position: relative;
+}
