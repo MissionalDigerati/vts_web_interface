@@ -63,6 +63,7 @@
 				endif;
 			?>
 		</p>
+		<p><strong>Uploaded By:</strong> <?php echo $this->Html->link($translation['User']['name'], array('controller'	=>	'users', 'action'	=>	'view', 'admin'	=>	true, $translation['User']['id'])); ?></p>
 		<div class="clear"></div>
 	</div>
 </div>
