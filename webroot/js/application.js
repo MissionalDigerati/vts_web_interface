@@ -104,8 +104,37 @@ function setupRecorder() {
 			var rel = $(this).attr('rel');
 			recordingForm = '#'+rel;
 	    $.jRecorder.sendData();
+			pollServer('/recorder/has_uploaded?file_name='+fileName, {}, 'GET', 10, function() { $(recordingForm).submit(); });
 			return false;
 	 });
+};
+/**
+ * polls the server and triggers callback when the resulting data is {status: 'success'} in json
+ * @param String url the url to poll
+ * @param Object params the params to pass
+ * @param String method the method to use
+ * @param Integer interval the number of seconds to poll the server
+ * @param Function params a callback function to call
+ * @return void
+ */
+function pollServer(url, params, method, inteval, callBack) {
+	$.ajax({
+	  url: url,
+	  type: method,
+	  dataType: 'json',
+	  data: params,
+	  success: function(data) {
+			console.log(data);
+			if(data['status'] == 'success') {
+				callBack();
+			}else{
+				setTimeout(function(){pollServer(url, params, method, inteval, callBack);},inteval);
+			}
+	 },
+	  error: function(jqXHR, textStatus, errorThrown) {
+		    console.log("ERROR:"+textStatus+" "+errorThrown);
+	  }
+	});
 };
 /**
  * JRecorder is done sending the file to the server.  Callback for JRecorder
@@ -113,7 +142,6 @@ function setupRecorder() {
  *  
  */
 function callbackJRecorderFinishedSending() {
-	$(recordingForm).submit();
 };
 /**
  * There was an error with the recording. Callback for JRecorder

@@ -59,7 +59,7 @@ class RecorderController extends AppController {
 		 *
 		 * @var array
 		 */
-		public $components = array('SpycYAML');
+		public $components = array('SpycYAML', 'RequestHandler');
 
 		/**
 		 * Declare a cakePHP callback to set the video clips needed
@@ -111,6 +111,19 @@ class RecorderController extends AppController {
 			$fp = fopen(WWW_ROOT . $fileName, "wb");
 			fwrite($fp, file_get_contents('php://input'));
 			fclose($fp);
+		}
+		
+		/**
+		 * Checks if the file is uploaded, and returns a boolean
+		 *
+		 * @return void
+		 * @access public
+		 * @author Johnathan Pulos
+		 */
+		public function has_uploaded() {
+			$fileName = $this->request->query['file_name'];
+			$fileExists = (file_exists(WWW_ROOT.$fileName)) ? 'success' : 'fail';
+			$this->set('fileExists', $fileExists);
 		}
 
 }

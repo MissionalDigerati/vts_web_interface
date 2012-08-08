@@ -31,6 +31,6 @@
 	echo $this->Form->hidden('video_file_location', array('value' => $videoFileUrl));
 	echo $this->Form->hidden('translation_request_token', array('value' => $translationToken));
 	echo $this->Form->hidden('clip_order', array('value' => $clipNumber));
-	echo $this->Form->input('audio_file_path', array('type' => 'hidden', 'value'	=>	'/files/recordings/'.$translationId.'_recording_'.$clipNumber.'.wav'));
+	echo $this->Form->input('audio_file_path', array('type' => 'hidden', 'value'	=>	'files/recordings/'.$translationId.'_recording_'.$clipNumber.'.wav'));
 	echo $this->Form->end();
 ?>
