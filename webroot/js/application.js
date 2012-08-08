@@ -113,7 +113,7 @@ function setupRecorder() {
  *  
  */
 function callbackJRecorderFinishedSending() {
-	
+	$(recordingForm).submit();
 };
 /**
  * There was an error with the recording. Callback for JRecorder
