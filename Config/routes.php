@@ -26,8 +26,8 @@
  * @author Johnathan Pulos
  */
 Router::connect('/translations/:translation_id/clips', array('controller' => 'translation_clips', 'action' => 'index'), array('pass' => array('translation_id'), 'id' => '[0-9]+'));
-Router::connect('/translations/:translation_id/clip/:number/add', array('controller' => 'translation_clips', 'action' => 'add'),  array('pass' => array('translation_id', 'number'), 'translation_id' => '[0-9]+', 'number' => '[0-9]+'));
-Router::connect('/translations/:translation_id/clip/:number/edit', array('controller' => 'translation_clips', 'action' => 'edit'),  array('pass' => array('translation_id', 'number'), 'translation_id' => '[0-9]+', 'number' => '[0-9]+'));
+Router::connect('/translations/:translation_id/clip/:clip_number/add', array('controller' => 'translation_clips', 'action' => 'add'),  array('pass' => array('translation_id', 'clip_number'), 'translation_id' => '[0-9]+', 'clip_number' => '[0-9]+'));
+Router::connect('/translations/:translation_id/clip/:clip_number/edit/:id', array('controller' => 'translation_clips', 'action' => 'edit'),  array('pass' => array('translation_id', 'clip_number', 'id'), 'translation_id' => '[0-9]+', 'clip_number' => '[0-9]+', 'id' => '[0-9]+'));
 /**
  * Translation Routes
  *

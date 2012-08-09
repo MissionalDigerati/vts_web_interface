@@ -29,10 +29,12 @@
 																											'id'						=>	'uploadAudioForm'.$clipNumber));
 			if($translationClipId):
 				echo $this->Form->hidden('id', array('value' => $translationClipId));
+				echo $this->Form->hidden('vts_clip_id', array('value' => $vtsClipId));
 			endif;
 			echo $this->Form->hidden('video_file_location', array('value' => $videoFileUrl));
 			echo $this->Form->hidden('translation_request_token', array('value' => $translationToken));
 			echo $this->Form->hidden('clip_order', array('value' => $clipNumber));
+			echo $this->Form->hidden('submission_type', array('value' => 'upload'));
 			echo $this->Form->input('audio_file', array('type' => 'file', 'label' => false));
 		?>
 		<button type="submit" class="btn btn-primary">

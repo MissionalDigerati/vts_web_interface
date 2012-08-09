@@ -75,7 +75,7 @@ function setupRecorder() {
 	var settings = {
 		 'rec_width': '300',
 		 'rec_height': '200',
-			'rec_top': '50%',
+			'rec_top': '',
 			'rec_left': flashLeftPosition+'px',
 	   'swf_path': '/swf/jRecorder.swf',
 	   'host': '/recorder/upload?file_name='+fileName,
@@ -127,7 +127,6 @@ function pollServer(url, params, method, inteval, callBack) {
 	  dataType: 'json',
 	  data: params,
 	  success: function(data) {
-			console.log(data);
 			if(data['status'] == 'success') {
 				callBack();
 			}else{

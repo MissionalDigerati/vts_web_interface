@@ -28,17 +28,19 @@
 	<span id="stop-recording-button-wrapper" class="hidden">
 		<a href="" class="stop-recording-button btn btn-primary"><i class="icon-stop icon-white"></i> <?php echo __('Stop'); ?></a> 
 	</span>
-	<a href="" class="save-button btn" rel="upload_audio_form_<?php echo $clipNumber; ?>"><i class="icon-hdd"></i> <?php echo __('Save'); ?></a>
+	<a href="" class="save-button btn" rel="recordAudioForm<?php echo $clipNumber; ?>"><i class="icon-hdd"></i> <?php echo __('Save'); ?></a>
 	<?php
 		echo $this->Form->create('TranslationClip', array(	'inputDefaults' => $this->TwitterBootstrap->inputDefaults(), 
 																												'class' 				=> 'form-horizontal',
 																												'id'						=>	'recordAudioForm'.$clipNumber));
 		if($translationClipId):
 			echo $this->Form->hidden('id', array('value' => $translationClipId));
+			echo $this->Form->hidden('vts_clip_id', array('value' => $vtsClipId));
 		endif;
 		echo $this->Form->hidden('video_file_location', array('value' => $videoFileUrl));
 		echo $this->Form->hidden('translation_request_token', array('value' => $translationToken));
 		echo $this->Form->hidden('clip_order', array('value' => $clipNumber));
+		echo $this->Form->hidden('submission_type', array('value' => 'recorded'));
 		echo $this->Form->input('audio_file_path', array('type' => 'hidden', 'value'	=>	'files/recordings/'.$translationId.'_recording_'.$clipNumber.'.wav'));
 		echo $this->Form->end();
 	?>

@@ -24,8 +24,8 @@ $formSettings = array(	'clipNumber'				=>	$clipCount['current'],
 												'translationId'			=>	$translation['Translation']['id'], 
 												'videoFileUrl'			=>	$currentClip['vts_video_file'], 
 												'translationToken'	=>	$translation['Translation']['token'],
-												'translationClipId' => '',
-												'vtsClipId'					=>	''
+												'translationClipId' => $translationClip['TranslationClip']['id'],
+												'vtsClipId'					=>	$translationClip['TranslationClip']['vts_clip_id']
 										);
 ?>
 <div class="recorder center">

@@ -24,7 +24,15 @@ $heading = __("%s Clip %u of %u");
 $heading = sprintf($heading, ucwords($this->action), $clipCount['current'], $clipCount['total']);
 ?>
 <h1><?php echo $heading; ?></h1>
-<?php echo $this->Html->image($currentClip['local_image_file']); ?>
+<div class="view">
+	<?php 
+		if(($translationClip['TranslationClip']['vts_file_path'] != '') && ($translationClip['TranslationClip']['vts_file_path'] != null)):
+			echo $this->element('_quicktime_embed', array('videoLocation' => VTS_URL.$translationClip['TranslationClip']['vts_file_path']));
+		else:
+			echo $this->Html->image($currentClip['local_image_file']);
+		endif;
+	?>
+</div>
 <div class="well text-to-translate">
 	<?php echo $currentClip['text']; ?>
 </div>

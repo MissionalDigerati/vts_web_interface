@@ -112,6 +112,7 @@ class TranslationClip extends AppModel {
 																										'clip_order' 			=> $data['TranslationClip']['clip_order'],
 																										'translation_id'	=> $this->Translation->id,
 																										'vts_status'			=>	'PENDING',
+																										'vts_file_path'		=>	'',
 																										'local_file_path'	=>	$localFilePath,
 																										'mime_type'				=>	$data['TranslationClip']['mime_type']
 																									)
