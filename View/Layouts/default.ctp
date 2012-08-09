@@ -89,7 +89,7 @@
 		<script type="text/javascript" charset="utf-8" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 		<?php
 			echo $this->Html->script(array('bootstrap.min', 'application'));
-			if($this->name == 'Recorder') {
+			if($this->name == 'TranslationClips') {
 				echo $this->Html->script('jRecorder');
 			}
 		?>

@@ -146,7 +146,10 @@ class TranslationClipsController extends AppController {
 		 *
 		 * @return void
 		 */
-			public function add($translationId = null) {
+			public function add($translationId = null, $clipNumber = null) {
+				if (!$clipNumber) {
+					throw new NotFoundException(__('Invalid Clip Number'));
+				}
 				$saveData = false;
 				$redirectTo = "/translations/" . $translationId . "/clips";
 				$localFilePath = "";
@@ -194,6 +197,9 @@ class TranslationClipsController extends AppController {
 						}
 					}
 				}
+				$videoClips = $this->SpycYAML->toArray(ROOT . DS . APP_DIR . DS . 'Config' . DS . 'clip_settings.yml');
+				$this->set('currentClip', $videoClips['clip_' . $clipNumber]);
+				$this->set('clipCount', array('current'	=>	$clipNumber, 'total'	=>	count($videoClips)));
 			}
 			
 		/**

@@ -1,29 +1,39 @@
 <?php
 /**
- * Routes configuration
+ * This file is part of Video Translator Service Website Example.
+ * 
+ * Video Translator Service Website Example is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * Video Translator Service Website Example is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see 
+ * <http://www.gnu.org/licenses/>.
  *
- * In this file, you set up routes to your controllers and their actions.
- * Routes are very important mechanism that allows you to freely connect
- * different urls to chosen controllers and their actions (functions).
+ * @author Johnathan Pulos <johnathan@missionaldigerati.org>
+ * @copyright Copyright 2012 Missional Digerati
+ * 
+ */
+/**
+ * TranslationClip Routes
  *
- * PHP 5
+ * @author Johnathan Pulos
+ */
+Router::connect('/translations/:translation_id/clips', array('controller' => 'translation_clips', 'action' => 'index'), array('pass' => array('translation_id'), 'id' => '[0-9]+'));
+Router::connect('/translations/:translation_id/clip/:number/add', array('controller' => 'translation_clips', 'action' => 'add'),  array('pass' => array('translation_id', 'number'), 'translation_id' => '[0-9]+', 'number' => '[0-9]+'));
+Router::connect('/translations/:translation_id/clip/:number/edit', array('controller' => 'translation_clips', 'action' => 'edit'),  array('pass' => array('translation_id', 'number'), 'translation_id' => '[0-9]+', 'number' => '[0-9]+'));
+/**
+ * Translation Routes
  *
- * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
- *
- * Licensed under The MIT License
- * Redistributions of files must retain the above copyright notice.
- *
- * @copyright     Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
- * @link          http://cakephp.org CakePHP(tm) Project
- * @package       app.Config
- * @since         CakePHP(tm) v 0.2.9
- * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
+ * @author Johnathan Pulos
  */
 Router::connect('/translations/download/:id', array('controller' => 'translations', 'action' => 'download'), array('pass' => array('id'), 'id' => '[a-zA-Z0-9]+'));
-Router::connect('/translations/:translation_id/clips', array('controller' => 'translation_clips', 'action' => 'index'), array('pass' => array('translation_id'), 'id' => '[0-9]+'));
-Router::connect('/translations/:translation_id/clips/add', array('controller' => 'translation_clips', 'action' => 'add'), array('pass' => array('translation_id'), 'id' => '[0-9]+'));
-Router::connect('/translations/:translation_id/clips/edit', array('controller' => 'translation_clips', 'action' => 'edit'), array('pass' => array('translation_id'), 'id' => '[0-9]+'));
 Router::mapResources('translations');
 /**
  * User Routes
@@ -44,31 +54,13 @@ Router::connect('/users/logout', array('controller' => 'users', 'action' => 'log
  *
  * @author Johnathan Pulos
  */
-Router::connect('/recorder/:translation_id/clip/:number', array('controller' => 'recorder', 'action' => 'clip'), array('pass' => array('translation_id', 'number'), 'translation_id' => '[0-9]+', 'number' => '[0-9]+'));
 Router::connect('/recorder/upload', array('controller' => 'recorder', 'action' => 'upload'), array());
 Router::connect('/recorder/has_uploaded', array('controller' => 'recorder', 'action' => 'has_uploaded'), array());
-//Router::connect('/admin/users/delete/:id', array('controller' => 'users', 'action' => 'delete', 'admin'	=>	true), array('pass' => array('id'), 'id' => '[0-9]+'));
-/**
- * Here, we are connecting '/' (base path) to controller called 'Pages',
- * its action called 'display', and we pass a param to select the view file
- * to use (in this case, /app/View/Pages/home.ctp)...
- */
-	Router::connect('/', array('controller' => 'pages', 'action' => 'home'));
-/**
- * ...and connect the rest of 'Pages' controller's urls.
- */
-	Router::connect('/pages/*', array('controller' => 'pages', 'action' => 'display'));
 
-	Router::parseExtensions('json');
+Router::connect('/', array('controller' => 'pages', 'action' => 'home'));
+Router::connect('/pages/*', array('controller' => 'pages', 'action' => 'display'));
+Router::parseExtensions('json');
 
-/**
- * Load all plugin routes.  See the CakePlugin documentation on 
- * how to customize the loading of plugin routes.
- */
-	CakePlugin::routes();
+CakePlugin::routes();
 
-/**
- * Load the CakePHP default routes. Remove this if you do not want to use
- * the built-in default routes.
- */
-	require CAKE . 'Config' . DS . 'routes.php';
+require CAKE . 'Config' . DS . 'routes.php';
