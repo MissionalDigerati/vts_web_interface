@@ -28,5 +28,18 @@ $recorderSettings = array(	'clipNumber'	=>	$clipCount['current'],
 ?>
 <div class="recorder center">
 	<?php echo $this->element('../TranslationClips/_details'); ?>
-	<?php echo $this->element('../TranslationClips/_record', $recorderSettings); ?>
+	<div class="tabbable"> <!-- Only required for left/right tabs -->
+	  <ul class="nav nav-tabs">
+	    <li class="active"><a href="#tab1" data-toggle="tab">Upload Audio</a></li>
+	    <li><a href="#tab2" data-toggle="tab">Record in Browser</a></li>
+	  </ul>
+	  <div class="tab-content">
+	    <div class="tab-pane active" id="tab1">
+	      <p>I'm in Section 1.</p>
+	    </div>
+	    <div class="tab-pane" id="tab2">
+	      <?php echo $this->element('../TranslationClips/_record', $recorderSettings); ?>
+	    </div>
+	  </div>
+	</div>
 </div>

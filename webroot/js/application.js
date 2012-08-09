@@ -65,6 +65,9 @@ function resizeVideos() {
  * @return void 
  */
 function setupRecorder() {
+	if(!swfobject.hasFlashPlayerVersion("1")) {
+	    $('div.recorder-controls').html('Please install Adobe Flash to use this feature.  You can download it at <a href="http://get.adobe.com/flashplayer/" target="_blank">Adobe\'s website</a>.  Then refresh this page.')
+	}
 	var recorderWidth = $('div.recorder').width();
 	var flashLeftPosition = (recorderWidth-300)/2;
 	var fileName = $('#TranslationClipAudioFilePath').val();

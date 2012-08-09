@@ -90,7 +90,7 @@
 		<?php
 			echo $this->Html->script(array('bootstrap.min', 'application'));
 			if($this->name == 'TranslationClips') {
-				echo $this->Html->script('jRecorder');
+				echo $this->Html->script(array('jRecorder', 'swfobject'));
 			}
 		?>
   </body>
