@@ -202,46 +202,32 @@ class TranslationClipsController extends AppController {
 		 * @return void
 		 */
 			public function edit($translationId = null) {
-				$this->TranslationClip->Translation->id = $translationId;
-				if (!$this->TranslationClip->Translation->exists()) {
-					throw new NotFoundException(__('Invalid Translation'));
-				}
-				$translation = $this->TranslationClip->Translation->read(null, $translationId);
 				if(!empty($this->request->data)) {
 					$translationClip = $this->TranslationClip->read(null, $this->request->data['TranslationClip']['id']);
 					if($this->TranslationClip->isMp3($this->request->data['TranslationClip']['audio_file']['tmp_name'])) {
 						$this->Uploader = new Uploader(array('tempDir' => TMP));
 						if ($data = $this->Uploader->upload('audio_file')) {
 							/**
-							 * Set the path to the uploaded file to audio_file
-							 *
-							 * @author Johnathan Pulos
-							 */
-							$this->request->data['TranslationClip']['audio_file'] = WWW_ROOT.$data['path'];
-							/**
 							 * Since we are updating, we need to pas an id to the vts api
 							 *
 							 * @author Johnathan Pulos
 							 */
 							$this->request->data['TranslationClip']['vts_clip_id'] = $translationClip['TranslationClip']['vts_clip_id'];
-							if ($this->Clip->save($this->request->data['TranslationClip'], false)) {
-								$clipData = array('TranslationClip' => array(	'vts_clip_id' => $this->Clip->id, 
-																															'clip_order' => $this->request->data['TranslationClip']['clip_order'],
-																															'translation_id'	=> $translationId));
-								if($this->TranslationClip->save($clipData, false)) {
-									$message = __('Clip # %s has been updated.');
-									$this->Session->setFlash(sprintf($message, $this->request->data['TranslationClip']['clip_order']), '_flash_msg', array('msgType' => 'info'));
-									$this->redirect("/translations/" . $this->TranslationClip->Translation->id . "/clips");
-								}else {
-									throw new CakeException(__('Unable to update the clip.'));
-								}
+							$this->request->data['TranslationClip']['mime_type'] = $this->Uploader->mimeType(WWW_ROOT.$data['path']);
+							if($this->TranslationClip->saveClipIncludingVts($this->request->data, $data['path'])) {
+								$message = __('Clip # %s has been uploaded.');
+								$this->Session->setFlash(sprintf($message, $this->request->data['TranslationClip']['clip_order']), '_flash_msg', array('msgType' => 'info'));
+								$this->redirect("/translations/" . $translationId . "/clips");
 							}else {
-								throw new CakeException(__('Unable to update the clip.'));
+								throw new CakeException(__('Unable to upload the clip.'));
 							}
+						}else {
+							$this->Session->setFlash(__('Only mp3 files are accepted.'), '_flash_msg', array('msgType' => 'error'));
+							$this->redirect("/translations/" . $translationId . "/clips");
 						}
 					}else {
 						$this->Session->setFlash(__('Only mp3 files are accepted.'), '_flash_msg', array('msgType' => 'error'));
-						$this->redirect("/translations/" . $this->Translation->id . "/clips");
+						$this->redirect("/translations/" . $translationId . "/clips");
 					}
 				}
 			}
