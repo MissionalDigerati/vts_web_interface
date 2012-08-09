@@ -92,6 +92,14 @@ class TranslationClipsController extends AppController {
 			$this->currentTranslation = $this->TranslationClip->Translation->read(null);
 			$this->set('translation', $this->currentTranslation);
 			/**
+			 * Block users who do not have access to it
+			 *
+			 * @author Johnathan Pulos
+			 */
+			if($this->currentTranslation['Translation']['user_id'] != $this->Auth->user('id')) {
+				throw new NotFoundException(__('You do not have permission.'));
+			}
+			/**
 			 * Get an array of all the clips needed
 			 *
 			 * @author Johnathan Pulos
@@ -107,14 +115,6 @@ class TranslationClipsController extends AppController {
 			public function index($translationId = null) {
 				$masterRecording = array();
 				$renderState = 'PENDING';
-				if($this->currentTranslation['Translation']['user_id'] != $this->Auth->user('id')) {
-					/**
-					 * They do no own the translation so redirect them to the view page
-					 *
-					 * @author Johnathan Pulos
-					 */
-					$this->redirect(array('controller'	=>	'translations', 'action'	=>	'view', $translationId));
-				}
 				if(!empty($this->currentTranslation['Translation']['vts_master_recording_id'])) {
 					/**
 					 * We need to see if the master recording is done
