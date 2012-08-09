@@ -50,9 +50,26 @@ class TranslationClipsController extends AppController {
 	/**
 	 * This controller uses the plugins models
 	 *
-	 * @var array
+	 * @var array	
+	 * @access public
 	 */
 		public $uses = array('TranslationClip', 'VideoTranslatorService.Clip', 'VideoTranslatorService.MasterRecording');
+		
+		/**
+		 * Call any necessary Components
+		 *
+		 * @var array
+		 * @access public
+		 */
+		public $components = array('SpycYAML');
+		
+		/**
+		 * The current translation
+		 *
+		 * @var array
+		 * @access public
+		 */
+		public $currentTranslation = array();
 
 		/**
 		 * Declare a cakePHP callback to set the video clips needed
@@ -63,6 +80,17 @@ class TranslationClipsController extends AppController {
 		 */
 		public function beforeFilter() {	
 			parent::beforeFilter();
+			/**
+			 * Setup the current translation
+			 *
+			 * @author Johnathan Pulos
+			 */
+			$this->TranslationClip->Translation->id = $this->request->translation_id;
+			if (!$this->TranslationClip->Translation->exists()) {
+				throw new NotFoundException(__('Invalid Translation'));
+			}
+			$this->currentTranslation = $this->TranslationClip->Translation->read(null);
+			$this->set('translation', $this->currentTranslation);
 			/**
 			 * Get an array of all the clips needed
 			 *
@@ -79,32 +107,23 @@ class TranslationClipsController extends AppController {
 			public function index($translationId = null) {
 				$masterRecording = array();
 				$renderState = 'PENDING';
-				$this->TranslationClip->Translation->id = $translationId;
-				if (!$this->TranslationClip->Translation->exists()) {
-					throw new NotFoundException(__('Invalid Translation'));
-				}
-				$translation = $this->TranslationClip->Translation->read(null, $translationId);
-				if($translation['Translation']['user_id'] != $this->Auth->user('id')) {
+				if($this->currentTranslation['Translation']['user_id'] != $this->Auth->user('id')) {
 					/**
 					 * They do no own the translation so redirect them to the view page
 					 *
 					 * @author Johnathan Pulos
 					 */
-					$this->redirect(array('controller'	=>	'translations', 'action'	=>	'view', $translation['Translation']['id']));
+					$this->redirect(array('controller'	=>	'translations', 'action'	=>	'view', $translationId));
 				}
-				$this->set('translation', $translation);
-				$this->set('currentClipOrderNumberAndIds', $this->TranslationClip->findClipsOrderNumberAndId($translationId));
-				$show = (isset($this->request->query['show'])) ? explode(',', $this->request->query['show']) : array();
-				$this->set('show', $show);
-				if(!empty($translation['Translation']['vts_master_recording_id'])) {
+				if(!empty($this->currentTranslation['Translation']['vts_master_recording_id'])) {
 					/**
 					 * We need to see if the master recording is done
 					 *
 					 * @author Johnathan Pulos
 					 */
 					$renderState = 'PROCESSING';
-					$conditions = array('conditions' => array(	'id' => $translation['Translation']['vts_master_recording_id'],
-																											'translation_request_token'	=>	$translation['Translation']['token']
+					$conditions = array('conditions' => array(	'id' 												=> $this->currentTranslation['Translation']['vts_master_recording_id'],
+																											'translation_request_token'	=>	$this->currentTranslation['Translation']['token']
 														));
 					if($masterRecording = $this->MasterRecording->find('first', $conditions)) {
 						if($masterRecording['MasterRecording']['status'] == 'COMPLETE') {
@@ -112,9 +131,12 @@ class TranslationClipsController extends AppController {
 						}
 					}
 				} else{
-					$allClips = $this->Clip->find('all', array('conditions'	=>	array('translation_request_token' => $translation['Translation']['token'])));
+					$allClips = $this->Clip->find('all', array('conditions'	=>	array('translation_request_token' => $this->currentTranslation['Translation']['token'])));
 					$renderState = ($this->TranslationClip->Translation->isReadyForRender($allClips['Translation']['ready_for_processing'], 'compassionateFather')) ? 'READY' : 'PENDING';
 				}
+				$this->set('currentClipOrderNumberAndIds', $this->TranslationClip->findClipsOrderNumberAndId());
+				$show = (isset($this->request->query['show'])) ? explode(',', $this->request->query['show']) : array();
+				$this->set('show', $show);
 				$this->set('masterRecording', $masterRecording);
 				$this->set('renderState', $renderState);
 			}

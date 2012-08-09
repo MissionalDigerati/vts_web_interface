@@ -82,14 +82,13 @@ class TranslationClip extends AppModel {
 	/**
 	 * Find all clips provided by the user, and return the order numbers of each clip
 	 *
-	 * @param integer $translationId Translation.id
 	 * @return array
 	 * @access public
 	 * @author Johnathan Pulos
 	 */
-	public function findClipsOrderNumberAndId($translationId) {
+	public function findClipsOrderNumberAndId() {
 		$orderNumbers = array();
-		$clips = $this->find('all', array('conditions'=> 'TranslationClip.translation_id = ' . $translationId));
+		$clips = $this->find('all', array('conditions'=> 'TranslationClip.translation_id = ' . $this->Translation->id));
 		foreach ($clips as $clip) {
 			$orderNumbers[$clip['TranslationClip']['clip_order']] = $clip['TranslationClip']['id'];
 		}
