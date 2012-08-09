@@ -151,7 +151,6 @@ class TranslationClipsController extends AppController {
 					throw new NotFoundException(__('Invalid Clip Number'));
 				}
 				$saveData = false;
-				$redirectTo = "/translations/" . $translationId . "/clips";
 				$localFilePath = "";
 				if(!empty($this->request->data)) {
 					$this->Uploader = new Uploader(array('tempDir' => TMP));
@@ -180,18 +179,16 @@ class TranslationClipsController extends AppController {
 						 */
 						$localFilePath = $this->request->data['TranslationClip']['audio_file_path'];
 						$saveData = true;
-						$nextClip = $this->request->data['TranslationClip']['clip_order']+1;
-						$redirectTo = "/recorder/" . $translationId . "/clip/" . $nextClip;
 					}else {
 						$this->Session->setFlash(__('You must supply a valid mp3.'), '_flash_msg', array('msgType' => 'error'));
-						$this->redirect($redirectTo);
+						$this->redirect("/translations/" . $translationId . "/clip/".$clipNumber."/edit");
 					}
 					if($saveData === true) {
 						$this->request->data['TranslationClip']['mime_type'] = $this->Uploader->mimeType(WWW_ROOT.$localFilePath);
 						if($this->TranslationClip->saveClipIncludingVts($this->request->data, $localFilePath)) {
 							$message = __('Clip # %s has been uploaded.');
 							$this->Session->setFlash(sprintf($message, $this->request->data['TranslationClip']['clip_order']), '_flash_msg', array('msgType' => 'info'));
-							$this->redirect($redirectTo);
+							$this->redirect("/translations/" . $translationId . "/clip/".$clipNumber."/edit");
 						}else {
 							throw new CakeException(__('Unable to upload the clip.'));
 						}

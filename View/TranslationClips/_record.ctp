@@ -32,9 +32,10 @@
 	<?php
 		echo $this->Form->create('TranslationClip', array(	'inputDefaults' => $this->TwitterBootstrap->inputDefaults(), 
 																												'class' 				=> 'form-horizontal',
-																												'id'						=>	'upload_audio_form_'.$clipNumber,
-																												'url'						=>	'/translations/'.$translationId.'/clips/add'));
-
+																												'id'						=>	'recordAudioForm'.$clipNumber));
+		if($translationClipId):
+			echo $this->Form->hidden('id', array('value' => $translationClipId));
+		endif;
 		echo $this->Form->hidden('video_file_location', array('value' => $videoFileUrl));
 		echo $this->Form->hidden('translation_request_token', array('value' => $translationToken));
 		echo $this->Form->hidden('clip_order', array('value' => $clipNumber));

@@ -20,11 +20,12 @@
  * @copyright Copyright 2012 Missional Digerati
  * 
  */
-$recorderSettings = array(	'clipNumber'	=>	$clipCount['current'], 
-														'translationId'	=>	$translation['Translation']['id'], 
-														'videoFileUrl'	=>	$currentClip['vts_video_file'], 
-														'translationToken'	=>	$translation['Translation']['token']
-													);
+$formSettings = array(	'clipNumber'	=>	$clipCount['current'], 
+												'translationId'	=>	$translation['Translation']['id'], 
+												'videoFileUrl'	=>	$currentClip['vts_video_file'], 
+												'translationToken'	=>	$translation['Translation']['token'],
+												'translationClipId' => ''
+										);
 ?>
 <div class="recorder center">
 	<?php echo $this->element('../TranslationClips/_details'); ?>
@@ -35,10 +36,10 @@ $recorderSettings = array(	'clipNumber'	=>	$clipCount['current'],
 	  </ul>
 	  <div class="tab-content">
 	    <div class="tab-pane active" id="tab1">
-	      <p>I'm in Section 1.</p>
+	      <?php echo $this->element('../TranslationClips/_upload', $formSettings); ?>
 	    </div>
 	    <div class="tab-pane" id="tab2">
-	      <?php echo $this->element('../TranslationClips/_record', $recorderSettings); ?>
+	      <?php echo $this->element('../TranslationClips/_record', $formSettings); ?>
 	    </div>
 	  </div>
 	</div>
