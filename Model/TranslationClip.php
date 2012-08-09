@@ -21,6 +21,7 @@
  * 
  */
 App::uses('AppModel', 'Model');
+App::import('Model', 'VideoTranslatorService.Clip');
 /**
  * TranslationClip Model
  *
@@ -93,5 +94,33 @@ class TranslationClip extends AppModel {
 			$orderNumbers[$clip['TranslationClip']['clip_order']] = $clip['TranslationClip']['id'];
 		}
 		return $orderNumbers;
+	}
+	
+	/**
+	 * Saves the clip to the VTS API, and to the Translation Clip model
+	 *
+	 * @param array $data form data passed from $this->request->data 
+	 * @param integer $translationId The Translation.id
+	 * @param string $localFilePath the path to the local file
+	 * @return boolean
+	 * @access public
+	 * @author Johnathan Pulos
+	 */
+	public function saveClipIncludingVts($data, $translationId, $localFilePath) {
+		$Clip = new Clip();
+		$data['TranslationClip']['audio_file'] = WWW_ROOT.$localFilePath;
+		if($Clip->save($data['TranslationClip'], false)) {
+			$clipData = array('TranslationClip' => array(	'vts_clip_id' 		=> $Clip->id, 
+																										'clip_order' 			=> $data['TranslationClip']['clip_order'],
+																										'translation_id'	=> $translationId,
+																										'vts_status'			=>	'PENDING',
+																										'local_file_path'	=>	$localFilePath,
+																										'mime_type'				=>	$data['TranslationClip']['mime_type']
+																									)
+												);
+			return $this->save($clipData);
+		}else {
+			return false;
+		}
 	}
 }
