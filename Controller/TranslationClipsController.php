@@ -150,11 +150,6 @@ class TranslationClipsController extends AppController {
 				$saveData = false;
 				$redirectTo = "/translations/" . $translationId . "/clips";
 				$localFilePath = "";
-				$this->TranslationClip->Translation->id = $translationId;
-				if (!$this->TranslationClip->Translation->exists()) {
-					throw new NotFoundException(__('Invalid Translation'));
-				}
-				$translation = $this->TranslationClip->Translation->read(null, $translationId);
 				if(!empty($this->request->data)) {
 					$this->Uploader = new Uploader(array('tempDir' => TMP));
 					if((isset($this->request->data['TranslationClip']['audio_file'])) && ($this->request->data['TranslationClip']['audio_file']['tmp_name'] != '')) {
@@ -183,14 +178,14 @@ class TranslationClipsController extends AppController {
 						$localFilePath = $this->request->data['TranslationClip']['audio_file_path'];
 						$saveData = true;
 						$nextClip = $this->request->data['TranslationClip']['clip_order']+1;
-						$redirectTo = "/recorder/" . $this->TranslationClip->Translation->id . "/clip/" . $nextClip;
+						$redirectTo = "/recorder/" . $translationId . "/clip/" . $nextClip;
 					}else {
 						$this->Session->setFlash(__('You must supply a valid mp3.'), '_flash_msg', array('msgType' => 'error'));
 						$this->redirect($redirectTo);
 					}
 					if($saveData === true) {
 						$this->request->data['TranslationClip']['mime_type'] = $this->Uploader->mimeType(WWW_ROOT.$localFilePath);
-						if($this->TranslationClip->saveClipIncludingVts($this->request->data, $translationId, $localFilePath)) {
+						if($this->TranslationClip->saveClipIncludingVts($this->request->data, $localFilePath)) {
 							$message = __('Clip # %s has been uploaded.');
 							$this->Session->setFlash(sprintf($message, $this->request->data['TranslationClip']['clip_order']), '_flash_msg', array('msgType' => 'info'));
 							$this->redirect($redirectTo);

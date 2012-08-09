@@ -98,20 +98,19 @@ class TranslationClip extends AppModel {
 	/**
 	 * Saves the clip to the VTS API, and to the Translation Clip model
 	 *
-	 * @param array $data form data passed from $this->request->data 
-	 * @param integer $translationId The Translation.id
+	 * @param array $data form data passed from $this->request->data
 	 * @param string $localFilePath the path to the local file
 	 * @return boolean
 	 * @access public
 	 * @author Johnathan Pulos
 	 */
-	public function saveClipIncludingVts($data, $translationId, $localFilePath) {
+	public function saveClipIncludingVts($data, $localFilePath) {
 		$Clip = new Clip();
 		$data['TranslationClip']['audio_file'] = WWW_ROOT.$localFilePath;
 		if($Clip->save($data['TranslationClip'], false)) {
 			$clipData = array('TranslationClip' => array(	'vts_clip_id' 		=> $Clip->id, 
 																										'clip_order' 			=> $data['TranslationClip']['clip_order'],
-																										'translation_id'	=> $translationId,
+																										'translation_id'	=> $this->Translation->id,
 																										'vts_status'			=>	'PENDING',
 																										'local_file_path'	=>	$localFilePath,
 																										'mime_type'				=>	$data['TranslationClip']['mime_type']
