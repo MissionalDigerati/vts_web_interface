@@ -20,8 +20,10 @@
  * @copyright Copyright 2012 Missional Digerati
  * 
  */
+$heading = __("%s Clip %u of %u");
+$heading = sprintf($heading, ucwords($this->action), $clipCount['current'], $clipCount['total']);
 ?>
-<h1>Clip <?php echo $clipCount['current']; ?> of <?php echo $clipCount['total']; ?></h1>
+<h1><?php echo $heading; ?></h1>
 <?php echo $this->Html->image($currentClip['local_image_file']); ?>
 <div class="well text-to-translate">
 	<?php echo $currentClip['text']; ?>
