@@ -150,7 +150,6 @@ class TranslationClipsController extends AppController {
 				if (!$clipNumber) {
 					throw new NotFoundException(__('Invalid Clip Number'));
 				}
-				$saveData = false;
 				$localFilePath = "";
 				if(!empty($this->request->data)) {
 					$this->Uploader = new Uploader(array('tempDir' => TMP));
@@ -167,7 +166,6 @@ class TranslationClipsController extends AppController {
 							 * @author Johnathan Pulos
 							 */
 							$localFilePath = $data['path'];
-							$saveData = true;
 						}else {
 							throw new CakeException(__('Unable to upload the clip.'));
 						}
@@ -178,20 +176,17 @@ class TranslationClipsController extends AppController {
 						 * @author Johnathan Pulos
 						 */
 						$localFilePath = $this->request->data['TranslationClip']['audio_file_path'];
-						$saveData = true;
 					}else {
 						$this->Session->setFlash(__('You must supply a valid mp3.'), '_flash_msg', array('msgType' => 'error'));
 						$this->redirect("/translations/" . $translationId . "/clip/".$clipNumber."/edit");
 					}
-					if($saveData === true) {
-						$this->request->data['TranslationClip']['mime_type'] = $this->Uploader->mimeType(WWW_ROOT.$localFilePath);
-						if($this->TranslationClip->saveClipIncludingVts($this->request->data, $localFilePath)) {
-							$message = __('Clip # %s has been uploaded.');
-							$this->Session->setFlash(sprintf($message, $this->request->data['TranslationClip']['clip_order']), '_flash_msg', array('msgType' => 'info'));
-							$this->redirect("/translations/" . $translationId . "/clip/".$clipNumber."/edit");
-						}else {
-							throw new CakeException(__('Unable to upload the clip.'));
-						}
+					$this->request->data['TranslationClip']['mime_type'] = $this->Uploader->mimeType(WWW_ROOT.$localFilePath);
+					if($this->TranslationClip->saveClipIncludingVts($this->request->data, $localFilePath)) {
+						$message = __('Clip # %s has been uploaded.');
+						$this->Session->setFlash(sprintf($message, $this->request->data['TranslationClip']['clip_order']), '_flash_msg', array('msgType' => 'info'));
+						$this->redirect("/translations/" . $translationId . "/clip/".$clipNumber."/edit");
+					}else {
+						throw new CakeException(__('Unable to upload the clip.'));
 					}
 				}
 				$videoClips = $this->SpycYAML->toArray(ROOT . DS . APP_DIR . DS . 'Config' . DS . 'clip_settings.yml');
