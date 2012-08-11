@@ -89,6 +89,7 @@ class TranslationClipsController extends AppController {
 			if (!$this->TranslationClip->Translation->exists()) {
 				throw new NotFoundException(__('Invalid Translation'));
 			}
+			$this->TranslationClip->Translation->recursive = -1;
 			$this->currentTranslation = $this->TranslationClip->Translation->read(null);
 			$this->set('translation', $this->currentTranslation);
 			/**
@@ -131,38 +132,9 @@ class TranslationClipsController extends AppController {
 		 * @author Johnathan Pulos
 		 */
 			public function index($translationId = null) {
-				$masterRecording = array();
-				$renderState = 'PENDING';
-				if(!empty($this->currentTranslation['Translation']['vts_master_recording_id'])) {
-					/**
-					 * We need to see if the master recording is done
-					 *
-					 * @author Johnathan Pulos
-					 */
-					$renderState = 'PROCESSING';
-					$conditions = array('conditions' => array(	'id' 												=> $this->currentTranslation['Translation']['vts_master_recording_id'],
-																											'translation_request_token'	=>	$this->currentTranslation['Translation']['token']
-														));
-					if($masterRecording = $this->MasterRecording->find('first', $conditions)) {
-						if($masterRecording['MasterRecording']['status'] == 'COMPLETE') {
-							$renderState = 'COMPLETE';
-						}
-					}
-				} else{
-					$allClips = $this->Clip->find('all', array('conditions'	=>	array('translation_request_token' => $this->currentTranslation['Translation']['token'])));
-					$renderState = ($this->TranslationClip->Translation->isReadyForRender($allClips['Translation']['ready_for_processing'], 'compassionateFather')) ? 'READY' : 'PENDING';
-				}
-				$this->set('currentClipOrderNumberAndIds', $this->TranslationClip->findClipsOrderNumberAndId());
-				$show = (isset($this->request->query['show'])) ? explode(',', $this->request->query['show']) : array();
-				$this->set('show', $show);
-				$this->set('masterRecording', $masterRecording);
-				$this->set('renderState', $renderState);
-				/**
-				 * Get an array of all the clips needed
-				 *
-				 * @author Johnathan Pulos
-				 */
-				$this->set('videoClipsNeeded', $this->TranslationClip->videoClipsNeeded);
+				$videoClipData = $this->SpycYAML->toArray(ROOT . DS . APP_DIR . DS . 'Config' . DS . 'clip_settings.yml');
+				$this->set('videoClipData', $videoClipData);
+				$this->set('clipOrderNumberAndIdArray', $this->TranslationClip->findClipsByOrderNumber());
 			}
 			
 		/**

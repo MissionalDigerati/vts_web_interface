@@ -21,7 +21,7 @@
  * 
  */
 ?>
-<div class="translation view">
+<div class="translation video_view">
 	<?php 
 		if($videoUrl):
 			echo $this->element('_quicktime_embed', array('videoLocation' => $videoUrl));

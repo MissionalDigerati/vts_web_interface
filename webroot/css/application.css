@@ -84,3 +84,6 @@ table {
 object, embed {
 	z-index: 10;
 }
+.width_50 {
+	width: 50%;
+}

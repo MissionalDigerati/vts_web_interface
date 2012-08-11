@@ -20,28 +20,23 @@
  * @copyright Copyright 2012 Missional Digerati
  * 
  */
-$heading = __("Clips for %s");
-$totalClips = count($videoClipData);
+$heading = __("Clip %u of %u");
+$heading = sprintf($heading, $clipNumber, $totalClips);
 ?>
-<div class="translation-clips index">
-	<h1><?php echo sprintf($heading, $translation['Translation']['title']); ?></h1>
-	<table class="table table-striped table-bordered table-condensed">
-	  <tbody>
-	<?php 
-		for($i = 1; $i <= $totalClips; $i++):
-			if(array_key_exists($i, $clipOrderNumberAndIdArray)):
-				$translationClip = $clipOrderNumberAndIdArray[$i];
+<tr>
+	<td colspan="2" class="center"><h2><?php echo $heading; ?></h2></td>
+</tr>
+<tr>
+	<td class="video_view width_50">
+		<?php
+		 	if(empty($clip)):
+				echo $this->Html->image($videoClipData['clip_'.$clipNumber]['local_image_file']);
+			elseif(($clip['TranslationClip']['vts_file_path'] != '') && ($clip['TranslationClip']['vts_file_path'] != null)):
+				echo $this->element('_quicktime_embed', array('videoLocation' => VTS_URL.$clip['TranslationClip']['vts_file_path']));
 			else:
-				/**
-				 * Not added yet
-				 *
-				 * @author Johnathan Pulos
-				 */
-				$translationClip = array();
+				echo $this->Html->image($videoClipData['clip_'.$clipNumber]['local_image_file']);
 			endif;
-			echo $this->element('../TranslationClips/_clip', array('clip'	=>	$translationClip, 'videoClipData'	=>	$videoClipData, 'totalClips' => $totalClips, 'clipNumber'	=>	$i));
-		endfor; 
-	?>
-	  </tbody>
-	</table>
-</div>
+		?>
+	</td>
+	<td class="actions width_50"></td>
+</tr>

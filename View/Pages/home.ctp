@@ -22,7 +22,7 @@
  */
 ?>
 <h1>Welcome to Open Bible Stories Video Translator Service</h1>
-<div class="pages home view">
+<div class="pages home video_view">
 	<table class="table table-striped table-bordered table-condensed">
 		<thead>
 			<tr>

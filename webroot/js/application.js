@@ -50,7 +50,7 @@ $(document).ready(function() {
  * @return void
  */
 function resizeVideos() {
-	var objectWidth = $('div.view').width();
+	var objectWidth = $('.video_view').width();
     $('object').not('#audiorecorder').css({'height':(objectWidth * 0.5625)+'px', 'width': '100%'});
     $('video').not('#audiorecorder').css({'height':(objectWidth * 0.5625)+'px', 'width': '100%'});
     $('embed').not('#audiorecorder').css({'height':(objectWidth * 0.5625)+'px', 'width': '100%'});

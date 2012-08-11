@@ -38,59 +38,19 @@ class TranslationClip extends AppModel {
 																											'foreignKey' => 'translation_id'
 																										)
 														);
-	/**
-	 * The video clips that need to be translated, keyed to the video story
-	 *
-	 * @var array
-	 */
-	public $videoClipsNeeded = array(	'compassionateFather'	=>	array(	'/files/master_files/example/the_compassionate_father_1.mp4',
-																																			'/files/master_files/example/the_compassionate_father_2.mp4',
-																																			'/files/master_files/example/the_compassionate_father_3.mp4',
-																																			'/files/master_files/example/the_compassionate_father_4.mp4',
-																																			'/files/master_files/example/the_compassionate_father_5.mp4',
-																																			'/files/master_files/example/the_compassionate_father_6.mp4',
-																																			'/files/master_files/example/the_compassionate_father_7.mp4',
-																																			'/files/master_files/example/the_compassionate_father_8.mp4',
-																																			'/files/master_files/example/the_compassionate_father_9.mp4',
-																																			'/files/master_files/example/the_compassionate_father_10.mp4',
-																																			'/files/master_files/example/the_compassionate_father_11.mp4',
-																																			'/files/master_files/example/the_compassionate_father_12.mp4',
-																																			'/files/master_files/example/the_compassionate_father_13.mp4'
-																																		)
-																	);
-
-	/**
-	 * Checks the mime-type of the file & verifies it is a mp3 audio file
-	 * It will degrade to checking the extension.
-	 *
-	 * @param string $file the location of the file to check
-	 * @return boolean
-	 * @access public
-	 * @author Johnathan Pulos
-	 */
-	public function isMp3($file) {
-		$mimeTypes = array('audio/mpeg3', 'audio/x-mpeg-3');
-		if(class_exists('finfo')) {
-			$finfo = new finfo;
-			$fileInfo = $finfo->file($file, FILEINFO_MIME);
-			return ((preg_match("/audio/", $fileInfo)) && (preg_match("/mpeg/", $fileInfo))) ? true : false;
-		}else {
-			return true;
-		}
-	}
 	
 	/**
-	 * Find all clips provided by the user, and return the order numbers of each clip
+	 * Find all clips provided by the user, and return an array with a key of the order, and the translation_clip details in value.
 	 *
 	 * @return array
 	 * @access public
 	 * @author Johnathan Pulos
 	 */
-	public function findClipsOrderNumberAndId() {
+	public function findClipsByOrderNumber() {
 		$orderNumbers = array();
 		$clips = $this->find('all', array('conditions'=> 'TranslationClip.translation_id = ' . $this->Translation->id));
 		foreach ($clips as $clip) {
-			$orderNumbers[$clip['TranslationClip']['clip_order']] = $clip['TranslationClip']['id'];
+			$orderNumbers[$clip['TranslationClip']['clip_order']] = $clip;
 		}
 		return $orderNumbers;
 	}
