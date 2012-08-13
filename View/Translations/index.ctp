@@ -29,26 +29,17 @@
 		<thead>
 			<tr>
 				<th>Title (Language)</th>
-				<th>Status</th>
-				<th></th>
 			</tr>
 		</thead>
 	  <tbody>
 	    <?php foreach($translations as $translation): ?>
 				<tr>
-			    <td class="title"><?php echo $translation['Translation']['title']; ?> (<?php echo $translation['Translation']['language']; ?>)</td>
-					<td>
-						<?php
-							if(!empty($translation['Translation']['master_recording_file'])) {
-								echo 'Complete';
-							}else {
-								if($this->Date->isExpired($translation['Translation']['expires_at'])) {
-									echo 'Expired';
-								}else {
-									echo 'Pending';
-								}
-							}
-						?>
+			    <td class="title">
+						<?php echo $translation['Translation']['title']; ?> (<?php echo $translation['Translation']['language']; ?>)
+						<?php $labelType = (strtolower($translation['Translation']['status']) == 'complete') ? 'label-success' : 'label-info'; ?>
+						<span class="label <?php echo $labelType; ?> pull-right">
+							<Info><?php echo $this->VtsApi->translateStatus($translation['Translation']['status']); ?></Info>
+						</span>
 					</td>
 			    <td class="actions"><?php echo $this->element('../Translations/_manage_button', array('translation'	=>	$translation)); ?></td>
 			  </tr>

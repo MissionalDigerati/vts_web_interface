@@ -46,6 +46,9 @@ class VtsApiHelper extends AppHelper {
 			case 'processing':
 				return __('Processing');
 			break;
+			case 'processed':
+				return __('Processed');
+			break;
 			case 'complete':
 				return __('Complete');
 			break;
