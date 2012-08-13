@@ -22,6 +22,7 @@
  */
 $heading = __("Clip %u of %u");
 $heading = sprintf($heading, $clipNumber, $totalClips);
+$labelType = ((!empty($clip)) && (strtolower($clip['TranslationClip']['vts_status']) == 'complete')) ? 'label-success' : 'label-info';
 ?>
 <tr>
 	<td colspan="2" class="center"><h2><?php echo $heading; ?></h2></td>
@@ -38,5 +39,29 @@ $heading = sprintf($heading, $clipNumber, $totalClips);
 			endif;
 		?>
 	</td>
-	<td class="actions width_50"></td>
+	<td class="actions width_50">
+		<div class="well">
+			<?php echo $videoClipData['clip_'.$clipNumber]['text']; ?>
+		</div>
+		<span class="label <?php echo $labelType; ?>">
+			<Info><?php 
+							if(!empty($clip)):
+								echo ucwords(strtolower($clip['TranslationClip']['vts_status']));
+							else:
+								echo 'Pending';
+							endif;
+						?></Info>
+		</span>
+		<?php 
+			if(empty($clip)):
+				echo $this->Html->link(__('Add Audio'), '/translations/'.$translation['Translation']['id'].'/clip/'.$clipNumber.'/add', array('class' => 'btn pull-right'));
+			elseif(($clip['TranslationClip']['vts_file_path'] != '') && ($clip['TranslationClip']['vts_file_path'] != null)):
+				echo $this->Html->link(__('Edit Audio'), '/translations/'.$translation['Translation']['id'].'/clip/'.$clipNumber.'/edit/'.$clip['TranslationClip']['id'], array('class' => 'btn pull-right'));
+			elseif(!empty($clip)):
+					echo $this->Html->link(__('Edit Audio'), '/translations/'.$translation['Translation']['id'].'/clip/'.$clipNumber.'/edit/'.$clip['TranslationClip']['id'], array('class' => 'btn pull-right'));
+			else:
+				echo $this->Html->link(__('Add Audio'), '/translations/'.$translation['Translation']['id'].'/clip/'.$clipNumber.'/add', array('class' => 'btn pull-right'));
+			endif;
+	 	?>
+	</td>
 </tr>

@@ -26,7 +26,9 @@ $heading = sprintf($heading, ucwords($this->action), $clipCount['current'], $cli
 <h1><?php echo $heading; ?></h1>
 <div class="video_view">
 	<?php 
-		if(($translationClip['TranslationClip']['vts_file_path'] != '') && ($translationClip['TranslationClip']['vts_file_path'] != null)):
+		if(empty($translationClip)):
+			echo $this->Html->image($currentClip['local_image_file']);
+		elseif(($translationClip['TranslationClip']['vts_file_path'] != '') && ($translationClip['TranslationClip']['vts_file_path'] != null)):
 			echo $this->element('_quicktime_embed', array('videoLocation' => VTS_URL.$translationClip['TranslationClip']['vts_file_path']));
 		else:
 			echo $this->Html->image($currentClip['local_image_file']);
