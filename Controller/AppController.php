@@ -52,7 +52,7 @@ class AppController extends Controller {
 	 *
 	 * @var array
 	 */
-	public $helpers = array('TwitterBootstrap', 'Form', 'Html', 'Session', 'Date');
+	public $helpers = array('TwitterBootstrap', 'Form', 'Html', 'Session', 'Date', 'VtsApi');
 	
 	/**
 	 * Define a CakePHP callback beforeFilter

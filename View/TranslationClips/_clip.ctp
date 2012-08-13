@@ -46,9 +46,9 @@ $labelType = ((!empty($clip)) && (strtolower($clip['TranslationClip']['vts_statu
 		<span class="label <?php echo $labelType; ?>">
 			<Info><?php 
 							if(!empty($clip)):
-								echo ucwords(strtolower($clip['TranslationClip']['vts_status']));
+								echo $this->VtsApi->translateStatus($clip['TranslationClip']['vts_status']);
 							else:
-								echo 'Pending';
+								echo __('Pending');
 							endif;
 						?></Info>
 		</span>
