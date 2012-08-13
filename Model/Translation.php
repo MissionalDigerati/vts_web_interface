@@ -83,6 +83,18 @@ class Translation extends AppModel {
 	}
 	
 	/**
+	 * Can they edit the translation clips
+	 *
+	 * @param string $status Translation.status
+	 * @return boolean
+	 * @access public
+	 * @author Johnathan Pulos
+	 */
+	public function isEditable($status) {
+		return (strtolower($status) == 'pending') ? true : false;
+	}
+	
+	/**
 	 * get an array of the clip_order that have been uploaded in order
 	 *
 	 * @param array $translationClips an array of the translation clips
@@ -97,5 +109,24 @@ class Translation extends AppModel {
 		}
 		sort($clipOrders);
 		return $clipOrders;
+	}
+	
+	/**
+	 * cakePHP afterFind callback
+	 *
+	 * @param array $results the results found
+	 * @return array
+	 * @access public
+	 * @author Johnathan Pulos
+	 */
+	public function afterFind($results) {
+		foreach ($results as $key => $val) {
+			if(isset($val[$this->alias])) {
+				$results[$key][$this->alias]['isEditable'] = $this->isEditable($val[$this->alias]['status']);
+			}else if(isset($val['status'])) {
+				$results['isEditable'] = $this->isEditable($val['status']);
+			}
+		}
+		return $results;
 	}
 }

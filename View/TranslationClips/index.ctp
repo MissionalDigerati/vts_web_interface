@@ -24,7 +24,22 @@ $heading = __("Clips for %s");
 $totalClips = count($videoClipData);
 ?>
 <div class="translation-clips index">
-	<h1><?php echo sprintf($heading, $translation['Translation']['title']); ?></h1>
+	<?php 
+		if(strtolower($translation['Translation']['status']) == 'processed'):
+			echo $this->Html->link(__('Re Render'), '/', array('class' => 'btn pull-right btn-large btn-inverse')); 
+			echo $this->Html->link(__('Publish'), '/', array('class' => 'btn pull-right btn-large btn-primary'));
+		elseif(strtolower($translation['Translation']['status']) == 'pending'):
+			if((!empty($vtsClipData)) && (strtoupper($vtsClipData['Translation']['ready_for_processing']) == 'YES') && ($totalClips == count($vtsClipData['Clips']))):
+				echo $this->Html->link(__('Render'), array('controller'	=>	'translations', 'action'	=>	'render_video', $translation['Translation']['id']), array('class' => 'btn pull-right btn-large btn-inverse')); 
+			else:
+				echo $this->Html->link(__('Render'), '', array('class' => 'btn pull-right btn-large btn-inverse disabled')); 
+			endif;
+		elseif(strtolower($translation['Translation']['status']) == 'rendering'):
+				echo $this->Html->link(__('Rendering'), '', array('class' => 'btn pull-right btn-large btn-inverse disabled'));
+		endif;
+	?>
+	<h1><?php echo sprintf($heading, $translation['Translation']['title']); ?></h1><br>
+	<div class="clear"></div>
 	<table class="table table-striped table-bordered table-condensed">
 	  <tbody>
 	<?php 

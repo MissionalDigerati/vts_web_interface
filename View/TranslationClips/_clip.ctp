@@ -53,14 +53,18 @@ $labelType = ((!empty($clip)) && (strtolower($clip['TranslationClip']['vts_statu
 						?></Info>
 		</span>
 		<?php 
-			if(empty($clip)):
-				echo $this->Html->link(__('Add Audio'), '/translations/'.$translation['Translation']['id'].'/clip/'.$clipNumber.'/add', array('class' => 'btn pull-right'));
-			elseif(($clip['TranslationClip']['vts_file_path'] != '') && ($clip['TranslationClip']['vts_file_path'] != null)):
-				echo $this->Html->link(__('Edit Audio'), '/translations/'.$translation['Translation']['id'].'/clip/'.$clipNumber.'/edit/'.$clip['TranslationClip']['id'], array('class' => 'btn pull-right'));
-			elseif(!empty($clip)):
+			if($translation['Translation']['isEditable'] === true):
+			
+				if(empty($clip)):
+					echo $this->Html->link(__('Add Audio'), '/translations/'.$translation['Translation']['id'].'/clip/'.$clipNumber.'/add', array('class' => 'btn pull-right'));
+				elseif(($clip['TranslationClip']['vts_file_path'] != '') && ($clip['TranslationClip']['vts_file_path'] != null)):
 					echo $this->Html->link(__('Edit Audio'), '/translations/'.$translation['Translation']['id'].'/clip/'.$clipNumber.'/edit/'.$clip['TranslationClip']['id'], array('class' => 'btn pull-right'));
-			else:
-				echo $this->Html->link(__('Add Audio'), '/translations/'.$translation['Translation']['id'].'/clip/'.$clipNumber.'/add', array('class' => 'btn pull-right'));
+				elseif(!empty($clip)):
+						echo $this->Html->link(__('Edit Audio'), '/translations/'.$translation['Translation']['id'].'/clip/'.$clipNumber.'/edit/'.$clip['TranslationClip']['id'], array('class' => 'btn pull-right'));
+				else:
+					echo $this->Html->link(__('Add Audio'), '/translations/'.$translation['Translation']['id'].'/clip/'.$clipNumber.'/add', array('class' => 'btn pull-right'));
+				endif;
+			
 			endif;
 	 	?>
 	</td>

@@ -133,8 +133,9 @@ class TranslationClipsController extends AppController {
 		 */
 			public function index($translationId = null) {
 				$videoClipData = $this->SpycYAML->toArray(ROOT . DS . APP_DIR . DS . 'Config' . DS . 'clip_settings.yml');
-				$this->TranslationClip->updateClipStatuses($this->currentTranslation['Translation']['token']);
+				$vtsClipData = $this->TranslationClip->updateClipStatuses($this->currentTranslation['Translation']['token']);
 				$this->set('videoClipData', $videoClipData);
+				$this->set('vtsClipData', $vtsClipData);
 				$this->set('clipOrderNumberAndIdArray', $this->TranslationClip->findClipsByOrderNumber());
 			}
 			

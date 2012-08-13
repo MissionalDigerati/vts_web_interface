@@ -84,10 +84,10 @@ class TranslationClip extends AppModel {
 	}
 	
 	/**
-	 * Update the status on all clips belonging to this translation
+	 * Update the status on all clips belonging to this translation.  It returns the array of data supplied by the Clip Model of VTS
 	 *
 	 * @param string $token the Translation.token 
-	 * @return void
+	 * @return array
 	 * @access public
 	 * @author Johnathan Pulos
 	 */
@@ -102,5 +102,6 @@ class TranslationClip extends AppModel {
 				$this->save();
 			}
 		}
+		return $clips;
 	}
 }
