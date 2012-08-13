@@ -82,4 +82,25 @@ class TranslationClip extends AppModel {
 			return false;
 		}
 	}
+	
+	/**
+	 * Update the status on all clips belonging to this translation
+	 *
+	 * @param string $token the Translation.token 
+	 * @return void
+	 * @access public
+	 * @author Johnathan Pulos
+	 */
+	public function updateClipStatuses($token) {
+		$Clip = new Clip();
+		$clips = $Clip->find('all', array('conditions' => array('translation_request_token' =>	$token)));
+		if((!empty($clips)) && (isset($clips['Clips']))) {
+			foreach ($clips['Clips'] as $clip) {
+				$translationClip = $this->find('first', array('conditions'	=> array('vts_clip_id'	=> $clip['id'])));
+				$this->id = $translationClip['TranslationClip']['id'];
+				$this->set(array('vts_status'	=>	$clip['status'], 'vts_file_path'	=>	substr($clip['completed_file_location'], 1)));
+				$this->save();
+			}
+		}
+	}
 }

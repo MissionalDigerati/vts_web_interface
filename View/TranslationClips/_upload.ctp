@@ -40,5 +40,6 @@
 		<button type="submit" class="btn btn-primary">
 			<?php echo __('Upload'); ?>
 		</button>
+			<?php echo $this->Html->link(__('Cancel'), '/translations/'.$translation['Translation']['id'].'/clips', array('class'	=>	'btn btn-mini')); ?>
 	<?php echo $this->Form->end(); ?>
 </div>

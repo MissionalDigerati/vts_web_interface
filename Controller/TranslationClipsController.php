@@ -133,6 +133,7 @@ class TranslationClipsController extends AppController {
 		 */
 			public function index($translationId = null) {
 				$videoClipData = $this->SpycYAML->toArray(ROOT . DS . APP_DIR . DS . 'Config' . DS . 'clip_settings.yml');
+				$this->TranslationClip->updateClipStatuses($this->currentTranslation['Translation']['token']);
 				$this->set('videoClipData', $videoClipData);
 				$this->set('clipOrderNumberAndIdArray', $this->TranslationClip->findClipsByOrderNumber());
 			}
@@ -151,7 +152,7 @@ class TranslationClipsController extends AppController {
 					if($this->TranslationClip->saveClipIncludingVts($this->request->data, $localFilePath)) {
 						$message = __('Clip # %s has been uploaded.');
 						$this->Session->setFlash(sprintf($message, $clipNumber), '_flash_msg', array('msgType' => 'info'));
-						$this->redirect("/translations/" . $translationId . "/clip/".$clipNumber."/edit/".$this->TranslationClip->id);
+						$this->redirect("/translations/" . $translationId . "/clips");
 					}else {
 						throw new CakeException(__('Unable to upload the clip.'));
 					}
@@ -175,7 +176,7 @@ class TranslationClipsController extends AppController {
 					if($this->TranslationClip->saveClipIncludingVts($this->request->data, $localFilePath)) {
 						$message = __('Clip # %s has been uploaded.');
 						$this->Session->setFlash(sprintf($message, $clipNumber), '_flash_msg', array('msgType' => 'info'));
-						$this->redirect("/translations/" . $translationId . "/clip/".$clipNumber."/edit/".$id);
+						$this->redirect("/translations/" . $translationId . "/clips");
 					}else {
 						throw new CakeException(__('Unable to upload the clip.'));
 					}

@@ -29,6 +29,7 @@
 		<a href="" class="stop-recording-button btn btn-primary"><i class="icon-stop icon-white"></i> <?php echo __('Stop'); ?></a> 
 	</span>
 	<a href="" class="save-button btn" rel="recordAudioForm<?php echo $clipNumber; ?>"><i class="icon-hdd"></i> <?php echo __('Save'); ?></a>
+	<?php echo $this->Html->link(__('Cancel'), '/translations/'.$translation['Translation']['id'].'/clips', array('class'	=>	'btn btn-mini')); ?>
 	<?php
 		echo $this->Form->create('TranslationClip', array(	'inputDefaults' => $this->TwitterBootstrap->inputDefaults(), 
 																												'class' 				=> 'form-horizontal',
