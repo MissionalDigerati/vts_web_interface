@@ -236,7 +236,7 @@ class TranslationsController extends AppController {
 			if($this->MasterRecording->save($data, false)) {
 				$this->Translation->set('vts_master_recording_id', $this->MasterRecording->id);
 				$this->Translation->set('master_recording_file', VTS_URL . 'files/master_recordings/' . $finalFilename . '/' . $finalFilename . '.mp4');
-				$this->Translation->set('status', 'Rendering');
+				$this->Translation->set('status', 'RENDERING');
 				$this->Translation->save();
 				$this->Session->setFlash(__('The translation is being rendered.  This may take a few minutes.'), '_flash_msg', array('msgType' => 'info'));
 				$this->redirect("/translations/" . $this->Translation->id . "/clips");

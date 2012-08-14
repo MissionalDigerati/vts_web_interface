@@ -132,8 +132,34 @@ class TranslationClipsController extends AppController {
 		 * @author Johnathan Pulos
 		 */
 			public function index($translationId = null) {
+				$vtsClipData = array();
+				$vtsMasterRecording = array();
 				$videoClipData = $this->SpycYAML->toArray(ROOT . DS . APP_DIR . DS . 'Config' . DS . 'clip_settings.yml');
-				$vtsClipData = $this->TranslationClip->updateClipStatuses($this->currentTranslation['Translation']['token']);
+				if(strtolower($this->currentTranslation['Translation']['status']) == 'pending') {
+					/**
+					 * Update the status of each clip
+					 *
+					 * @author Johnathan Pulos
+					 */
+					$vtsClipData = $this->TranslationClip->updateClipStatuses($this->currentTranslation['Translation']['token']);
+				}else if(strtolower($this->currentTranslation['Translation']['status']) == 'rendering') {
+					/**
+					 * Update the status of the master recording
+					 *
+					 * @author Johnathan Pulos
+					 */
+					$options =array(	'conditions'	=>	array(	'id'												=>	$this->currentTranslation['Translation']['vts_master_recording_id'], 
+																											'translation_request_token'	=>	$this->currentTranslation['Translation']['token'])
+																										);
+					$vtsMasterRecording = $this->MasterRecording->find('first', $options);
+					if(strtolower($vtsMasterRecording['MasterRecording']['status']) == 'complete') {
+						$this->TranslationClip->Translation->id = $this->currentTranslation['Translation']['id'];
+						$this->TranslationClip->Translation->set('status', 'RENDERED');
+						$this->TranslationClip->Translation->save();
+						$this->currentTranslation['Translation']['status'] = 'RENDERED';
+						$this->set('translation', $this->currentTranslation);
+					}
+				}
 				$this->set('videoClipData', $videoClipData);
 				$this->set('vtsClipData', $vtsClipData);
 				$this->set('clipOrderNumberAndIdArray', $this->TranslationClip->findClipsByOrderNumber());
