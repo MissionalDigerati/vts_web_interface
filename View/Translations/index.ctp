@@ -36,12 +36,20 @@
 				<tr>
 			    <td class="title">
 						<?php echo $translation['Translation']['title']; ?> (<?php echo $translation['Translation']['language']; ?>)
-						<?php $labelType = (strtolower($translation['Translation']['status']) == 'complete') ? 'label-success' : 'label-info'; ?>
+						<?php $labelType = (strtolower($translation['Translation']['status']) == 'published') ? 'label-success' : 'label-info'; ?>
 						<span class="label <?php echo $labelType; ?> pull-right">
 							<Info><?php echo $this->VtsApi->translateStatus($translation['Translation']['status']); ?></Info>
 						</span>
 					</td>
-			    <td class="actions"><?php echo $this->element('../Translations/_manage_button', array('translation'	=>	$translation)); ?></td>
+			    <td class="actions">
+						<?php
+						 	if(strtolower($translation['Translation']['status']) == 'published'):
+								echo $this->Html->link('<i class="icon-zoom-in"></i> ' . __('View'), array('controller'	=>	'translations',	'action'	=>	'view', 'admin'	=>	false, $translation['Translation']['id']), array('escape'	=>	false, 'class'	=>	'btn'));
+							else:
+								echo $this->element('../Translations/_manage_button', array('translation'	=>	$translation)); 
+							endif;
+						?>
+					</td>
 			  </tr>
 			<?php endforeach; ?>
 			<?php if(empty($translations)): ?>

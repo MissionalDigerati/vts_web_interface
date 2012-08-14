@@ -298,7 +298,7 @@ class TranslationsController extends AppController {
 			$this->Translation->set('status', 'PUBLISHED');
 			$this->Translation->save();
 			$this->Session->setFlash(__('The video has been published.  Thank you for your contribution.'), '_flash_msg', array('msgType' => 'info'));
-			$this->redirect("/translations/" . $this->Translation->id . "/clips");
+			$this->redirect(array('controller'	=>	'translations', 'action'	=>	'index',	'admin'	=>	false));
 		}
 
 /**

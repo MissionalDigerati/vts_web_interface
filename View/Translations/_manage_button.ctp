@@ -30,7 +30,7 @@ $isAdmin = (isset($isAdmin)) ? $isAdmin : false;
 				<?php 
 					echo $this->Html->link('<i class="icon-zoom-in"></i> ' . __('View'), array('controller'	=>	'translations',	'action'	=>	'view', 'admin'	=>	$isAdmin, $translation['Translation']['id']), array('escape'	=>	false));
 					if($isAdmin === false):
-						echo $this->Html->link('<i class="icon-music"></i> ' . __('Add Audio'), "/translations/" . $translation['Translation']['id'] . "/clips", array('escape'	=>	false));
+						echo $this->Html->link('<i class="icon-music"></i> ' . __('Manage Clips'), "/translations/" . $translation['Translation']['id'] . "/clips", array('escape'	=>	false));
 					endif;
 				?>
 		</li>

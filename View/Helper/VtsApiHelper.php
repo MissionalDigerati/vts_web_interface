@@ -52,6 +52,15 @@ class VtsApiHelper extends AppHelper {
 			case 'complete':
 				return __('Complete');
 			break;
+			case 'rendered':
+				return __('Rendered');
+			break;
+			case 'rendering':
+				return __('Rendering');
+			break;
+			case 'published':
+				return __('Published');
+			break;
 			default:
 				return ucwords($status);
 			break;
