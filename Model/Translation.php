@@ -95,6 +95,18 @@ class Translation extends AppModel {
 	}
 	
 	/**
+	 * Can they play the translation movie
+	 *
+	 * @param string $status Translation.status
+	 * @return boolean
+	 * @access public
+	 * @author Johnathan Pulos
+	 */
+	public function isPlayable($status) {
+		return (strtolower($status) == 'rendered' || strtolower($status) == 'published') ? true : false;
+	}
+	
+	/**
 	 * cakePHP afterFind callback
 	 *
 	 * @param array $results the results found
@@ -106,8 +118,10 @@ class Translation extends AppModel {
 		foreach ($results as $key => $val) {
 			if(isset($val[$this->alias])) {
 				$results[$key][$this->alias]['isEditable'] = $this->isEditable($val[$this->alias]['status']);
+				$results[$key][$this->alias]['isPlayable'] = $this->isPlayable($val[$this->alias]['status']);
 			}else if(isset($val['status'])) {
 				$results['isEditable'] = $this->isEditable($val['status']);
+				$results['isPlayable'] = $this->isPlayable($val['status']);
 			}
 		}
 		return $results;
