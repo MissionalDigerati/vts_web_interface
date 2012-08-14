@@ -95,23 +95,6 @@ class Translation extends AppModel {
 	}
 	
 	/**
-	 * get an array of the clip_order that have been uploaded in order
-	 *
-	 * @param array $translationClips an array of the translation clips
-	 * @return array
-	 * @access public
-	 * @author Johnathan Pulos
-	 */
-	public function getUploadedClipsArray($translationClips = array()) {
-		$clipOrders = array();
-		foreach($translationClips as $clip) {
-			array_push($clipOrders, $clip['clip_order']);
-		}
-		sort($clipOrders);
-		return $clipOrders;
-	}
-	
-	/**
 	 * cakePHP afterFind callback
 	 *
 	 * @param array $results the results found
