@@ -87,3 +87,8 @@ object, embed {
 .width_50 {
 	width: 50%;
 }
+.modify-btn {
+	position: relative;
+	top: 5px;
+	right: 5px;
+}

@@ -25,17 +25,17 @@ $totalClips = count($videoClipData);
 ?>
 <div class="translation-clips index">
 	<?php 
-		if(strtolower($translation['Translation']['status']) == 'processed'):
-			echo $this->Html->link(__('Re Render'), '/', array('class' => 'btn pull-right btn-large btn-inverse')); 
-			echo $this->Html->link(__('Publish'), '/', array('class' => 'btn pull-right btn-large btn-primary'));
+		if(strtolower($translation['Translation']['status']) == 'rendered'):
+			echo $this->Html->link(__('Publish'), array('controller'	=>	'translations', 'action'	=>	'publish_video', $translation['Translation']['id']), array('class' => 'btn pull-right btn-large btn-primary'), __('Are you sure you want to publish this video? You will no longer be able to edit the video clips.'));
+			echo $this->Html->link(__('Modify'), array('controller'	=>	'translations', 'action'	=>	'remove_video', $translation['Translation']['id']), array('class' => 'btn pull-right btn-small btn-inverse modify-btn'));
+		elseif(strtolower($translation['Translation']['status']) == 'rendering'):
+				echo $this->Html->link(__('Rendering'), '', array('class' => 'btn pull-right btn-large btn-inverse disabled'));
 		elseif(strtolower($translation['Translation']['status']) == 'pending'):
 			if((!empty($vtsClipData)) && (strtoupper($vtsClipData['Translation']['ready_for_processing']) == 'YES') && ($totalClips == count($vtsClipData['Clips']))):
 				echo $this->Html->link(__('Render'), array('controller'	=>	'translations', 'action'	=>	'render_video', $translation['Translation']['id']), array('class' => 'btn pull-right btn-large btn-inverse')); 
 			else:
 				echo $this->Html->link(__('Render'), '', array('class' => 'btn pull-right btn-large btn-inverse disabled')); 
 			endif;
-		elseif(strtolower($translation['Translation']['status']) == 'rendering'):
-				echo $this->Html->link(__('Rendering'), '', array('class' => 'btn pull-right btn-large btn-inverse disabled'));
 		endif;
 	?>
 	<h1><?php echo sprintf($heading, $translation['Translation']['title']); ?></h1><br>

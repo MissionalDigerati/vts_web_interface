@@ -268,13 +268,37 @@ class TranslationsController extends AppController {
 		 	if($this->MasterRecording->delete()) {
 				$this->Translation->set('vts_master_recording_id', '');
 				$this->Translation->set('master_recording_file', '');
+				$this->Translation->set('status', 'PENDING');
 				$this->Translation->save();
-				$this->Session->setFlash(__('The translation video has been removed.  You may now edit your clips.'), '_flash_msg', array('msgType' => 'info'));
+				$this->Session->setFlash(__('The clips are now editable.'), '_flash_msg', array('msgType' => 'info'));
 				$this->redirect("/translations/" . $this->Translation->id . "/clips");
 			}else {
 				$this->Session->setFlash(__('Unable to remove the translation video. Please try again later.'), '_flash_msg', array('msgType' => 'error'));
 				$this->redirect("/translations/" . $this->Translation->id . "/clips");
 			}
+		}
+		
+		/**
+		 * Publish the current video
+		 *
+		 * @param integer $id Translation.id
+		 * @return void
+		 * @access public
+		 * @author Johnathan Pulos
+		 */
+		public function publish_video($id = null) {
+			$this->Translation->id = $id;
+			if (!$this->Translation->exists()) {
+				throw new NotFoundException(__('Invalid Translation'));
+			}
+			$translation = $this->Translation->read(null, $this->Translation->id);
+			if($translation['Translation']['user_id'] != $this->Auth->user('id')) {
+				throw new NotFoundException(__('You do not have permission.'));
+			}
+			$this->Translation->set('status', 'PUBLISHED');
+			$this->Translation->save();
+			$this->Session->setFlash(__('The video has been published.  Thank you for your contribution.'), '_flash_msg', array('msgType' => 'info'));
+			$this->redirect("/translations/" . $this->Translation->id . "/clips");
 		}
 
 /**
