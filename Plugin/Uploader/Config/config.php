@@ -83,6 +83,7 @@ $config['Uploader']['mimeTypes'] = array(
 		'snd' 	=> 'audio/basic',
 		'tsi' 	=> 'audio/TSP-audio',
 		'wav' 	=> 'audio/x-wav',
+		'wav' 	=> 'audio/wav',
 		'wma'	=> 'audio/x-ms-wma'
 	),
 	'video' => array(
