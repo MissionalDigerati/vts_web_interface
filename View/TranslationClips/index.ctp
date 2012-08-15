@@ -42,6 +42,16 @@ $totalClips = count($videoClipData);
 	<div class="clear"></div>
 	<table class="table table-striped table-bordered table-condensed">
 	  <tbody>
+	<?php if(strtolower($translation['Translation']['status']) == 'rendered'): ?>
+		<tr>
+			<td colspan="2" class="center"><h2><?php echo __('Rendered Video'); ?></h2></td>
+		</tr>
+		<tr>
+			<td colspan="2" class="video_view">
+				<?php echo $this->element('_quicktime_embed', array('videoLocation' => $translation['Translation']['master_recording_file']));  ?>
+			</td>
+		</tr>
+	<?php endif; ?>
 	<?php 
 		for($i = 1; $i <= $totalClips; $i++):
 			if(array_key_exists($i, $clipOrderNumberAndIdArray)):
