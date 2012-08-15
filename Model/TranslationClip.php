@@ -21,6 +21,11 @@
  * 
  */
 App::uses('AppModel', 'Model');
+/**
+ * Import the VTS Clip Model
+ *
+ * @author Johnathan Pulos
+ */
 App::import('Model', 'VideoTranslatorService.Clip');
 /**
  * TranslationClip Model
@@ -119,5 +124,17 @@ class TranslationClip extends AppModel {
 			unlink(WWW_ROOT.$clip['TranslationClip']['local_file_path']);
 		}
 		return true;
+	}
+	
+	/**
+	 * Validates the mime type is acceptable
+	 *
+	 * @param string $mimeType the mime type of the file
+	 * @return boolean
+	 * @access public
+	 * @author Johnathan Pulos
+	 */
+	public function validMimeType($mimeType) {
+		return in_array($mimeType, array('audio/mpeg', 'audio/mp3', 'audio/x-wav', 'audio/wav'));
 	}
 }

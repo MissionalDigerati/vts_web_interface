@@ -175,13 +175,19 @@ class TranslationClipsController extends AppController {
 			public function add($translationId = null, $clipNumber = null) {
 				if(!empty($this->request->data)) {
 					$localFilePath = $this->handleSubmittedFile();
-					$this->request->data['TranslationClip']['mime_type'] = $this->Uploader->mimeType(WWW_ROOT.$localFilePath);
-					if($this->TranslationClip->saveClipIncludingVts($this->request->data, $localFilePath)) {
-						$message = __('Clip # %s has been uploaded.');
-						$this->Session->setFlash(sprintf($message, $clipNumber), '_flash_msg', array('msgType' => 'info'));
-						$this->redirect("/translations/" . $translationId . "/clips");
+					$mimeType = $this->Uploader->mimeType(WWW_ROOT.$localFilePath);
+					if($this->TranslationClip->validMimeType($mimeType)) {
+						$this->request->data['TranslationClip']['mime_type'] = $mimeType;
+						if($this->TranslationClip->saveClipIncludingVts($this->request->data, $localFilePath)) {
+							$message = __('Clip # %s has been uploaded.');
+							$this->Session->setFlash(sprintf($message, $clipNumber), '_flash_msg', array('msgType' => 'info'));
+							$this->redirect("/translations/" . $translationId . "/clips");
+						}else {
+							throw new CakeException(__('Unable to upload the clip.'));
+						}
 					}else {
-						throw new CakeException(__('Unable to upload the clip.'));
+						unlink(WWW_ROOT.$localFilePath);
+						$this->Session->setFlash("Only mp3 and wav files are allowed.", '_flash_msg', array('msgType' => 'error'));
 					}
 				}
 				$videoClips = $this->SpycYAML->toArray(ROOT . DS . APP_DIR . DS . 'Config' . DS . 'clip_settings.yml');
@@ -199,13 +205,19 @@ class TranslationClipsController extends AppController {
 			public function edit($translationId = null, $clipNumber = null, $id = null) {
 				if(!empty($this->request->data)) {
 					$localFilePath = $this->handleSubmittedFile();
-					$this->request->data['TranslationClip']['mime_type'] = $this->Uploader->mimeType(WWW_ROOT.$localFilePath);
-					if($this->TranslationClip->saveClipIncludingVts($this->request->data, $localFilePath)) {
-						$message = __('Clip # %s has been uploaded.');
-						$this->Session->setFlash(sprintf($message, $clipNumber), '_flash_msg', array('msgType' => 'info'));
-						$this->redirect("/translations/" . $translationId . "/clips");
+					$mimeType = $this->Uploader->mimeType(WWW_ROOT.$localFilePath);
+					if($this->TranslationClip->validMimeType($mimeType)) {
+						$this->request->data['TranslationClip']['mime_type'] = $mimeType;
+						if($this->TranslationClip->saveClipIncludingVts($this->request->data, $localFilePath)) {
+							$message = __('Clip # %s has been uploaded.');
+							$this->Session->setFlash(sprintf($message, $clipNumber), '_flash_msg', array('msgType' => 'info'));
+							$this->redirect("/translations/" . $translationId . "/clips");
+						}else {
+							throw new CakeException(__('Unable to upload the clip.'));
+						}
 					}else {
-						throw new CakeException(__('Unable to upload the clip.'));
+						unlink(WWW_ROOT.$localFilePath);
+						$this->Session->setFlash("Only mp3 and wav files are allowed.", '_flash_msg', array('msgType' => 'error'));
 					}
 				}
 				$translationClip = $this->TranslationClip->read(null);
