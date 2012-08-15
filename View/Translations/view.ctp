@@ -23,13 +23,13 @@
 ?>
 <div class="translation video_view">
 	<?php 
-		if($videoUrl):
-			echo $this->element('_quicktime_embed', array('videoLocation' => $videoUrl));
+		if($translation['Translation']['isPlayable'] === true):
+			echo $this->element('_quicktime_embed', array('videoLocation' => $translation['Translation']['master_recording_file']));
 		endif; 
 	?>
 	<div class="well">
 		<?php
-			if($videoUrl):
+			if($translation['Translation']['isPlayable'] === true):
 				echo $this->Html->link('<i class="icon-download-alt icon-white"></i> Download', array('controller'	=>	'translations', 'action'	=>	'download', $translation['Translation']['id']), array('target'	=> '_blank', 'class' =>	'pull-right btn btn-large btn-primary', 'escape'=> false)); 
 			endif;
 		?>

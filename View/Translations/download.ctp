@@ -21,7 +21,7 @@
  * 
  */
 header('Content-Disposition: attachment; filename="obs_video.mp4"');
-$fp=fopen(VTS_URL. $videoUrl,'r');
+$fp=fopen(VTS_URL. $translation['Translation']['master_recording_file'],'r');
 fpassthru($fp);
 fclose($fp);
 ?>

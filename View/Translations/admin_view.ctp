@@ -23,46 +23,23 @@
 ?>
 <div class="translation video_view">
 	<?php 
-		if($videoUrl):
-			echo $this->element('_quicktime_embed', array('videoLocation' => $videoUrl));
+		if($translation['Translation']['isPlayable'] === true):
+			echo $this->element('_quicktime_embed', array('videoLocation' => $translation['Translation']['master_recording_file']));
 		endif; 
 	?>
 	<?php echo $this->element('../Translations/_manage_button', array('translation'	=>	$translation, 'pull_right'	=>	true, 'isAdmin'	=> true)); ?>
 	<div class="clear"></div><br>
 	<div class="well">
 		<?php 
-			if($videoUrl):
+			if($translation['Translation']['isPlayable'] === true):
 				echo $this->Html->link('<i class="icon-download-alt icon-white"></i> Download', array('controller'	=>	'translations', 'action'	=>	'download', 'admin'	=>	false, $translation['Translation']['id']), array('target'	=> '_blank', 'class' =>	'pull-right btn btn-large btn-primary', 'escape'=> false)); 
 			endif;
 		?>
 		<p><strong>Title:</strong> <?php echo $translation['Translation']['title']; ?></p>
 		<p><strong>Language:</strong> <?php echo $translation['Translation']['language']; ?></p>
-		<p><strong>Status:</strong> <?php 
-				if(!empty($translation['Translation']['master_recording_file'])) {
-					echo 'Complete';
-				}else {
-					if($this->Date->isExpired($translation['Translation']['expires_at'])) {
-						echo 'Expired';
-					}else {
-						echo 'Pending';
-					}
-				}
-		?></p>
+		<p><strong>Status:</strong> <?php echo $this->VtsApi->translateStatus($translation['Translation']['status']); ?></p>
 		<p><strong>Created On:</strong> <?php echo $this->Time->nice($translation['Translation']['created']); ?></p>
 		<p><strong>Expires On:</strong> <?php echo $this->Time->nice($translation['Translation']['expires_at']); ?></p>
-		<p><strong>Uploaded Audio For Clips:</strong> 
-			<?php
-				if(count($uploadedClips) == $maxClips):
-					echo __("All");
-				else:
-					$clips = '';
-					foreach($uploadedClips as $clip):
-						$clips .= "#".$clip.", ";
-					endforeach;
-					echo substr_replace($clips ,"",-2);
-				endif;
-			?>
-		</p>
 		<p><strong>Uploaded By:</strong> <?php echo $this->Html->link($translation['User']['name'], array('controller'	=>	'users', 'action'	=>	'view', 'admin'	=>	true, $translation['User']['id'])); ?></p>
 		<div class="clear"></div>
 	</div>
