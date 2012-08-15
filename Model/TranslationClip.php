@@ -104,4 +104,20 @@ class TranslationClip extends AppModel {
 		}
 		return $clips;
 	}
+	
+	/**
+	 * CakePHP's beforeDelete Callback.  It will remove the file from the local server
+	 *
+	 * @param boolean $cascade tells us if the delete is set to cascade to related models
+	 * @return boolean
+	 * @access public
+	 * @author Johnathan Pulos
+	 */
+	public function beforeDelete($cascade = true) {
+		$clip = $this->read('local_file_path', $this->id);
+		if(file_exists(WWW_ROOT.$clip['TranslationClip']['local_file_path'])) {
+			unlink(WWW_ROOT.$clip['TranslationClip']['local_file_path']);
+		}
+		return true;
+	}
 }
