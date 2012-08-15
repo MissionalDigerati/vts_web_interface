@@ -32,11 +32,3 @@ Config/email.php
 /tmp/tests/*
 !/tmp/tests/
 !/tmp/tests/empty
-
-/webroot/files/*
-!/webroot/files/
-!/webroot/files/empty
-
-/webroot/files/uploads/*
-!/webroot/files/uploads/
-!/webroot/files/uploads/empty
