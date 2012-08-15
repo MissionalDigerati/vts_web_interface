@@ -20,6 +20,7 @@
  * @copyright Copyright 2012 Missional Digerati
  * 
  */
+header('Content-type: video/mp4');
 header('Content-Disposition: attachment; filename="obs_video.mp4"');
 $fp=fopen(VTS_URL. $translation['Translation']['master_recording_file'],'r');
 fpassthru($fp);
