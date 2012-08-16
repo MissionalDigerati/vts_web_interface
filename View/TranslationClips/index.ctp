@@ -20,7 +20,6 @@
  * @copyright Copyright 2012 Missional Digerati
  * 
  */
-$heading = __("Clips for %s");
 $totalClips = count($videoClipSettings);
 ?>
 <div class="translation-clips index">
@@ -38,7 +37,7 @@ $totalClips = count($videoClipSettings);
 			endif;
 		endif;
 	?>
-	<h1><?php echo sprintf($heading, $translation['Translation']['title']); ?></h1><br>
+	<h1><?php echo __("Clips for %s", $translation['Translation']['title']); ?></h1><br>
 	<div class="clear"></div>
 	<table class="table table-striped table-bordered table-condensed">
 	  <tbody>

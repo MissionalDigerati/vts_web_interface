@@ -200,8 +200,7 @@ class TranslationClipsController extends AppController {
 					if($this->TranslationClip->validMimeType($mimeType)) {
 						$this->request->data['TranslationClip']['mime_type'] = $mimeType;
 						if($this->TranslationClip->saveClipIncludingVts($this->request->data, $localFilePath)) {
-							$message = __('Clip # %s has been uploaded.');
-							$this->Session->setFlash(sprintf($message, $clipNumber), '_flash_msg', array('msgType' => 'info'));
+							$this->Session->setFlash(__('Clip # %s has been uploaded.', $clipNumber), '_flash_msg', array('msgType' => 'info'));
 							$this->redirect("/translations/" . $translationId . "/clips");
 						}else {
 							throw new CakeException(__('Unable to upload the clip.'));
@@ -229,8 +228,7 @@ class TranslationClipsController extends AppController {
 					if($this->TranslationClip->validMimeType($mimeType)) {
 						$this->request->data['TranslationClip']['mime_type'] = $mimeType;
 						if($this->TranslationClip->saveClipIncludingVts($this->request->data, $localFilePath)) {
-							$message = __('Clip # %s has been uploaded.');
-							$this->Session->setFlash(sprintf($message, $clipNumber), '_flash_msg', array('msgType' => 'info'));
+							$this->Session->setFlash(__('Clip # %s has been uploaded.', $clipNumber), '_flash_msg', array('msgType' => 'info'));
 							$this->redirect("/translations/" . $translationId . "/clips");
 						}else {
 							throw new CakeException(__('Unable to upload the clip.'));

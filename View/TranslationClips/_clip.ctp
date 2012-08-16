@@ -20,12 +20,10 @@
  * @copyright Copyright 2012 Missional Digerati
  * 
  */
-$heading = __("Clip %u of %u");
-$heading = sprintf($heading, $clipNumber, $totalClips);
 $labelType = ((!empty($clip)) && (strtolower($clip['TranslationClip']['vts_status']) == 'complete')) ? 'label-success' : 'label-info';
 ?>
 <tr>
-	<td colspan="2" class="center"><h2><?php echo $heading; ?></h2></td>
+	<td colspan="2" class="center"><h2><?php echo __("Clip %u of %u", $clipNumber, $totalClips); ?></h2></td>
 </tr>
 <tr>
 	<td class="video_view width_50">

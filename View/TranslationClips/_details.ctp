@@ -20,10 +20,8 @@
  * @copyright Copyright 2012 Missional Digerati
  * 
  */
-$heading = __("%s Clip %u of %u");
-$heading = sprintf($heading, ucwords($this->action), $clipCount['current'], $clipCount['total']);
 ?>
-<h1><?php echo $heading; ?></h1>
+<h1><?php echo __("%s Clip %u of %u", ucwords($this->action), $clipCount['current'], $clipCount['total']); ?></h1>
 <div class="video_view">
 	<?php 
 		if(empty($translationClip)):
