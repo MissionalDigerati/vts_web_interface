@@ -126,4 +126,25 @@ class Translation extends AppModel {
 		}
 		return $results;
 	}
+	
+	/**
+	 * Download the final file from remote server, and publish the Translation.  Returns true if the file is downloaded successfully.
+	 *
+	 * @param string $remoteFile the current location of the final file
+	 * @return boolean
+	 * @access public
+	 * @author Johnathan Pulos
+	 */
+	public function downloadAndPublish($remoteFile) {
+		$localFilePath = 'files' . DS . 'completed' . DS . basename($remoteFile);
+		$this->downloadRemoteFile($remoteFile, WWW_ROOT . $localFilePath);
+		if(file_exists($localFilePath)) {
+			$this->set('master_recording_file', $localFilePath);
+			$this->set('status', 'PUBLISHED');
+			$this->save();
+			return true;
+		} else{
+			return false;
+		}
+	}
 }

@@ -137,6 +137,7 @@ class TranslationsController extends AppController {
 		 */
 		public function download($id = null) {
 			$this->layout = false;
+			Configure::write('debug',0);
 		}
 		
 		/**
@@ -276,10 +277,13 @@ class TranslationsController extends AppController {
 		 */
 		public function publish_video($id = null) {
 			$this->Translation->id = $id;
-			$this->Translation->set('status', 'PUBLISHED');
-			$this->Translation->save();
-			$this->Session->setFlash(__('The video has been published.  Thank you for your contribution.'), '_flash_msg', array('msgType' => 'info'));
-			$this->redirect(array('controller'	=>	'translations', 'action'	=>	'index',	'admin'	=>	false));
+			if($this->Translation->downloadAndPublish($this->currentTranslation['Translation']['master_recording_file'])) {
+				$this->Session->setFlash(__('The video has been published.  Thank you for your contribution.'), '_flash_msg', array('msgType' => 'info'));
+				$this->redirect(array('controller'	=>	'translations', 'action'	=>	'index',	'admin'	=>	false));
+			}else {
+				$this->Session->setFlash(__('The video could not be published.  Please try again, or contact the webmaster.'), '_flash_msg', array('msgType' => 'error'));
+				$this->redirect(array('controller'	=>	'translations', 'action'	=>	'index',	'admin'	=>	false));
+			}
 		}
 
 /**

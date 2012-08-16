@@ -20,11 +20,13 @@
  * @copyright Copyright 2012 Missional Digerati
  * 
  */
+$videoLocation = $translation['Translation']['master_recording_file'];
+$videoLocation = (strtolower($translation['Translation']['status']) == 'published') ? DS . $videoLocation : $videoLocation;
 ?>
 <div class="translation video_view">
 	<?php 
 		if($translation['Translation']['isPlayable'] === true):
-			echo $this->element('_quicktime_embed', array('videoLocation' => $translation['Translation']['master_recording_file']));
+			echo $this->element('_quicktime_embed', array('videoLocation' => $videoLocation));
 		endif; 
 	?>
 	<div class="well">

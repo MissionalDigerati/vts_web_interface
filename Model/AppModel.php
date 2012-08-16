@@ -62,4 +62,22 @@ class AppModel extends Model {
 			} 
 		} 
 	}
+	
+	/**
+	 * Download a remote file using the curl library
+	 *
+	 * @param string $remoteFileUrl the URL to the remote file
+	 * @param string $localFilePath the path on this server to save the file
+	 * @return void
+	 * @access public
+	 * @author Johnathan Pulos
+	 */
+	public function downloadRemoteFile($remoteFileUrl, $localFilePath) {
+		$ch = curl_init($remoteFileUrl);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    $data = curl_exec($ch);
+    curl_close($ch);
+    file_put_contents($localFilePath, $data);
+	}
+	
 }
