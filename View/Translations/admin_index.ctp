@@ -29,6 +29,7 @@
 			<tr>
 				<th><?php echo $this->Paginator->sort('title', 'Title'); ?></th>
 				<th><?php echo $this->Paginator->sort('language', 'Language'); ?></th>
+				<th><?php echo $this->Paginator->sort('status', 'Status'); ?></th>
 				<th></th>
 			</tr>
 		</thead>
@@ -37,6 +38,7 @@
 				<tr>
 			    <td class="title"><?php echo $translation['Translation']['title']; ?></td>
 					<td><?php echo $translation['Translation']['language']; ?></td>
+					<td><?php echo ucwords(strtolower($translation['Translation']['status'])); ?></td>
 			    <td class="actions"><?php echo $this->element('../Translations/_manage_button', array('translation'	=>	$translation, 'isAdmin'	=>	true)); ?></td>
 			  </tr>
 			<?php endforeach; ?>
