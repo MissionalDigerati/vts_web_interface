@@ -70,6 +70,13 @@ class TranslationClipsController extends AppController {
 		 * @access public
 		 */
 		public $currentTranslation = array();
+		
+		/**
+		 * The translated settings for this video's clips
+		 *
+		 * @var array
+		 */
+		public $videoClipSettings = array();
 
 		/**
 		 * Declare a cakePHP callback to set the video clips needed
@@ -121,6 +128,10 @@ class TranslationClipsController extends AppController {
 					throw new NotFoundException(__('Invalid Translation Clip'));
 				}
 			}
+			if(in_array($this->action, array('index', 'add', 'edit'))) {
+				$this->videoClipSettings = $this->SpycYAML->toArray(ROOT . DS . APP_DIR . DS . 'Config' . DS . 'clip_settings.yml');
+				$this->set('videoClipSettings', $this->videoClipSettings);
+			}
 			$this->Uploader = new Uploader(array('tempDir' => TMP));
 		}
 		
@@ -134,7 +145,6 @@ class TranslationClipsController extends AppController {
 			public function index($translationId = null) {
 				$vtsClipData = array();
 				$vtsMasterRecording = array();
-				$videoClipData = $this->SpycYAML->toArray(ROOT . DS . APP_DIR . DS . 'Config' . DS . 'clip_settings.yml');
 				if(strtolower($this->currentTranslation['Translation']['status']) == 'pending') {
 					/**
 					 * Update the status of each clip
@@ -160,7 +170,6 @@ class TranslationClipsController extends AppController {
 						$this->set('translation', $this->currentTranslation);
 					}
 				}
-				$this->set('videoClipData', $videoClipData);
 				$this->set('vtsClipData', $vtsClipData);
 				$this->set('clipOrderNumberAndIdArray', $this->TranslationClip->findClipsByOrderNumber());
 			}
@@ -190,9 +199,8 @@ class TranslationClipsController extends AppController {
 						$this->Session->setFlash("Only mp3 and wav files are allowed.", '_flash_msg', array('msgType' => 'error'));
 					}
 				}
-				$videoClips = $this->SpycYAML->toArray(ROOT . DS . APP_DIR . DS . 'Config' . DS . 'clip_settings.yml');
-				$this->set('currentClip', $videoClips['clip_' . $clipNumber]);
-				$this->set('clipCount', array('current'	=>	$clipNumber, 'total'	=>	count($videoClips)));
+				$this->set('currentClipSettings', $this->videoClipSettings['clip_' . $clipNumber]);
+				$this->set('clipCount', array('current'	=>	$clipNumber, 'total'	=>	count($this->videoClipSettings)));
 			}
 			
 		/**
@@ -235,9 +243,8 @@ class TranslationClipsController extends AppController {
 						$translationClip = $this->TranslationClip->read(null);
 					}
 				}
-				$videoClips = $this->SpycYAML->toArray(ROOT . DS . APP_DIR . DS . 'Config' . DS . 'clip_settings.yml');
-				$this->set('currentClip', $videoClips['clip_' . $clipNumber]);
-				$this->set('clipCount', array('current'	=>	$clipNumber, 'total'	=>	count($videoClips)));
+				$this->set('currentClipSettings', $this->videoClipSettings['clip_' . $clipNumber]);
+				$this->set('clipCount', array('current'	=>	$clipNumber, 'total'	=>	count($this->videoClipSettings)));
 				$this->set('translationClip', $translationClip);
 			}
 

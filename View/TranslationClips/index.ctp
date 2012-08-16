@@ -21,7 +21,7 @@
  * 
  */
 $heading = __("Clips for %s");
-$totalClips = count($videoClipData);
+$totalClips = count($videoClipSettings);
 ?>
 <div class="translation-clips index">
 	<?php 
@@ -64,7 +64,7 @@ $totalClips = count($videoClipData);
 				 */
 				$translationClip = array();
 			endif;
-			echo $this->element('../TranslationClips/_clip', array('clip'	=>	$translationClip, 'videoClipData'	=>	$videoClipData, 'totalClips' => $totalClips, 'clipNumber'	=>	$i));
+			echo $this->element('../TranslationClips/_clip', array('clip'	=>	$translationClip, 'videoClipSettings'	=>	$videoClipSettings, 'totalClips' => $totalClips, 'clipNumber'	=>	$i));
 		endfor; 
 	?>
 	  </tbody>

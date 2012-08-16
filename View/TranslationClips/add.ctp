@@ -22,7 +22,7 @@
  */
 $formSettings = array(	'clipNumber'				=>	$clipCount['current'], 
 												'translationId'			=>	$translation['Translation']['id'], 
-												'videoFileUrl'			=>	$currentClip['vts_video_file'], 
+												'videoFileUrl'			=>	$currentClipSettings['vts_video_file'], 
 												'translationToken'	=>	$translation['Translation']['token'],
 												'translationClipId' => '',
 												'vtsClipId'					=>	''

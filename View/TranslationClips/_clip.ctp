@@ -31,17 +31,17 @@ $labelType = ((!empty($clip)) && (strtolower($clip['TranslationClip']['vts_statu
 	<td class="video_view width_50">
 		<?php
 		 	if(empty($clip)):
-				echo $this->Html->image($videoClipData['clip_'.$clipNumber]['local_image_file']);
+				echo $this->Html->image($videoClipSettings['clip_'.$clipNumber]['local_image_file']);
 			elseif(($clip['TranslationClip']['vts_file_path'] != '') && ($clip['TranslationClip']['vts_file_path'] != null)):
 				echo $this->element('_quicktime_embed', array('videoLocation' => VTS_URL.$clip['TranslationClip']['vts_file_path']));
 			else:
-				echo $this->Html->image($videoClipData['clip_'.$clipNumber]['local_image_file']);
+				echo $this->Html->image($videoClipSettings['clip_'.$clipNumber]['local_image_file']);
 			endif;
 		?>
 	</td>
 	<td class="actions width_50">
 		<div class="well">
-			<?php echo $videoClipData['clip_'.$clipNumber]['text']; ?>
+			<?php echo $videoClipSettings['clip_'.$clipNumber]['text']; ?>
 		</div>
 		<span class="label <?php echo $labelType; ?>">
 			<Info><?php 

@@ -277,6 +277,13 @@ Cache::config('_cake_model_', array(
 	'duration' => $duration
 ));
 /**
+ * Define the default language for the site. Set this based on the standard ISO 639-2 three letter code
+ * 
+ * @link http://www.loc.gov/standards/iso639-2/php/code_list.php
+ * @author Johnathan Pulos
+ */
+Configure::write('Config.language', 'eng');
+/**
  * Define where the API is hosted
  */
 define("VTS_URL", "http://api.obs.local/");

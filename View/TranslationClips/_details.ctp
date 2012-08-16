@@ -27,14 +27,14 @@ $heading = sprintf($heading, ucwords($this->action), $clipCount['current'], $cli
 <div class="video_view">
 	<?php 
 		if(empty($translationClip)):
-			echo $this->Html->image($currentClip['local_image_file']);
+			echo $this->Html->image($currentClipSettings['local_image_file']);
 		elseif(($translationClip['TranslationClip']['vts_file_path'] != '') && ($translationClip['TranslationClip']['vts_file_path'] != null)):
 			echo $this->element('_quicktime_embed', array('videoLocation' => VTS_URL.$translationClip['TranslationClip']['vts_file_path']));
 		else:
-			echo $this->Html->image($currentClip['local_image_file']);
+			echo $this->Html->image($currentClipSettings['local_image_file']);
 		endif;
 	?>
 </div>
 <div class="well text-to-translate">
-	<?php echo $currentClip['text']; ?>
+	<?php echo $currentClipSettings['text']; ?>
 </div>
