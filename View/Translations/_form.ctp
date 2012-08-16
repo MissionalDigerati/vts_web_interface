@@ -30,6 +30,8 @@
 	?>
 	</fieldset>
 	<div class="form-actions">
-		<button type="submit" class="btn btn-primary"><?php echo ($method == 'EDIT') ? __('Update Translation') : __('Create Translation'); ?></button>
+		<button type="submit" class="btn btn-primary disable-after-click" rel="<?php echo ($method == 'EDIT') ? __('Updating Translation') : __('Creating Translation'); ?>">
+			<?php echo ($method == 'EDIT') ? __('Update Translation') : __('Create Translation'); ?>
+		</button>
 	</div>
 <?php echo $this->Form->end(); ?>

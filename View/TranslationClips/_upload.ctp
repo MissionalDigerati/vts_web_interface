@@ -37,8 +37,8 @@
 			echo $this->Form->hidden('submission_type', array('value' => 'upload'));
 			echo $this->Form->input('audio_file', array('type' => 'file', 'label' => false));
 		?>
-		<button type="submit" class="btn btn-primary">
-			<?php echo __('Upload'); ?>
+		<button type="submit" class="btn btn-primary disable-after-click" rel="<?php echo __('Uploading'); ?>">
+			<i class="icon-upload icon-white"></i> <?php echo __('Upload'); ?>
 		</button>
 			<?php echo $this->Html->link(__('Cancel'), '/translations/'.$translation['Translation']['id'].'/clips', array('class'	=>	'btn btn-mini')); ?>
 	<?php echo $this->Form->end(); ?>

@@ -40,6 +40,18 @@ $(document).ready(function() {
 	if($('div.recorder').length > 0) {
 		setupRecorder();
 	}
+	$('button.disable-after-click').click(function() {
+		if($(this).attr('type') == 'submit') {
+			$(this).closest('form').submit();
+		}
+		$(this).attr('disabled', 'disabled');
+		$(this).addClass('disabled');
+		var content = $(this).attr('rel');
+		if(content) {
+			$(this).text(content);
+		}
+		return true;
+	});
 });
 /**
  * Resize video based on the aspect width of the site
@@ -103,11 +115,13 @@ function setupRecorder() {
 			return false;
 	 });
 	$('.save-button').click(function(){
-			$('.record-button').addClass('disabled');
-			var rel = $(this).attr('rel');
-			recordingForm = '#'+rel;
+			$('.record-button, .save-button').addClass('disabled');
+			var content = $(this).attr('rel');
+			if(content) {
+				$(this).html('<i class="icon-hdd"></i> '+content);
+			}
 	    $.jRecorder.sendData();
-			pollServer('/recorder/has_uploaded?file_name='+fileName, {}, 'GET', 10, function() { $(recordingForm).submit(); });
+			pollServer('/recorder/has_uploaded?file_name='+fileName, {}, 'GET', 10, function() { $('#recordAudioForm').submit(); });
 			return false;
 	 });
 };

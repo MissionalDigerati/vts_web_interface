@@ -23,17 +23,17 @@
 ?>
 <div class="translate-controls recorder-controls">
 	<span id="record-button-wrapper">
-		<a href="" class="record-button btn btn-primary"><i class="icon-bullhorn icon-white"></i> <?php echo __('Record'); ?></a> 
+		<a href="" class="record-button btn btn-primary" rel="<?php echo __('Recording'); ?>"><i class="icon-bullhorn icon-white"></i> <?php echo __('Record'); ?></a> 
 	</span>
 	<span id="stop-recording-button-wrapper" class="hidden">
 		<a href="" class="stop-recording-button btn btn-primary"><i class="icon-stop icon-white"></i> <?php echo __('Stop'); ?></a> 
 	</span>
-	<a href="" class="save-button btn" rel="recordAudioForm<?php echo $clipNumber; ?>"><i class="icon-hdd"></i> <?php echo __('Save'); ?></a>
+	<a href="" class="save-button btn" rel="<?php echo __('Saving'); ?>"><i class="icon-hdd"></i> <?php echo __('Save'); ?></a>
 	<?php echo $this->Html->link(__('Cancel'), '/translations/'.$translation['Translation']['id'].'/clips', array('class'	=>	'btn btn-mini')); ?>
 	<?php
 		echo $this->Form->create('TranslationClip', array(	'inputDefaults' => $this->TwitterBootstrap->inputDefaults(), 
 																												'class' 				=> 'form-horizontal',
-																												'id'						=>	'recordAudioForm'.$clipNumber));
+																												'id'						=>	'recordAudioForm'));
 		if($translationClipId):
 			echo $this->Form->hidden('id', array('value' => $translationClipId));
 			echo $this->Form->hidden('vts_clip_id', array('value' => $vtsClipId));
