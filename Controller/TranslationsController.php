@@ -136,8 +136,17 @@ class TranslationsController extends AppController {
 		 * @author Johnathan Pulos
 		 */
 		public function download($id = null) {
-			$this->layout = false;
 			Configure::write('debug',0);
+			$this->viewClass = 'Media';
+	    $params = array(
+	        'id'        => basename($this->currentTranslation['Translation']['master_recording_file']),
+	        'name'      => 'obs_video',
+	        'extension' => 'mp4',
+					'download'  => true,
+	        'mimeType'  => array('mp4' => 'video/mp4'),
+	        'path'      => 'files' . DS . 'completed' . DS
+	    );
+	    $this->set($params);
 		}
 		
 		/**
