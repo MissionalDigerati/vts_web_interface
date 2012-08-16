@@ -55,6 +55,13 @@ class AppController extends Controller {
 	public $helpers = array('TwitterBootstrap', 'Form', 'Html', 'Session', 'Date', 'VtsApi');
 	
 	/**
+	 * The sites current locale setting
+	 *
+	 * @var string
+	 */
+	public $locale = '';
+	
+	/**
 	 * Define a CakePHP callback beforeFilter
 	 *
 	 * @return void
@@ -62,6 +69,7 @@ class AppController extends Controller {
 	 * @author Johnathan Pulos
 	 */
 	public function beforeFilter() {
+		$this->locale = Configure::read('Config.language');
 		/**
 		 * Capture and redirect non-admins
 		 *
