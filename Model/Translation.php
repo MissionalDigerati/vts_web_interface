@@ -38,7 +38,7 @@ class Translation extends AppModel {
 	 *
 	 * @var array
 	 */
-	public $attrAccessible	=	array('title', 'language', 'user_id');
+	public $attrAccessible	=	array('title', 'language', 'user_id', 'video_prefix');
 	
 	/**
 	 * hasMany associations

@@ -129,17 +129,18 @@ class TranslationClipsController extends AppController {
 				}
 			}
 			if(in_array($this->action, array('index', 'add', 'edit'))) {
+				$settingsFilePrefix = $this->currentTranslation['Translation']['video_prefix'];
 				if(strlen(trim($this->locale)) != 3) {
 					throw new NotFoundException(__("You must set the website's locale to the standard ISO 639-2 three letter code."));
 				}
-				$videoClipSettingsFile = ROOT . DS . APP_DIR . DS . 'Locale' . DS . $this->locale . DS . 'VIDEO_SETTINGS' . DS . 'settings.yml';
+				$videoClipSettingsFile = ROOT . DS . APP_DIR . DS . 'Locale' . DS . $this->locale . DS . 'VIDEOS' . DS . $settingsFilePrefix . '_settings.yml';
 				if(!file_exists($videoClipSettingsFile)) {
 					/**
 					 * default to english
 					 *
 					 * @author Johnathan Pulos
 					 */
-					$videoClipSettingsFile = ROOT . DS . APP_DIR . DS . 'Locale' . DS . 'eng' . DS . 'VIDEO_SETTINGS' . DS . 'settings.yml';
+					$videoClipSettingsFile = ROOT . DS . APP_DIR . DS . 'Locale' . DS . 'eng' . DS . 'VIDEOS' . DS . $settingsFilePrefix . '_settings.yml';
 				}
 				$this->videoClipSettings = $this->SpycYAML->toArray($videoClipSettingsFile);
 				$this->set('videoClipSettings', $this->videoClipSettings);

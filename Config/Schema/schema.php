@@ -1,5 +1,4 @@
 <?php 
-<?php 
 /**
  * This file is part of Video Translator Service Website Example.
  * 
@@ -44,6 +43,7 @@ class WebsiteWithPluginSchema extends CakeSchema {
 		}
 	}
 
+
 	public $translation_clips = array(
 		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
 		'translation_id' => array('type' => 'integer', 'null' => false, 'default' => NULL),
@@ -61,6 +61,7 @@ class WebsiteWithPluginSchema extends CakeSchema {
 	public $translations = array(
 		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
 		'user_id' => array('type' => 'integer', 'null' => false, 'default' => NULL),
+		'video_prefix' => array('type' => 'string', 'null' => true, 'default' => NULL, 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
 		'title' => array('type' => 'string', 'null' => true, 'default' => NULL, 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
 		'language' => array('type' => 'text', 'null' => true, 'default' => NULL, 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
 		'token' => array('type' => 'string', 'null' => true, 'default' => NULL, 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
@@ -68,7 +69,7 @@ class WebsiteWithPluginSchema extends CakeSchema {
 		'master_recording_file' => array('type' => 'string', 'null' => true, 'default' => NULL, 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
 		'vts_master_recording_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
 		'vts_translation_request_id' => array('type' => 'integer', 'null' => false, 'default' => NULL),
-		'status' => array('type' => 'string', 'null' => false, 'default' => 'Pending', 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
+		'status' => array('type' => 'string', 'null' => false, 'default' => 'PENDING', 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
 		'created' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
 		'modified' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
 		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1)),

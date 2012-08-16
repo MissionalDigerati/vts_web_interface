@@ -23,9 +23,18 @@
 ?>
 <?php echo $this->Form->create('Translation', array('inputDefaults' => $this->TwitterBootstrap->inputDefaults(), 'class' => 'form-horizontal'));?>
 	<fieldset>
-		<legend><?php echo ($method == 'EDIT') ? __('Edit Translation') : __('Add Translation'); ?></legend>
+		<legend><?php echo ($method == 'EDIT') ? __('Edit Translation') : __('Add Translation'); ?></legend><br>
+		<?php if($method == 'CREATE'): ?>
+			<label for="TranslationVideoPrefix" class="control-label"><?php echo __('Video Title'); ?></label>
+			<?php
+					echo $this->Form->input('video_prefix', array('label'	=>	false, 'type'	=>	'select', 'options'	=>	$videoOptions));
+				else: 
+					echo $this->Form->input('video_prefix', array('type'	=>	'hidden'));
+				endif;
+		?>
+	<label for="TranslationTitle" class="control-label"><?php echo __('Translated Title'); ?></label>
 	<?php
-		echo $this->Form->input('title');
+		echo $this->Form->input('title', array('label'	=>	false));
 		echo $this->Form->input('language', array('type' => 'string'));
 	?>
 	</fieldset>

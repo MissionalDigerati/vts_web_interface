@@ -49,6 +49,14 @@ class TranslationsController extends AppController {
 		 * @access public
 		 */
 		public $helpers = array('Time');
+		
+		/**
+		 * Call any necessary Components
+		 *
+		 * @var array
+		 * @access public
+		 */
+		public $components = array('SpycYAML');
 
 		/**
 		 * Define pagination settings
@@ -104,6 +112,31 @@ class TranslationsController extends AppController {
 				if($this->currentTranslation['Translation']['user_id'] != $this->Auth->user('id')) {
 					throw new NotFoundException(__('You do not have permission.'));
 				}
+			}
+			if(in_array($this->action, array('add'))) {
+				/**
+				 * Setup the videos they can translate
+				 *
+				 * @author Johnathan Pulos
+				 */
+				if(strlen(trim($this->locale)) != 3) {
+					throw new NotFoundException(__("You must set the website's locale to the standard ISO 639-2 three letter code."));
+				}
+				$videosYmlFile = ROOT . DS . APP_DIR . DS . 'Locale' . DS . $this->locale . DS . 'VIDEOS' . DS . 'videos.yml';
+				if(!file_exists($videosYmlFile)) {
+					/**
+					 * default to english
+					 *
+					 * @author Johnathan Pulos
+					 */
+					$videosYmlFile = ROOT . DS . APP_DIR . DS . 'Locale' . DS . 'eng' . DS . 'VIDEOS' . DS . 'videos.yml';
+				}
+				$videoOptionsArray = $this->SpycYAML->toArray($videosYmlFile);
+				$videoOptions = array();
+				foreach ($videoOptionsArray['videos'] as $key => $val) {
+					$videoOptions[$val['settings_prefix']] = $val['title'];
+				}
+				$this->set('videoOptions', $videoOptions);
 			}
 		}
 		
