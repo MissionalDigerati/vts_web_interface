@@ -41,6 +41,11 @@ $isAdmin = (isset($isAdmin)) ? $isAdmin : false;
 					endif;
 				?>
 		</li>
+		<?php if((strtolower($translation['Translation']['status']) == 'rendered') && ($isAdmin === false)): ?>
+			<li>
+			<?php echo $this->Html->link('<i class="icon-globe"></i> ' . __('Publish'), array('controller'	=>	'translations', 'action'	=>	'publish_video', $translation['Translation']['id'], 'admin'	=> false), array('escape' => false), __('Are you sure you want to publish this video? You will no longer be able to edit the video clips.')); ?>
+			</li>
+		<?php endif; ?>
 		<li>
 				<?php 
 					echo $this->Form->postLink('<i class="icon-trash"></i> ' . __('Delete'), array('controller'	=>	'translations', 'action'	=>	'delete',	'admin'	=>	$isAdmin, $translation['Translation']['id']), array('escape'	=>	false), sprintf(__('Are you sure you want to delete the translation %s?'), $translation['Translation']['title'])); 
