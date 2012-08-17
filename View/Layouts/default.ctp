@@ -45,10 +45,10 @@
           <a class="brand" href="/"><?php echo __('Open Bible Stories'); ?></a>
           <div class="nav-collapse">
             <ul class="nav pull-right">
-              <li><a href="/"><?php echo __('Home'); ?></a></li>
+              <li><?php echo $this->Html->link(__('Home'), $this->Html->appendLanguage('/')); ?></li>
 							<?php 
 								if($this->Session->read('Auth.User.id')):
-									echo '<li>' . $this->Html->link(__('Welcome ') . $this->Session->read('Auth.User.name'), '/my-account', array('title'	=>	'View My Account')) . '</li>';
+									echo '<li>' . $this->Html->link(__('Welcome ') . $this->Session->read('Auth.User.name'), $this->Html->appendLanguage('/my-account'), array('title'	=>	'View My Account')) . '</li>';
 									echo '<li>' . $this->Html->link(__('My Translations'), array('controller'	=>	'translations', 'action'	=>	'index',	'admin'	=>	false)) . '</li>';
 									if($this->Session->read('Auth.User.role') == 'ADMIN'):
 										?>
@@ -72,7 +72,7 @@
 										if($this->Session->read('Auth.User.id')):
 											echo $this->Html->link(__('Add a Translation'), array('controller' => 'translations', 'action' => 'add', 'admin'	=>	false), array('class' => 'btn btn-primary'));
 										else:
-											echo $this->Html->link(__('Join'), '/join', array('class' => 'btn btn-primary'));
+											echo $this->Html->link(__('Join'), $this->Html->appendLanguage('/join'), array('class' => 'btn btn-primary'));
 										endif;
 									?>
 								</div>

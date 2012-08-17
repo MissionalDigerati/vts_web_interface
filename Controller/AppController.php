@@ -39,6 +39,7 @@ class AppController extends Controller {
 	 */
 	public $components = array(	'DebugKit.Toolbar', 
 															'Session',
+															'Cookie',
 															'Auth' => array(
 																				        'authenticate' => array(
 																															            'Form' => array('fields' => array('username' => 'email'),
@@ -52,7 +53,7 @@ class AppController extends Controller {
 	 *
 	 * @var array
 	 */
-	public $helpers = array('TwitterBootstrap', 'Form', 'Html', 'Session', 'Date', 'VtsApi');
+	public $helpers = array('TwitterBootstrap', 'Form', 'Html' => array('className' => 'CustomHtml'), 'Session', 'Date', 'VtsApi');
 	
 	/**
 	 * The sites current locale setting
@@ -69,7 +70,7 @@ class AppController extends Controller {
 	 * @author Johnathan Pulos
 	 */
 	public function beforeFilter() {
-		$this->locale = Configure::read('Config.language');
+		$this->setLanguage();
 		/**
 		 * Capture and redirect non-admins
 		 *
@@ -85,4 +86,59 @@ class AppController extends Controller {
 			}
 		}
 	}
+	
+	/**
+	 * set the current language
+	 *
+	 * @return void
+	 * @access public
+	 * @author Johnathan Pulos
+	 * @link http://colorblindprogramming.com/multiple-languages-in-a-cakephp-2-application-in-5-steps
+	 */
+	private function setLanguage() {
+		$lang = Configure::read('Config.language');
+		/**
+		 * if the cookie was previously set, and Config.language has not been set write the Config.language with the value from the Cookie
+		 *
+		 * @author Johnathan Pulos
+		 */
+		if ($this->Cookie->read('lang') && !$this->Session->check('Config.language')) {
+			$lang = $this->Cookie->read('lang');
+		}else if(isset($this->params['language']) && ($this->params['language'] !=  $this->Session->read('Config.language'))) {
+			/**
+			 * then update the value in Session and the one in Cookie
+			 *
+			 * @author Johnathan Pulos
+			 */
+			$lang = $this->params['language']; 
+			$this->Cookie->write('lang', $lang, false, '20 days');
+		}
+		$this->Session->write('Config.language', $lang);
+		$this->locale = $lang;
+	}
+
+	/**
+	 * override redirect method
+	 *
+	 * @param mixed $url 
+	 * @param string $status 
+	 * @param string $exit 
+	 * @return void
+	 * @access public
+	 * @author Johnathan Pulos
+	 * @link http://colorblindprogramming.com/multiple-languages-in-a-cakephp-2-application-in-5-steps
+	 */
+	public function redirect($url, $status = NULL, $exit = true) {
+		if(is_array($url)) {
+			if (!isset($url['language']) && $this->Session->check('Config.language')) {
+				$url['language'] = $this->Session->read('Config.language');
+			}
+		}else{
+			if ($this->Session->check('Config.language')) {
+				$url = '/' . $this->Session->read('Config.language') . $url;
+			}
+		}
+		parent::redirect($url,$status,$exit);
+	}
+
 }

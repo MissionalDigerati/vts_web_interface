@@ -54,9 +54,9 @@ $labelType = ((!empty($clip)) && (strtolower($clip['TranslationClip']['vts_statu
 			if($translation['Translation']['isEditable'] === true):
 			
 				if(empty($clip)):
-					echo $this->Html->link(__('Add Audio'), '/translations/'.$translation['Translation']['id'].'/clip/'.$clipNumber.'/add', array('class' => 'btn pull-right'));
+					echo $this->Html->link(__('Add Audio'), $this->Html->appendLanguage('/translations/'.$translation['Translation']['id'].'/clip/'.$clipNumber.'/add'), array('class' => 'btn pull-right'));
 				elseif((strtolower($clip['TranslationClip']['vts_status']) == 'complete')):
-					echo $this->Html->link(__('Edit Audio'), '/translations/'.$translation['Translation']['id'].'/clip/'.$clipNumber.'/edit/'.$clip['TranslationClip']['id'], array('class' => 'btn pull-right'));
+					echo $this->Html->link(__('Edit Audio'), $this->Html->appendLanguage('/translations/'.$translation['Translation']['id'].'/clip/'.$clipNumber.'/edit/'.$clip['TranslationClip']['id']), array('class' => 'btn pull-right'));
 				endif;
 			
 			endif;

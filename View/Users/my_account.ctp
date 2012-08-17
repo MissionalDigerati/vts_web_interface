@@ -26,7 +26,7 @@
 		<p><strong>Name:</strong> <?php echo $user['User']['name']; ?></p>
 		<p><strong>Email:</strong> <?php echo $user['User']['email']; ?></p>
 		<p><strong>Joined On:</strong> <?php echo $this->Time->nice($user['User']['created']); ?></p>
-		<?php echo $this->Html->link(__('Edit Account'), '/edit-account', array('class' => 'btn pull-right')); ?>
+		<?php echo $this->Html->link(__('Edit Account'), $this->Html->appendLanguage('/edit-account'), array('class' => 'btn pull-right')); ?>
 		<div class="clear"></div>
 	</div>
 </div>

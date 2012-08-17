@@ -40,6 +40,6 @@
 		<button type="submit" class="btn btn-primary disable-after-click" rel="<?php echo __('Uploading'); ?>">
 			<i class="icon-upload icon-white"></i> <?php echo __('Upload'); ?>
 		</button>
-			<?php echo $this->Html->link(__('Cancel'), '/translations/'.$translation['Translation']['id'].'/clips', array('class'	=>	'btn btn-mini')); ?>
+			<?php echo $this->Html->link(__('Cancel'), $this->Html->appendLanguage('/translations/'.$translation['Translation']['id'].'/clips'), array('class'	=>	'btn btn-mini')); ?>
 	<?php echo $this->Form->end(); ?>
 </div>

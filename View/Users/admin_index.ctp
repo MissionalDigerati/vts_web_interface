@@ -53,7 +53,7 @@
 			    <td class="actions">
 			    	<?php
 			 			if($this->Session->read('Auth.User.id') == $user['User']['id']):
-							echo $this->Html->link(__('My Account'), '/my-account', array('class' => 'btn'));
+							echo $this->Html->link(__('My Account'), $this->Html->appendLanguage('/my-account'), array('class' => 'btn'));
 						else:
 							echo $this->element('../Users/_manage_button', array('user'	=>	$user));
 						endif; 

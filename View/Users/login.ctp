@@ -32,8 +32,8 @@
 	</fieldset>
 	<div class="form-actions">
 		<button type="submit" class="btn btn-primary"><?php echo __('Login'); ?></button>
-		<?php echo $this->Html->link(__('Resend Activation Email'), '/resend-activation', array('class'=> 'btn btn-mini')); ?>
-		<?php echo $this->Html->link(__('Forgot Password?'), '/request-password-change', array('class'=> 'btn btn-mini')); ?></button>
+		<?php echo $this->Html->link(__('Resend Activation Email'), $this->Html->appendLanguage('/resend-activation'), array('class'=> 'btn btn-mini')); ?>
+		<?php echo $this->Html->link(__('Forgot Password?'), $this->Html->appendLanguage('/request-password-change'), array('class'=> 'btn btn-mini')); ?></button>
 	</div>
 <?php echo $this->Form->end(); ?>
 </div>
