@@ -3,6 +3,18 @@ VTS Web Interface
 
 This is a sample web interface created for crowd sourcing the translation of video using the [VTS API](https://github.com/MissionalDigerati/vts_api) and the [VTS CakePHP Plugin](https://github.com/MissionalDigerati/vts_cakephp_plugin).  You will need the VTS API Service running on a separate instance, in order to use this app.  This application submodules the [VTS CakePHP Plugin](https://github.com/MissionalDigerati/vts_cakephp_plugin).
 
+Package
+-------
+
+This is part of the Video Translating Service Package (VTS) which consists of the following repositories:
+
+* [VTS API](https://github.com/MissionalDigerati/vts_api)
+	* Submodule - [VTS Rendering Engine](https://github.com/MissionalDigerati/vts_rendering_engine)
+* [VTS CakePHP Web Interface](https://github.com/MissionalDigerati/vts_web_interface)	
+	* Submodule - [VTS CakePHP 2 Plugin](https://github.com/MissionalDigerati/vts_cakephp_plugin)
+	
+To use this service, you will need one instance of the [VTS API](https://github.com/MissionalDigerati/vts_api) running on a stand alone server, and the [VTS CakePHP Web Interface](https://github.com/MissionalDigerati/vts_web_interface) running on a separate server.
+
 Requirements
 ------------
 
