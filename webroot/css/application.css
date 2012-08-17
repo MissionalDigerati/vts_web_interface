@@ -1,5 +1,5 @@
 body {
-	padding-top: 45px;
+	padding-top: 75px;
 }
 .hidden {
 	display: none;
@@ -91,4 +91,11 @@ object, embed {
 	position: relative;
 	top: 5px;
 	right: 5px;
+}
+#language-selection {
+	font-size: 12px;
+	margin: 8px 0px;
+}
+#language-selection a{
+	color: #fff;
 }

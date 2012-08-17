@@ -102,9 +102,9 @@ class AppController extends Controller {
 		 *
 		 * @author Johnathan Pulos
 		 */
-		if ($this->Cookie->read('lang') && !$this->Session->check('Config.language')) {
+		if ($this->Cookie->read('lang') && !$lang) {
 			$lang = $this->Cookie->read('lang');
-		}else if(isset($this->params['language']) && ($this->params['language'] !=  $this->Session->read('Config.language'))) {
+		}else if(isset($this->params['language']) && ($this->params['language'] !=  $lang)) {
 			/**
 			 * then update the value in Session and the one in Cookie
 			 *
@@ -113,7 +113,7 @@ class AppController extends Controller {
 			$lang = $this->params['language']; 
 			$this->Cookie->write('lang', $lang, false, '20 days');
 		}
-		$this->Session->write('Config.language', $lang);
+		Configure::write('Config.language', $lang);
 		$this->locale = $lang;
 	}
 
@@ -129,13 +129,14 @@ class AppController extends Controller {
 	 * @link http://colorblindprogramming.com/multiple-languages-in-a-cakephp-2-application-in-5-steps
 	 */
 	public function redirect($url, $status = NULL, $exit = true) {
+		$lang = Configure::read('Config.language');
 		if(is_array($url)) {
-			if (!isset($url['language']) && $this->Session->check('Config.language')) {
-				$url['language'] = $this->Session->read('Config.language');
+			if (!isset($url['language']) && $lang) {
+				$url['language'] = $lang;
 			}
 		}else{
-			if ($this->Session->check('Config.language')) {
-				$url = '/' . $this->Session->read('Config.language') . $url;
+			if ($lang) {
+				$url = '/' . $lang . $url;
 			}
 		}
 		parent::redirect($url,$status,$exit);

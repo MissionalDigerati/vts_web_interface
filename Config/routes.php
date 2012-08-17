@@ -86,7 +86,7 @@ Router::connect('/recorder/has_uploaded', array('controller' => 'recorder', 'act
 Router::connect('/:language/recorder/has_uploaded', array('controller' => 'recorder', 'action' => 'has_uploaded'), array('pass' => array('language'), array('language' => '[a-z]{3}')));
 
 Router::connect('/', array('controller' => 'pages', 'action' => 'home'));
-Router::connect('/:language/', array('controller' => 'pages', 'action' => 'home'), array('pass' => array('language'), array('language' => '[a-z]{3}')));
+Router::connect('/:language', array('controller' => 'pages', 'action' => 'home'), array('pass' => array('language'), array('language' => '[a-z]{3}')));
 
 Router::connect('/pages/*', array('controller' => 'pages', 'action' => 'display'));
 Router::parseExtensions('json');

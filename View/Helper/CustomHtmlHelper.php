@@ -39,7 +39,13 @@ class CustomHtmlHelper extends HtmlHelper {
 	 * @author Johnathan Pulos
 	 */
 	public function url($url = null, $full = false) {
-		if(!isset($url['language']) && isset($this->params['language'])) {
+		if(isset($url['admin']) && $url['admin'] === true) {
+			/**
+			 * Don't do anything to the url
+			 *
+			 * @author Johnathan Pulos
+			 */
+		}else if((!isset($url['language'])) && (isset($this->params['language']))) {
 			$url['language'] = $this->params['language'];
 		}
 		return parent::url($url, $full);
@@ -54,10 +60,39 @@ class CustomHtmlHelper extends HtmlHelper {
 	 * @author Johnathan Pulos
 	 */
 	public function appendLanguage($staticUrl = '') {
-		if(!isset($url['language']) && isset($this->params['language'])) {
+		if(isset($this->params['language'])) {
 			return '/' . $this->params['language'] . $staticUrl;
 		}else {
 			return $staticUrl;
+		}
+	}
+	
+	/**
+	 * Takes the current url and switches or appends the requested lang.  This is used for switching the sites languages.
+	 *
+	 * @param string $lang the language to append
+	 * @return string
+	 * @access public
+	 * @author Johnathan Pulos
+	 */
+	public function switchLanguageOnCurrentUrl($lang) {
+		$currentUrl = $_SERVER['REQUEST_URI'];
+		if((isset($this->params['language'])) && ($lang == $this->params['language'])) {
+			return $currentUrl;
+		}else if((isset($this->params['language'])) && ($lang != $this->params['language'])) {
+			/**
+			 * Replace the current lang with the new lang
+			 *
+			 * @author Johnathan Pulos
+			 */
+			return str_replace("/" . $this->params['language'], "/" . $lang, $currentUrl);
+		}else {
+			/**
+			 * no lang defined in url
+			 *
+			 * @author Johnathan Pulos
+			 */
+			return "/" . $lang . $currentUrl;
 		}
 	}
 
