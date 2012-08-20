@@ -196,7 +196,7 @@ class User extends AppModel {
 	/**
 	 * Call CakePHP's callback method afterSave
 	 *
-	 * @param boolean $created wheater they are creating or updating
+	 * @param boolean $created weather they are creating or updating
 	 * @return boolean
 	 * @access public
 	 * @author Johnathan Pulos
