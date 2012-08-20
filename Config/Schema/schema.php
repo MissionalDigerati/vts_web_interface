@@ -29,8 +29,8 @@ class WebsiteWithPluginSchema extends CakeSchema {
 
 	public function after($event = array()) {
 		if(array_key_exists('create', $event) && $event['create'] == 'users') {
-			$admin = array('User' => array( 'password' 								=> 	'123456789', 
-																			'confirm_password'			 	=> 	'123456789', 
+			$admin = array('User' => array( 'password' 								=> 	'mypass*12', 
+																			'confirm_password'			 	=> 	'mypass*12', 
 																			'name' 										=> 	'Johnathan Pulos', 
 																			'email' 									=> 	'johnathan@missionaldigerati.org',
 																			'active'									=>	1,
