@@ -29,17 +29,27 @@ class WebsiteWithPluginSchema extends CakeSchema {
 
 	public function after($event = array()) {
 		if(array_key_exists('create', $event) && $event['create'] == 'users') {
-			$admin = array('User' => array( 'password' 								=> 	'password21', 
-																			'confirm_password'			 	=> 	'password21', 
+			$admin = array('User' => array( 'password' 								=> 	'123456789', 
+																			'confirm_password'			 	=> 	'123456789', 
 																			'name' 										=> 	'Johnathan Pulos', 
 																			'email' 									=> 	'johnathan@missionaldigerati.org',
 																			'active'									=>	1,
 																			'role'										=>	'ADMIN'
 																		)
 										);
-			$Auth = new AuthComponent(new ComponentCollection());
-			$admin['User']['password'] = $Auth->password($admin['User']['password']);
-			ClassRegistry::init('User')->save($admin, false);
+			$User = ClassRegistry::init('User');
+			/**
+			 * Make sure it allows setting the role
+			 *
+			 * @author Johnathan Pulos
+			 */
+			$User->requestedByAdmin = true;
+			/**
+			 * Password is encrypted on the beforeSave
+			 *
+			 * @author Johnathan Pulos
+			 */
+			$User->save($admin, false);
 		}
 	}
 
