@@ -204,7 +204,7 @@ class TranslationClipsController extends AppController {
 							$this->Session->setFlash(__('Clip # %s has been uploaded.', $clipNumber), '_flash_msg', array('msgType' => 'info'));
 							$this->redirect("/translations/" . $translationId . "/clips");
 						}else {
-							throw new CakeException(__('Unable to upload the clip.'));
+							$this->Session->setFlash(__('Unable to add the clip.'), '_flash_msg', array('msgType' => 'error'));
 						}
 					}else {
 						unlink(WWW_ROOT.$localFilePath);
@@ -232,7 +232,7 @@ class TranslationClipsController extends AppController {
 							$this->Session->setFlash(__('Clip # %s has been uploaded.', $clipNumber), '_flash_msg', array('msgType' => 'info'));
 							$this->redirect("/translations/" . $translationId . "/clips");
 						}else {
-							throw new CakeException(__('Unable to upload the clip.'));
+							$this->Session->setFlash(__('Unable to add the clip.'), '_flash_msg', array('msgType' => 'error'));
 						}
 					}else {
 						unlink(WWW_ROOT.$localFilePath);
