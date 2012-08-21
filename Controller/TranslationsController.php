@@ -146,6 +146,7 @@ class TranslationsController extends AppController {
 	 * @return void
 	 */
 		public function index() {
+			$translationRequest = $this->TranslationRequest->read(null, 1);
 			$this->set('translations', $this->Translation->find('all', array('conditions'=> array('Translation.user_id'	=>	$this->Auth->user('id')))));
 		}
 		

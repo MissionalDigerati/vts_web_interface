@@ -288,6 +288,10 @@ Configure::write('Config.language', 'eng');
  */
 define("VTS_URL", "http://api.obs.local/");
 /**
+ * Define the VTS API Key setup on your VTS API Server.
+ */
+define("VTS_API_KEY", "your_api_key");
+/**
  * Define the website this resides on
  *
  * @author Johnathan Pulos
