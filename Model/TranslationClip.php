@@ -72,6 +72,7 @@ class TranslationClip extends AppModel {
 	public function saveClipIncludingVts($data, $localFilePath) {
 		$Clip = new Clip();
 		$data['TranslationClip']['audio_file'] = WWW_ROOT.$localFilePath;
+		$data['TranslationClip']['order_by'] = $data['TranslationClip']['clip_order'];
 		if($Clip->save($data['TranslationClip'], false)) {
 			$clipData = array('TranslationClip' => array(	'vts_clip_id' 		=> $Clip->id, 
 																										'clip_order' 			=> $data['TranslationClip']['clip_order'],
