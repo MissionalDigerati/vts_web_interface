@@ -271,7 +271,7 @@ class TranslationsController extends AppController {
 											'language' 									=> $this->currentTranslation['Translation']['language'],
 											'final_filename'						=> $finalFilename
 									);
-			if($this->MasterRecording->save($data, false)) {
+			if($this->MasterRecording->save($data)) {
 				$this->Translation->id = $id;
 				$this->Translation->set('vts_master_recording_id', $this->MasterRecording->id);
 				$this->Translation->set('master_recording_file', VTS_URL . 'files/master_recordings/' . $finalFilename . '/' . $finalFilename . '.mp4');
@@ -280,7 +280,12 @@ class TranslationsController extends AppController {
 				$this->Session->setFlash(__('The translation is being rendered.  This may take a few minutes.'), '_flash_msg', array('msgType' => 'info'));
 				$this->redirect("/translations/" . $id . "/clips");
 			}else {
-				$this->Session->setFlash(__('Unable to render the translation.'), '_flash_msg', array('msgType' => 'error'));
+				$errors = $this->MasterRecording->invalidFields();
+				if(!empty($errors)) {
+						$this->Session->setFlash($this->ppErrors($errors), '_flash_msg', array('msgType' => 'error'));
+				}else {
+					$this->Session->setFlash(__('Unable to render the translation.'), '_flash_msg', array('msgType' => 'error'));
+				}
 				$this->redirect("/translations/" . $id . "/clips");
 			}
 		}
