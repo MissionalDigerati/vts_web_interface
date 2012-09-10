@@ -197,23 +197,27 @@ class TranslationClipsController extends AppController {
 			public function add($translationId = null, $clipNumber = null) {
 				if(!empty($this->request->data)) {
 					$localFilePath = $this->handleSubmittedFile();
-					$mimeType = $this->Uploader->mimeType(WWW_ROOT.$localFilePath);
-					if($this->TranslationClip->validMimeType($mimeType)) {
-						$this->request->data['TranslationClip']['mime_type'] = $mimeType;
-						if($this->TranslationClip->saveClipIncludingVts($this->request->data, $localFilePath)) {
-							$this->Session->setFlash(__('Clip # %s has been uploaded.', $clipNumber), '_flash_msg', array('msgType' => 'info'));
-							$this->redirect("/translations/" . $translationId . "/clips");
-						}else {
-							$errors = $this->TranslationClip->currentSaveErrors;
-							if(!empty($errors)) {
-									$this->Session->setFlash($this->ppErrors($errors), '_flash_msg', array('msgType' => 'error'));
+					if($localFilePath) {
+						$mimeType = $this->Uploader->mimeType(WWW_ROOT.$localFilePath);
+						if($this->TranslationClip->validMimeType($mimeType)) {
+							$this->request->data['TranslationClip']['mime_type'] = $mimeType;
+							if($this->TranslationClip->saveClipIncludingVts($this->request->data, $localFilePath)) {
+								$this->Session->setFlash(__('Clip # %s has been uploaded.', $clipNumber), '_flash_msg', array('msgType' => 'info'));
+								$this->redirect("/translations/" . $translationId . "/clips");
 							}else {
-								$this->Session->setFlash(__('Unable to add your clip.'), '_flash_msg', array('msgType' => 'error'));
+								$errors = $this->TranslationClip->currentSaveErrors;
+								if(!empty($errors)) {
+										$this->Session->setFlash($this->ppErrors($errors), '_flash_msg', array('msgType' => 'error'));
+								}else {
+									$this->Session->setFlash(__('Unable to add your clip.'), '_flash_msg', array('msgType' => 'error'));
+								}
 							}
+						}else {
+							unlink(WWW_ROOT.$localFilePath);
+							$this->Session->setFlash("Only mp3 and wav files are allowed.", '_flash_msg', array('msgType' => 'error'));
 						}
 					}else {
-						unlink(WWW_ROOT.$localFilePath);
-						$this->Session->setFlash("Only mp3 and wav files are allowed.", '_flash_msg', array('msgType' => 'error'));
+						$this->Session->setFlash("Please add a file before submitting the form.", '_flash_msg', array('msgType' => 'error'));
 					}
 				}
 				$this->set('currentClipSettings', $this->videoClipSettings['clip_' . $clipNumber]);
@@ -280,6 +284,14 @@ class TranslationClipsController extends AppController {
 			private function handleSubmittedFile() {
 				switch (strtolower($this->request->data['TranslationClip']['submission_type'])) {
 					case 'upload':
+					/**
+					 * They forgot to add the file
+					 *
+					 * @author Johnathan Pulos
+					 */
+						if(empty($this->request->data['TranslationClip']['audio_file']['name'])){
+							return '';
+						}
 						/**
 						 * A file needs to be uploaded
 						 *
