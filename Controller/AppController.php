@@ -142,4 +142,24 @@ class AppController extends Controller {
 		parent::redirect($url,$status,$exit);
 	}
 
+	/**
+	 * iterates over cakePHP's invalidFields() errors, and returns a string of the errors.
+	 *
+	 * @param array $errors the errors received from invalidFields()
+	 * @return string
+	 * @access public
+	 * @author Johnathan Pulos
+	 */
+	public function ppErrors($errors) {
+		$errorMsg = '';
+		foreach($errors as $key => $value) {
+			foreach ($value as $individualError) {
+				if(strpos($errorMsg, $individualError) === false) {
+					$errorMsg .= $individualError . " ";
+				}
+			}
+		}
+		return trim($errorMsg);
+	}
+
 }

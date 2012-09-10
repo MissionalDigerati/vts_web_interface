@@ -43,6 +43,12 @@ class TranslationClip extends AppModel {
 																											'foreignKey' => 'translation_id'
 																										)
 														);
+	/**
+	 * An array of errors when saving the translation clip
+	 *
+	 * @var array
+	 */
+	public $currentSaveErrors = array();
 	
 	/**
 	 * Find all clips provided by the user, and return an array with a key of the order, and the translation_clip details in value.
@@ -73,7 +79,7 @@ class TranslationClip extends AppModel {
 		$Clip = new Clip();
 		$data['TranslationClip']['audio_file'] = WWW_ROOT.$localFilePath;
 		$data['TranslationClip']['order_by'] = $data['TranslationClip']['clip_order'];
-		if($Clip->save($data['TranslationClip'], false)) {
+		if($Clip->save($data['TranslationClip'])) {
 			$clipData = array('TranslationClip' => array(	'vts_clip_id' 		=> $Clip->id, 
 																										'clip_order' 			=> $data['TranslationClip']['clip_order'],
 																										'translation_id'	=> $this->Translation->id,
@@ -85,6 +91,7 @@ class TranslationClip extends AppModel {
 												);
 			return $this->save($clipData);
 		}else {
+			$this->currentSaveErrors = $Clip->invalidFields();
 			return false;
 		}
 	}

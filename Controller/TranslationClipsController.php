@@ -204,7 +204,12 @@ class TranslationClipsController extends AppController {
 							$this->Session->setFlash(__('Clip # %s has been uploaded.', $clipNumber), '_flash_msg', array('msgType' => 'info'));
 							$this->redirect("/translations/" . $translationId . "/clips");
 						}else {
-							$this->Session->setFlash(__('Unable to add the clip.'), '_flash_msg', array('msgType' => 'error'));
+							$errors = $this->TranslationClip->currentSaveErrors;
+							if(!empty($errors)) {
+									$this->Session->setFlash($this->ppErrors($errors), '_flash_msg', array('msgType' => 'error'));
+							}else {
+								$this->Session->setFlash(__('Unable to add your clip.'), '_flash_msg', array('msgType' => 'error'));
+							}
 						}
 					}else {
 						unlink(WWW_ROOT.$localFilePath);
