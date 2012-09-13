@@ -260,8 +260,11 @@ class TranslationClipsController extends AppController {
 					 *
 					 * @author Johnathan Pulos
 					 */
-					$this->Clip->id = $translationClip['TranslationClip']['vts_clip_id'];
-					$clip = $this->Clip->find('first', array('conditions'	=>	array('translation_request_token'	=>	$this->currentTranslation['Translation']['token'])));
+					$clip = $this->Clip->find('first', array('conditions'	=>	array(	'translation_request_token'	=>	$this->currentTranslation['Translation']['token'],
+																																						'id' => $translationClip['TranslationClip']['vts_clip_id']
+																																					)
+																										)
+																		);
 					if($clip['Clip']['status'] == 'COMPLETE') {
 						$this->TranslationClip->set(array('vts_status'	=>	$clip['Clip']['status'], 'vts_file_path'	=>	substr($clip['Clip']['completed_file_location'], 1)));
 						$this->TranslationClip->save();
