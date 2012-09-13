@@ -265,6 +265,7 @@ class TranslationsController extends AppController {
 		 * @author Johnathan Pulos
 		 */
 		public function render_video($id = null) {
+			$this->MasterRecording->create();
 			$finalFilename = $id . "_translated_video";
 			$data = array(	'translation_request_token' => $this->currentTranslation['Translation']['token'],
 											'title' 										=> $this->currentTranslation['Translation']['title'],
