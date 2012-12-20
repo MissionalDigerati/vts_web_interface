@@ -53,7 +53,7 @@ class AppController extends Controller {
 	 *
 	 * @var array
 	 */
-	public $helpers = array('TwitterBootstrap', 'Form', 'Html' => array('className' => 'CustomHtml'), 'Session', 'Date', 'VtsApi');
+	public $helpers = array('TwitterBootstrap', 'Form', 'Html' => array('className' => 'CustomHtml'), 'Session', 'Date', 'VtsApi', 'Time');
 	
 	/**
 	 * The sites current locale setting

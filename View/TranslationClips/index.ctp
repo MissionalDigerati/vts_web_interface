@@ -37,7 +37,8 @@ $totalClips = count($videoClipSettings);
 			endif;
 		endif;
 	?>
-	<h1><?php echo __("Clips for %s", $translation['Translation']['title']); ?></h1><br>
+	<h1><?php echo __("Manage Translation: %s", $translation['Translation']['title']); ?></h1>
+	<p><small><strong><?php echo __("Created "); ?><?php echo $this->Time->timeAgoInWords($translation['Translation']['created'], array('format' => 'F jS, Y', 'end' => '+1 year')); ?></strong></small></p>
 	<div class="clear"></div>
 	<table class="table table-striped table-bordered table-condensed">
 	  <tbody>
