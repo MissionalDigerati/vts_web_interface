@@ -145,4 +145,29 @@ class TranslationClip extends AppModel {
 	public function validMimeType($mimeType) {
 		return in_array($mimeType, array('audio/mpeg', 'audio/mp3', 'audio/x-wav', 'audio/wav'));
 	}
+
+	/**
+	 * Look for the next clip that needs to be added.  Iterates over already added clips and finds the next number needed.  NOTE: This method is not aware of how many 
+	 * clips belong to a translation, so you will need to check if the number returned is greater then the max number of clips.
+	 *
+	 * @param integer $translationId Translation.id
+	 * @param integer $currentClipNumber the current Clip number
+	 * @return integer
+	 * @access public
+	 * @author Johnathan Pulos
+	 */
+	public function nextClipToAdd($translationId, $currentClipNumber) {
+		$nextClipNumber = $currentClipNumber+1; 
+		$addedClipSearch = $this->find('list', array(
+				        																	'fields'			=> array('TranslationClip.id', 'TranslationClip.clip_order'),
+				        																	'order'				=> array('TranslationClip.clip_order' => 'ASC'),
+																									'conditions'	=> array('TranslationClip.translation_id' => $translationId),
+				        																	'recursive'		=> 0
+		));
+		$addedClips = array_values($addedClipSearch);
+		while(in_array($nextClipNumber, $addedClips)) {
+			$nextClipNumber = $nextClipNumber+1;
+		}
+		return $nextClipNumber;
+	}
 }

@@ -195,6 +195,8 @@ class TranslationClipsController extends AppController {
 		 * @author Johnathan Pulos
 		 */
 			public function add($translationId = null, $clipNumber = null) {
+				$totalClipsToTranslate = count($this->videoClipSettings);
+				$nextClipNumber = $this->TranslationClip->nextClipToAdd($translationId, $clipNumber);
 				if(!empty($this->request->data)) {
 					$localFilePath = $this->handleSubmittedFile();
 					if($localFilePath) {
@@ -202,8 +204,13 @@ class TranslationClipsController extends AppController {
 						if($this->TranslationClip->validMimeType($mimeType)) {
 							$this->request->data['TranslationClip']['mime_type'] = $mimeType;
 							if($this->TranslationClip->saveClipIncludingVts($this->request->data, $localFilePath)) {
-								$this->Session->setFlash(__('Clip # %s has been uploaded.', $clipNumber), '_flash_msg', array('msgType' => 'info'));
-								$this->redirect("/translations/" . $translationId . "/clips");
+								if($nextClipNumber > $totalClipsToTranslate) {
+									$this->Session->setFlash(__('Clip # %s is being processed.', $clipNumber), '_flash_msg', array('msgType' => 'info'));
+									$this->redirect("/translations/" . $translationId . "/clips");
+								}else {
+									$this->Session->setFlash(__('Clip # %s is being processed.  You can begin translating the next clip, or hit the cancel button to visit the translation management page for this translation.', $clipNumber), '_flash_msg', array('msgType' => 'info'));
+									$this->redirect("/translations/" . $translationId . "/clip/" . $nextClipNumber . "/add");
+								}
 							}else {
 								$errors = $this->TranslationClip->currentSaveErrors;
 								if(!empty($errors)) {
@@ -221,7 +228,7 @@ class TranslationClipsController extends AppController {
 					}
 				}
 				$this->set('currentClipSettings', $this->videoClipSettings['clip_' . $clipNumber]);
-				$this->set('clipCount', array('current'	=>	$clipNumber, 'total'	=>	count($this->videoClipSettings)));
+				$this->set('clipCount', array('current'	=>	$clipNumber, 'total'	=>	$totalClipsToTranslate));
 			}
 			
 		/**
