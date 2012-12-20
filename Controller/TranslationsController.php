@@ -199,8 +199,8 @@ class TranslationsController extends AppController {
 						$this->Translation->saveField('vts_translation_request_id', $translationRequest['TranslationRequest']['id']);
 						$this->Translation->saveField('token', $translationRequest['TranslationRequest']['token']);
 						$this->Translation->saveField('expires_at', $translationRequest['TranslationRequest']['expires_at']);
-						$this->Session->setFlash(__('The translation has been created.  Now upload your audio files for each clip.'), '_flash_msg', array('msgType' => 'info'));
-						$this->redirect("/translations/" . $this->Translation->id . "/clips");
+						$this->Session->setFlash(__('The translation has been created.  You can begin translating the first clip, or hit the cancel button to visit the translation management page for this translation.'), '_flash_msg', array('msgType' => 'info'));
+						$this->redirect("/translations/" . $this->Translation->id . "/clip/1/add");
 					} else{
 						$this->Session->setFlash(__('Unable to save the translation.'), '_flash_msg', array('msgType' => 'error'));
 					}
