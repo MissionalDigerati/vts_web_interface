@@ -34,15 +34,12 @@ App::import('Model', 'VideoTranslatorService.Clip');
  */
 class TranslationClip extends AppModel {
 
-/**
- * belongsTo associations
- *
- * @var array
- */
-	public $belongsTo = array(	'Translation' => array(	'className' => 'Translation',
-																											'foreignKey' => 'translation_id'
-																										)
-														);
+    /**
+     * belongsTo associations
+     *
+     * @var array
+     */
+	public $belongsTo = array(	'Translation' => array(	'className' => 'Translation','foreignKey' => 'translation_id'));
 	/**
 	 * An array of errors when saving the translation clip
 	 *
@@ -81,14 +78,14 @@ class TranslationClip extends AppModel {
 		$data['TranslationClip']['order_by'] = $data['TranslationClip']['clip_order'];
 		if($Clip->save($data['TranslationClip'])) {
 			$clipData = array('TranslationClip' => array(	'vts_clip_id' 		=> $Clip->id, 
-																										'clip_order' 			=> $data['TranslationClip']['clip_order'],
-																										'translation_id'	=> $this->Translation->id,
-																										'vts_status'			=>	'PENDING',
-																										'vts_file_path'		=>	'',
-																										'local_file_path'	=>	$localFilePath,
-																										'mime_type'				=>	$data['TranslationClip']['mime_type']
-																									)
-												);
+															'clip_order' 		=> $data['TranslationClip']['clip_order'],
+															'translation_id'	=> $this->Translation->id,
+															'vts_status'		=>	'PENDING',
+															'vts_file_path'		=>	'',
+															'local_file_path'	=>	$localFilePath,
+															'mime_type'			=>	$data['TranslationClip']['mime_type']
+														)
+							);
 			return $this->save($clipData);
 		}else {
 			$this->currentSaveErrors = $Clip->invalidFields();
