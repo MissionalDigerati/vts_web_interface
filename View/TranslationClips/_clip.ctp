@@ -55,7 +55,7 @@ $labelType = ((!empty($clip)) && (strtolower($clip['TranslationClip']['vts_statu
 			
 				if(empty($clip)):
 					echo $this->Html->link(__('Add Audio'), $this->Html->appendLanguage('/translations/'.$translation['Translation']['id'].'/clip/'.$clipNumber.'/add'), array('class' => 'btn pull-right'));
-				else:
+				elseif((strtolower($clip['TranslationClip']['vts_status']) != 'processing')):
 					echo $this->Html->link(__('Edit Audio'), $this->Html->appendLanguage('/translations/'.$translation['Translation']['id'].'/clip/'.$clipNumber.'/edit/'.$clip['TranslationClip']['id']), array('class' => 'btn pull-right'));
 				endif;
 			
