@@ -91,7 +91,7 @@ class Translation extends AppModel {
 	 * @author Johnathan Pulos
 	 */
 	public function isEditable($status) {
-		return (strtolower($status) == 'pending') ? true : false;
+		return (strtolower($status) == 'pending' || strtolower($status) == 'error') ? true : false;
 	}
 	
 	/**
