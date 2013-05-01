@@ -99,3 +99,10 @@ object, embed {
 #language-selection a{
 	color: #fff;
 }
+div.footer {
+	margin-top: 20px;
+	border-top: 1px solid gray;
+	padding-top: 10px;
+	text-align: center;
+	font-size: 12px;
+}
