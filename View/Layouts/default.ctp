@@ -47,7 +47,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="/"><?php echo __('Open Bible Stories'); ?></a>
+          <a class="brand" href="/">Open Bible Stories <span class="beta">beta</span></a>
           <div class="nav-collapse">
             <ul class="nav pull-right">
               <li><?php echo $this->Html->link(__('Home'), $this->Html->appendLanguage('/')); ?></li>
