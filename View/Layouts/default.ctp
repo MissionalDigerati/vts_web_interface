@@ -92,7 +92,7 @@
 			<?php echo $this->fetch('content'); ?>
     </div> <!-- /container -->
     <div class="container footer">
-        <a href="files/instructions/join_create_translation.pdf" target="_blank">How do I Create a Translation?</a>
+        <a href="/files/instructions/join_create_translation.pdf" target="_blank">How do I Create a Translation?</a>
     </div> <!-- /container -->
 		<script type="text/javascript" charset="utf-8" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 		<?php
